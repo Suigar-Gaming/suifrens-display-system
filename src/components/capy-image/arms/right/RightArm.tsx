@@ -1,12 +1,24 @@
 import { type SVGProps } from "react";
+import { CapyExpression } from "../../types.js";
 
 type RightArmProps = {
   handProps?: SVGProps<SVGPathElement>;
+  expression: CapyExpression;
 } & SVGProps<SVGPathElement>;
 
-export function RightArm({ handProps, ...armProps }: RightArmProps) {
+export function RightArm({
+  handProps,
+  expression,
+  ...armProps
+}: RightArmProps) {
   return (
-    <g transform="matrix(-2.9166107177734375, 0, 0, 2.9166107177734375, 1880.95,1719.3)">
+    <g
+      transform={
+        expression === "ourah" || expression === "showing"
+          ? "matrix(-2.9166107177734375, 0, 0, -2.9166107177734375, 1780.95,2069.3) rotate(55)"
+          : "matrix(-2.9166107177734375, 0, 0, 2.9166107177734375, 1880.95,1719.3)"
+      }
+    >
       <g transform="matrix(1, 0, 0, 1, 0, 0)">
         <path
           {...armProps}

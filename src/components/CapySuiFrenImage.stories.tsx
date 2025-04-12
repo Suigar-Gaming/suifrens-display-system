@@ -26,6 +26,8 @@ const allPossibleExpressions: CapyExpression[] = [
   "dizzyFace",
   "goofy",
   "grimace",
+  "ourah",
+  "showing",
 ];
 
 const meta = {
@@ -170,7 +172,7 @@ export const WithShadow: Story = {
       secondaryColor: "E6FBFF",
       skin: "basic",
       earShape: "wild",
-      expression: "grimace",
+      expression: "ourah",
     },
     shadow: true,
   },

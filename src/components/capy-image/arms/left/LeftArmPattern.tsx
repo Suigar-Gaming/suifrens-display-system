@@ -6,6 +6,7 @@ import { SnakeLeftArmPattern } from "./patterns/SnakeLeftArmPattern.js";
 
 type LeftArmPatternProps = {
   skin: CapySkin;
+  expression: string;
 } & SVGProps<SVGGElement>;
 
 const leftArmPatternComponents: Record<CapySkin, ComponentType | null> = {
@@ -19,10 +20,20 @@ const leftArmPatternComponents: Record<CapySkin, ComponentType | null> = {
   dalmation: DalmationLeftArmPattern,
 };
 
-export function LeftArmPattern({ skin, ...svgProps }: LeftArmPatternProps) {
+export function LeftArmPattern({
+  skin,
+  expression,
+  ...svgProps
+}: LeftArmPatternProps) {
   const LeftArmPatternContent = leftArmPatternComponents[skin];
   return (
-    <g transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1002.9,1719.3)">
+    <g
+      transform={
+        expression === "ourah"
+          ? "matrix(2.9166107177734375, 0, 0, -2.9166107177734375, 1002.9,2019.3) rotate(45)"
+          : "matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1002.9,1719.3)"
+      }
+    >
       <g transform="matrix( 1, 0, 0, 1, 0,0) ">
         {LeftArmPatternContent && (
           <g {...svgProps}>
