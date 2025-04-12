@@ -1,11 +1,12 @@
 import { type SVGProps, type ComponentType } from "react";
 
-import { type CapySkin } from "../../types.js";
+import { CapyExpression, type CapySkin } from "../../types.js";
 import { DalmationRightArmPattern } from "./patterns/DalmationRightArmPattern.js";
 import { SnakeRightArmPattern } from "./patterns/SnakeRightArmPattern.js";
 
 type RightArmPatternProps = {
   skin: CapySkin;
+  expression: CapyExpression;
 } & SVGProps<SVGGElement>;
 
 const rightArmPatternComponents: Record<CapySkin, ComponentType | null> = {
@@ -19,10 +20,20 @@ const rightArmPatternComponents: Record<CapySkin, ComponentType | null> = {
   dalmation: DalmationRightArmPattern,
 };
 
-export function RightArmPattern({ skin, ...svgProps }: RightArmPatternProps) {
+export function RightArmPattern({
+  skin,
+  expression,
+  ...svgProps
+}: RightArmPatternProps) {
   const RightArmPatternContent = rightArmPatternComponents[skin];
   return (
-    <g transform="matrix(-2.9166107177734375, 0, 0, 2.9166107177734375, 1880.95,1719.3)">
+    <g
+      transform={
+        expression === "showing" || expression === "ourah"
+          ? "matrix(-2.9166107177734375, 0, 0, -2.9166107177734375, 1780.95,2069.3) rotate(55)"
+          : "matrix(-2.9166107177734375, 0, 0, 2.9166107177734375, 1880.95,1719.3)"
+      }
+    >
       <g transform="matrix( 1, 0, 0, 1, 0,0) ">
         {RightArmPatternContent && (
           <g {...svgProps}>

@@ -50,8 +50,15 @@ export function CapyImage({
       <RightArm
         fill={colorTheme.arms}
         handProps={{ fill: colorTheme.appendages }}
+        expression={expression}
       />
-      {!incognito && <RightArmPattern skin={skin} fill={colorTheme.patterns} />}
+      {!incognito && (
+        <RightArmPattern
+          skin={skin}
+          fill={colorTheme.patterns}
+          expression={expression}
+        />
+      )}
       {accessoriesByType?.back?.category === "wings" && (
         <Accessory accessory={accessoriesByType.back.name} lor="right" />
       )}
@@ -105,8 +112,15 @@ export function CapyImage({
       <LeftArm
         fill={colorTheme.arms}
         handProps={{ fill: colorTheme.appendages }}
+        expression={expression}
       />
-      {!incognito && <LeftArmPattern skin={skin} fill={colorTheme.patterns} />}
+      {!incognito && (
+        <LeftArmPattern
+          skin={skin}
+          fill={colorTheme.patterns}
+          expression={expression}
+        />
+      )}
 
       {accessoriesByType?.torso && (
         <Accessory accessory={accessoriesByType?.torso.name} lor="right" />

@@ -32,7 +32,9 @@ export type CapyExpression =
   | "wink"
   | "dizzyFace"
   | "goofy"
-  | "grimace";
+  | "grimace"
+  | "showing"
+  | "ourah";
 
 export type CapyAttributes = {
   mainColor: keyof typeof colors;

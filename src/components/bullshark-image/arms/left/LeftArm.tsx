@@ -1,10 +1,20 @@
 import { type SVGProps } from "react";
 
-type LeftArmProps = SVGProps<SVGPathElement>;
+type LeftArmProps = SVGProps<SVGPathElement> & {
+  expression?: "ourah" | "showing";
+};
 
-export function LeftArm(props: LeftArmProps) {
+export function LeftArm({ expression, ...props }: LeftArmProps) {
   return (
-    <g transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1002.9,1719.3)">
+    <g
+      transform={
+        expression === "ourah"
+          ? "matrix(2.9166107177734375, 0, 0, -2.9166107177734375, 1002.9,2019.3) rotate(45)"
+          : expression === "showing"
+          ? "matrix(2.9166107177734375, 0, 0, -2.9166107177734375, 1002.9,2069.3) rotate(55)"
+          : "matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1002.9,1719.3)"
+      }
+    >
       <g transform="matrix(1, 0, 0, 1, 0, 0)">
         <path
           {...props}
