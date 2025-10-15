@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { SuiFrenImage } from "./SuiFrenImage.js";
 import { accessories } from "../constants/accessories.js";
-import { type ComponentProps } from "react";
+import { useEffect, useState, type ComponentProps } from "react";
 import { CapyAttributes, CapyExpression } from "./capy-image/types.js";
 import { SuiLogo } from "./logos/SuiLogo.js";
 
@@ -64,6 +64,44 @@ export const Basic: StoryWithAllExpressions = {
       ))}
     </div>
   ),
+  args: {
+    attributes: {
+      mainColor: "6FBBEE",
+      secondaryColor: "E6FBFF",
+      skin: "basic",
+      earShape: "default",
+    },
+  },
+};
+
+export const CapyTransition: StoryWithAllExpressions = {
+  // Change periodically expression and rerender the image every 2 seconds
+  render: ({ attributes, ...props }) => {
+    const [expression, setExpression] = useState<CapyExpression>("happy");
+    useEffect(() => {
+      const interval = setInterval(() => {
+        const randomExpression =
+          allPossibleExpressions[
+            Math.floor(Math.random() * allPossibleExpressions.length)
+          ];
+        setExpression(randomExpression);
+      }, 2000);
+      return () => clearInterval(interval);
+    }, []);
+    return (
+      <div className="flex gap-2 flex-wrap">
+        <div className="h-60 w-60 shrink-0">
+          <SuiFrenImage
+            attributes={{
+              ...attributes,
+              expression,
+            }}
+            {...props}
+          />
+        </div>
+      </div>
+    );
+  },
   args: {
     attributes: {
       mainColor: "6FBBEE",
@@ -154,6 +192,23 @@ export const Snake: StoryWithAllExpressions = {
       secondaryColor: "A87C4C",
       skin: "snake",
       earShape: "default",
+    },
+  },
+};
+
+export const Walking: Story = {
+  args: {
+    attributes: {
+      mainColor: "6FBBEE",
+      secondaryColor: "E6FBFF",
+      skin: "basic",
+      earShape: "default",
+      expression: "happy",
+    },
+    shadow: true,
+    animation: {
+      preset: "walk",
+      playback: { iterations: "infinite", alternate: true },
     },
   },
 };

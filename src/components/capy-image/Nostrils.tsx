@@ -1,6 +1,10 @@
+import { useAnimatedPartTransform } from "../../animation/useAnimatedPartTransform.js";
+
 export function Nostrils() {
+  const baseTransform = "matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 2037.2,948.05)";
+  const transform = useAnimatedPartTransform("head", baseTransform);
   return (
-    <g transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 2037.2,948.05)">
+    <g transform={transform}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)">
         <path
           d="M16.3,17.8c-0.4-2.2-1.6-4-3.5-5.2c-1.9-1.3-3.9-1.7-6.1-1.2c-2.2,0.4-4,1.6-5.2,3.4s-1.7,3.9-1.2,6.1s1.6,4,3.4,5.2

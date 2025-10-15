@@ -1,5 +1,5 @@
 import { type SVGProps, type ComponentType } from "react";
-
+import { useAnimatedPartTransform } from "../../../../animation/useAnimatedPartTransform.js";
 import { type CapySkin } from "../../types.js";
 import { DalmationLeftLegPattern } from "./patterns/DalmationLeftLegPattern.js";
 import { SnakeLeftLegPattern } from "./patterns/SnakeLeftLegPattern.js";
@@ -21,8 +21,10 @@ const leftLegPatternComponents: Record<CapySkin, ComponentType | null> = {
 
 export function LeftLegPattern({ skin, ...svgProps }: LeftLegPatternProps) {
   const LeftLegPatternContent = leftLegPatternComponents[skin];
+  const baseTransform = "matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1042.6,1961.9)";
+  const transform = useAnimatedPartTransform("leftLeg", baseTransform);
   return (
-    <g transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1042.6,1961.9)">
+    <g transform={transform}>
       <g transform="matrix( 1, 0, 0, 1, 0,0) ">
         {LeftLegPatternContent && (
           <g {...svgProps}>

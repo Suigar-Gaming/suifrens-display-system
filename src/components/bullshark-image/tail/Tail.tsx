@@ -1,10 +1,12 @@
 import { type SVGProps } from "react";
-
+import { useAnimatedPartTransform } from "../../../animation/useAnimatedPartTransform.js";
 type TailProps = SVGProps<SVGPathElement>;
 
 export function Tail(props: TailProps) {
+  const baseTransform = "matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 468.15,1761.65)";
+  const transform = useAnimatedPartTransform("tail", baseTransform);
   return (
-    <g transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 468.15,1761.65)">
+    <g transform={transform}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)">
         <path
           {...props}

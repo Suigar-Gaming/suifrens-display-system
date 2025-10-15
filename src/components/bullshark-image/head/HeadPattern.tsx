@@ -1,5 +1,5 @@
 import { type SVGProps, type ComponentType } from "react";
-
+import { useAnimatedPartTransform } from "../../../animation/useAnimatedPartTransform.js";
 import { type BullsharkSkin } from "../types.js";
 import { BasicHeadPattern } from "./patterns/BasicHeadPattern.js";
 import { CheetahHeadPattern } from "./patterns/CheetahHeadPattern.js";
@@ -27,8 +27,10 @@ const headPatternComponents: Record<BullsharkSkin, ComponentType> = {
 
 export function HeadPattern({ skin, ...svgProps }: HeadPatternProps) {
   const HeadPatternContent = headPatternComponents[skin];
+  const baseTransform = "matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 848.15,585.65)";
+  const transform = useAnimatedPartTransform("head", baseTransform);
   return (
-    <g transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 848.15,585.65)">
+    <g transform={transform}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)">
         <g {...svgProps}>
           <HeadPatternContent />

@@ -1,4 +1,6 @@
 import { ReactNode } from "react";
+import { AnimationProvider } from "../animation/AnimationContext.js";
+import type { AnimationConfig } from "../animation/types.js";
 import { BullsharkImage } from "./bullshark-image/BullsharkImage.js";
 import { SuiFrenAttributes } from "./types.js";
 import { AccessoryMetadata } from "../utils/accessoryUtils.js";
@@ -12,6 +14,7 @@ type SuiFrenImageProps = {
   incognito?: boolean;
   shadow?: boolean;
   logo?: ReactNode;
+  animation?: AnimationConfig | null;
 };
 
 export function SuiFrenImage({
@@ -20,6 +23,7 @@ export function SuiFrenImage({
   incognito = false,
   shadow = false,
   logo,
+  animation = null,
 }: SuiFrenImageProps) {
   const accessoriesByType = accessories
     ? getAccessoriesByType(accessories)
@@ -54,11 +58,18 @@ export function SuiFrenImage({
       x="0px"
       y="0px"
       viewBox="0 0 3000 3000"
+      className="suifren-image"
     >
       {shadow ? (
         <ellipse opacity={0.3} cx="1400.4" cy="2615.2" rx="472.8" ry="130.6" />
       ) : null}
-      {suiFrenImageContent}
+      {animation ? (
+        <AnimationProvider animation={animation}>
+          {suiFrenImageContent}
+        </AnimationProvider>
+      ) : (
+        suiFrenImageContent
+      )}
       {logo}
     </svg>
   );
