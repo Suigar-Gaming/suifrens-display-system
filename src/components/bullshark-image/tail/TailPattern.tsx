@@ -1,5 +1,5 @@
 import { type SVGProps, type ComponentType } from "react";
-
+import { useAnimatedPartTransform } from "../../../animation/useAnimatedPartTransform.js";
 import { type BullsharkSkin } from "../types.js";
 import { DalmationTailPattern } from "./patterns/DalmationTailPattern.js";
 
@@ -20,8 +20,10 @@ const tailPatternComponents: Record<BullsharkSkin, ComponentType | null> = {
 
 export function TailPattern({ skin, ...svgProps }: TailPatternProps) {
   const TailPatternContent = tailPatternComponents[skin];
+  const baseTransform = "matrix( 2.9166107177734375, 0, 0, 2.9166107177734375, 468.15,1761.65) ";
+  const transform = useAnimatedPartTransform("tail", baseTransform);
   return (
-    <g transform="matrix( 2.9166107177734375, 0, 0, 2.9166107177734375, 468.15,1761.65) ">
+    <g transform={transform}>
       <g transform="matrix( 1, 0, 0, 1, 0,0) ">
         {TailPatternContent && (
           <g {...svgProps}>

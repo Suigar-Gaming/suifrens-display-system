@@ -1,4 +1,5 @@
 import { ComponentType } from "react";
+import { AnimatedAccessory } from "../../animation/AnimatedAccessory.js";
 import { AngryExpression } from "./expressions/AngryExpression.js";
 import { AnnoyedExpression } from "./expressions/AnnoyedExpression.js";
 import { BigSmileExpression } from "./expressions/BigSmileExpression.js";
@@ -52,5 +53,9 @@ export const expressionComponents: Record<CapyExpression, ComponentType> = {
 
 export function Expression({ expression }: ExpressionProps) {
   const ExpressionComponent = expressionComponents[expression];
-  return <ExpressionComponent />;
+  return (
+    <AnimatedAccessory fallbackPart="head">
+      <ExpressionComponent />
+    </AnimatedAccessory>
+  );
 }

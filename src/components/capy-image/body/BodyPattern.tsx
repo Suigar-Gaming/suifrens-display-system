@@ -1,5 +1,5 @@
 import { type SVGProps, type ComponentType } from "react";
-
+import { useAnimatedPartTransform } from "../../../animation/useAnimatedPartTransform.js";
 import { type CapySkin } from "../types.js";
 import { BasicBodyPattern } from "./patterns/BasicBodyPattern.js";
 import { CheetahBodyPattern } from "./patterns/CheetahBodyPattern.js";
@@ -27,8 +27,10 @@ const bodyPatternComponents: Record<CapySkin, ComponentType> = {
 
 export function BodyPattern({ skin, ...svgProps }: BodyPatternProps) {
   const BodyPatternContent = bodyPatternComponents[skin];
+  const baseTransform = "matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 956.5,1516.1)";
+  const transform = useAnimatedPartTransform("body", baseTransform);
   return (
-    <g transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 956.5,1516.1)">
+    <g transform={transform}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)">
         <g {...svgProps}>
           <BodyPatternContent />

@@ -29,6 +29,8 @@ const allPossibleExpressions: BullsharkExpression[] = [
   "dizzyFace",
   "goofy",
   "grimace",
+  "ourah",
+  "showing",
 ];
 
 const meta = {
@@ -204,6 +206,23 @@ export const Incognito: Story = {
       expression: "happy",
     },
     incognito: true,
+  },
+};
+
+export const Walking: Story = {
+  args: {
+    attributes: {
+      mainColor: "FB825C",
+      secondaryColor: "FFF1D6",
+      skin: "basic",
+      finStyle: "classic",
+      expression: "happy",
+    },
+    shadow: true,
+    animation: {
+      preset: "walk",
+      playback: { iterations: "infinite", alternate: true },
+    },
   },
 };
 

@@ -1,10 +1,13 @@
 import { type SVGProps } from "react";
+import { useAnimatedPartTransform } from "../../../animation/useAnimatedPartTransform.js";
 
 type BodyProps = SVGProps<SVGPathElement>;
 
 export function Body(props: BodyProps) {
+  const baseTransform = "matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 956.5,1516.1)";
+  const transform = useAnimatedPartTransform("body", baseTransform);
   return (
-    <g transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 956.5,1516.1)">
+    <g transform={transform}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)">
         <g>
           <path

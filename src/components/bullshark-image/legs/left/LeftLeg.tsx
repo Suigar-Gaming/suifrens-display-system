@@ -1,10 +1,14 @@
 import { type SVGProps } from "react";
+import { useAnimatedPartTransform } from "../../../../animation/useAnimatedPartTransform.js";
 
 type LeftLegProps = SVGProps<SVGPathElement>;
 
 export function LeftLeg(props: LeftLegProps) {
+  const baseTransform =
+    "matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1042.6,1961.9)";
+  const transform = useAnimatedPartTransform("leftLeg", baseTransform);
   return (
-    <g transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1042.6,1961.9)">
+    <g transform={transform}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)">
         <path
           {...props}
