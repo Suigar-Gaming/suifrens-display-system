@@ -96,11 +96,18 @@ export class SequencePlayer {
   private playing = false;
   private currentPoses = new Map<AnimationPart, PartPose>();
 
-  load(sequence: AnimationSequence, playback?: PlaybackOptions) {
+  load(
+    sequence: AnimationSequence,
+    playback?: PlaybackOptions,
+    options?: { direction?: 1 | -1; startAt?: "start" | "end" }
+  ) {
     this.sequence = sequence;
     this.playback = normalizePlayback(playback);
-    this.time = 0;
-    this.direction = 1;
+    this.direction = options?.direction ?? 1;
+    this.time =
+      options?.startAt === "end" || (this.direction === -1 && options?.startAt !== "start")
+        ? sequence.duration
+        : 0;
     this.completedIterations = 0;
     this.playing = false;
     this.currentPoses.clear();
@@ -114,9 +121,15 @@ export class SequencePlayer {
     this.playing = true;
   }
 
-  stop() {
+  pause() {
     this.playing = false;
-    this.time = 0;
+  }
+
+  stop(resetTime = true) {
+    this.playing = false;
+    if (resetTime && this.sequence) {
+      this.time = this.direction === -1 ? this.sequence.duration : 0;
+    }
     this.direction = 1;
     this.completedIterations = 0;
     this.currentPoses.clear();
@@ -124,6 +137,62 @@ export class SequencePlayer {
 
   isPlaying() {
     return this.playing;
+  }
+
+  hasSequence() {
+    return Boolean(this.sequence);
+  }
+
+  setPlayback(playback?: PlaybackOptions) {
+    this.playback = normalizePlayback(playback);
+    this.completedIterations = 0;
+    this.recalculate();
+  }
+
+  setDirection(
+    direction: 1 | -1,
+    resetTime = false,
+    position: "start" | "end" = direction === -1 ? "end" : "start"
+  ) {
+    if (!this.sequence) {
+      return;
+    }
+    this.direction = direction;
+    if (resetTime) {
+      this.time = position === "end" ? this.sequence.duration : 0;
+      this.completedIterations = 0;
+      this.recalculate();
+    }
+  }
+
+  restart(position: "start" | "end" = this.direction === -1 ? "end" : "start") {
+    if (!this.sequence) {
+      return;
+    }
+    this.completedIterations = 0;
+    this.time = position === "end" ? this.sequence.duration : 0;
+    this.currentPoses.clear();
+    this.recalculate();
+  }
+
+  getDuration() {
+    return this.sequence?.duration ?? 0;
+  }
+
+  getTime() {
+    return this.time;
+  }
+
+  setTime(time: number) {
+    if (!this.sequence) {
+      return;
+    }
+    this.time = Math.min(Math.max(time, 0), this.sequence.duration);
+    this.recalculate();
+  }
+
+  hasActivePose() {
+    return this.currentPoses.size > 0;
   }
 
   update(deltaMs: number) {
@@ -171,7 +240,11 @@ export class SequencePlayer {
     if (this.playback.alternate) {
       this.direction = this.direction === 1 ? -1 : 1;
     } else {
-      this.time = 0;
+      if (this.sequence) {
+        this.time = this.direction === 1 ? 0 : this.sequence.duration;
+      } else {
+        this.time = 0;
+      }
     }
   }
 
@@ -190,8 +263,8 @@ export class SequencePlayer {
     for (const track of this.sequence.tracks) {
       const pose = interpolatePose(track, effectiveTime);
       if (pose) {
-        this.currentPoses.set(track.part, pose);
-      }
+      this.currentPoses.set(track.part, pose);
     }
   }
+}
 }

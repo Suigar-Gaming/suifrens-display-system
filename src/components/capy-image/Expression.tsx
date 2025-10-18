@@ -55,7 +55,9 @@ export function Expression({ expression }: ExpressionProps) {
   const ExpressionComponent = expressionComponents[expression];
   return (
     <AnimatedAccessory fallbackPart="head">
-      <ExpressionComponent />
+      <g>
+        <ExpressionComponent />
+      </g>
     </AnimatedAccessory>
   );
 }

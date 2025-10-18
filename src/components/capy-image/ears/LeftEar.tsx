@@ -1,3 +1,4 @@
+import { AnimatedAccessory } from "../../../animation/AnimatedAccessory.js";
 import { assertUnreachable } from "../../../utils/assertUnreachable.js";
 import { DefaultLeftEar, DefaultLeftEarProps } from "./left/DefaultLeftEar.js";
 import {
@@ -14,22 +15,32 @@ type LeftEarProps =
   | QuietLeftEarProps;
 
 export function LeftEar({ ...props }: LeftEarProps) {
+  let content: JSX.Element;
   switch (props.earShape) {
     case "default":
-      return <DefaultLeftEar earShape={props.earShape} fill={props.fill} />;
+      content = <DefaultLeftEar earShape={props.earShape} fill={props.fill} />;
+      break;
     case "wild":
-      return (
+      content = (
         <WildLeftEar
           earShape={props.earShape}
           innerEarProps={props.innerEarProps}
           outerEarProps={props.outerEarProps}
         />
       );
+      break;
     case "mischievous":
-      return <MischievousLeftEar earShape={props.earShape} fill={props.fill} />;
+      content = <MischievousLeftEar earShape={props.earShape} fill={props.fill} />;
+      break;
     case "quiet":
-      return <QuietLeftEar earShape={props.earShape} fill={props.fill} />;
+      content = <QuietLeftEar earShape={props.earShape} fill={props.fill} />;
+      break;
     default:
       assertUnreachable(props);
   }
+  return (
+    <AnimatedAccessory fallbackPart="head">
+      <g>{content}</g>
+    </AnimatedAccessory>
+  );
 }

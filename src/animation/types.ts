@@ -44,14 +44,33 @@ export type PlaybackOptions = {
   loop?: boolean | number;
 };
 
+export type AnimationDirection = "forward" | "reverse";
+
+export type PlayState = "idle" | "running" | "paused" | "stopped";
+
+type AnimationBaseConfig = {
+  playback?: PlaybackOptions;
+  autoPlay?: boolean;
+  playState?: PlayState;
+  direction?: AnimationDirection;
+  /**
+   * Changing the trigger value restarts the animation timeline.
+   */
+  trigger?: string | number;
+  /**
+   * Defines the resting start position when resetting or restarting.
+   */
+  startAt?: "start" | "end";
+  /**
+   * Keeps the final pose instead of clearing once iterations end.
+   */
+  holdOnComplete?: boolean;
+};
+
 export type AnimationConfig =
-  | {
+  | (AnimationBaseConfig & {
       sequence: AnimationSequence;
-      playback?: PlaybackOptions;
-      autoPlay?: boolean;
-    }
-  | {
+    })
+  | (AnimationBaseConfig & {
       preset: string;
-      playback?: PlaybackOptions;
-      autoPlay?: boolean;
-    };
+    });
