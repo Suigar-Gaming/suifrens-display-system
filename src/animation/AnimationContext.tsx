@@ -20,7 +20,7 @@ export function AnimationProvider({ animation = null, children }: AnimationProvi
   const controller = useMemo(() => new AnimationController(store), [store]);
 
   useEffect(() => {
-    controller.load(animation);
+    controller.applyConfig(animation ?? null);
   }, [controller, animation]);
 
   useEffect(() => {

@@ -1,6 +1,12 @@
-import { ReactNode } from "react";
+import { ReactNode, useMemo } from "react";
 import { AnimationProvider } from "../animation/AnimationContext.js";
-import type { AnimationConfig } from "../animation/types.js";
+import type {
+  AnimationConfig,
+  AnimationSequence,
+  AnimationDirection,
+  PlaybackOptions,
+  PlayState,
+} from "../animation/types.js";
 import { BullsharkImage } from "./bullshark-image/BullsharkImage.js";
 import { SuiFrenAttributes } from "./types.js";
 import { AccessoryMetadata } from "../utils/accessoryUtils.js";
@@ -15,6 +21,15 @@ type SuiFrenImageProps = {
   shadow?: boolean;
   logo?: ReactNode;
   animation?: AnimationConfig | null;
+  animationPreset?: string;
+  animationSequence?: AnimationSequence;
+  animationPlayback?: PlaybackOptions;
+  animationPlayState?: PlayState;
+  animationDirection?: AnimationDirection;
+  animationTrigger?: string | number;
+  animationStartAt?: "start" | "end";
+  animationAutoPlay?: boolean;
+  animationHoldOnComplete?: boolean;
 };
 
 export function SuiFrenImage({
@@ -23,7 +38,16 @@ export function SuiFrenImage({
   incognito = false,
   shadow = false,
   logo,
-  animation = null,
+  animation: animationProp,
+  animationPreset,
+  animationSequence,
+  animationPlayback,
+  animationPlayState,
+  animationDirection,
+  animationTrigger,
+  animationStartAt,
+  animationAutoPlay,
+  animationHoldOnComplete,
 }: SuiFrenImageProps) {
   const accessoriesByType = accessories
     ? getAccessoriesByType(accessories)
@@ -50,6 +74,58 @@ export function SuiFrenImage({
     assertUnreachable(attributes);
   }
 
+  const resolvedAnimation = useMemo<AnimationConfig | null>(() => {
+    if (animationProp !== undefined) {
+      return animationProp ?? null;
+    }
+
+    const sourceSequence = animationSequence;
+    const sourcePreset = animationPreset;
+
+    if (!sourceSequence && !sourcePreset) {
+      return null;
+    }
+
+    const base: AnimationConfig = sourceSequence
+      ? { sequence: sourceSequence }
+      : { preset: sourcePreset! };
+
+    if (animationPlayback) {
+      base.playback = animationPlayback;
+    }
+    if (animationPlayState) {
+      base.playState = animationPlayState;
+    }
+    if (animationDirection) {
+      base.direction = animationDirection;
+    }
+    if (animationTrigger !== undefined) {
+      base.trigger = animationTrigger;
+    }
+    if (animationStartAt) {
+      base.startAt = animationStartAt;
+    }
+    if (animationAutoPlay !== undefined) {
+      base.autoPlay = animationAutoPlay;
+    }
+    if (animationHoldOnComplete !== undefined) {
+      base.holdOnComplete = animationHoldOnComplete;
+    }
+
+    return base;
+  }, [
+    animationProp,
+    animationSequence,
+    animationPreset,
+    animationPlayback,
+    animationPlayState,
+    animationDirection,
+    animationTrigger,
+    animationStartAt,
+    animationAutoPlay,
+    animationHoldOnComplete,
+  ]);
+
   return (
     <svg
       version="1.1"
@@ -63,8 +139,8 @@ export function SuiFrenImage({
       {shadow ? (
         <ellipse opacity={0.3} cx="1400.4" cy="2615.2" rx="472.8" ry="130.6" />
       ) : null}
-      {animation ? (
-        <AnimationProvider animation={animation}>
+      {resolvedAnimation ? (
+        <AnimationProvider animation={resolvedAnimation}>
           {suiFrenImageContent}
         </AnimationProvider>
       ) : (
