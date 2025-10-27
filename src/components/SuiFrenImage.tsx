@@ -14,7 +14,7 @@ import { assertUnreachable } from "../utils/assertUnreachable.js";
 import { CapyImage } from "./capy-image/CapyImage.js";
 import { getAccessoriesByType } from "../utils/accessoryUtils.js";
 
-type SuiFrenImageProps = {
+export type SuiFrenImageProps = {
   attributes: SuiFrenAttributes;
   accessories?: AccessoryMetadata[];
   incognito?: boolean;

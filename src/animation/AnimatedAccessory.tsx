@@ -112,5 +112,5 @@ export function AnimatedAccessory({ children, fallbackPart }: AnimatedAccessoryP
     } as any);
   }
 
-  return <g ref={localRef}>{children}</g>;
+  return <g ref={localRef as MutableRefObject<SVGGElement | null>}>{children}</g>;
 }
