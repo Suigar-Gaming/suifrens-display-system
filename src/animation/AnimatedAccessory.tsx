@@ -15,6 +15,31 @@ type AnimatedAccessoryProps = {
   fallbackPart?: AnimationPart;
 };
 
+const REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref");
+const REACT_MEMO_TYPE = Symbol.for("react.memo");
+
+function canAttachRefToType(type: unknown): boolean {
+  if (!type) {
+    return false;
+  }
+  if (typeof type === "string") {
+    return true;
+  }
+  if (typeof type === "function") {
+    return Boolean((type as any).prototype?.isReactComponent);
+  }
+  if (typeof type === "object") {
+    const $$typeof = (type as { $$typeof?: symbol }).$$typeof;
+    if ($$typeof === REACT_FORWARD_REF_TYPE) {
+      return true;
+    }
+    if ($$typeof === REACT_MEMO_TYPE) {
+      return canAttachRefToType((type as { type?: unknown }).type);
+    }
+  }
+  return false;
+}
+
 function mergeRefs<T>(...refs: (Ref<T> | undefined)[]) {
   return (value: T) => {
     for (const ref of refs) {
@@ -81,7 +106,11 @@ export function AnimatedAccessory({ children, fallbackPart }: AnimatedAccessoryP
     return children;
   }
 
-  return cloneElement(children as ReactElement<any>, {
-    ref: mergeRefs((children as any).ref, localRef),
-  } as any);
+  if (canAttachRefToType((children as ReactElement).type)) {
+    return cloneElement(children as ReactElement<any>, {
+      ref: mergeRefs((children as any).ref, localRef),
+    } as any);
+  }
+
+  return <g ref={localRef}>{children}</g>;
 }

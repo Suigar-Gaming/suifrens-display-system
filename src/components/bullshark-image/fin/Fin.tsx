@@ -1,11 +1,14 @@
 import { type SVGProps } from "react";
 import { AnimatedAccessory } from "../../../animation/AnimatedAccessory.js";
+import { useAnimatedPartTransform } from "../../../animation/useAnimatedPartTransform.js";
 type FinProps = SVGProps<SVGPathElement>;
 
 export function Fin(props: FinProps) {
+  const baseTransform = "matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1181.8,460.1)";
+  const transform = useAnimatedPartTransform("fin", baseTransform);
   return (
     <AnimatedAccessory fallbackPart="head">
-      <g transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1181.8,460.1)">
+      <g transform={transform}>
         <g transform="matrix(1, 0, 0, 1, 0, 0)">
           <path
             {...props}
