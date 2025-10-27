@@ -1,5 +1,5 @@
 {
-  "name": "suifrens-display-system",
+  "name": "@suigar/suifrens-display-system",
   "type": "module",
   "private": false,
   "sideEffects": false,

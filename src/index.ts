@@ -44,3 +44,7 @@ export type {
   PlayState,
 } from "./animation/types.js";
 export { getPresetSequence } from "./animation/presets.js";
+
+export { colors } from "./constants/colors.js";
+export { earGeneToEarShape } from "./constants/attributes.js";
+export { accessories } from "./constants/accessories.js";
