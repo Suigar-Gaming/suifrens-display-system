@@ -20,7 +20,7 @@ import { LeftArmPattern } from "./arms/left/LeftArmPattern.js";
 import { RightArmPattern } from "./arms/right/RightArmPattern.js";
 import { Accessory } from "../accessories/index.js";
 
-type CapyImageProps = {
+export type CapyImageProps = {
   attributes: CapyAttributes;
   accessoriesByType?: Record<string, AccessoryMetadata>;
   incognito?: boolean;
