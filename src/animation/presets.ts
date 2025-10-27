@@ -243,17 +243,25 @@ const slotPullSequence: AnimationSequence = {
       part: "rightArm",
       keyframes: [
         { at: 0, pose: { rotate: -6, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: SLOT_PULL_DURATION * 0.3, pose: { rotate: 30, translate: { x: -18, y: 45 } }, ease: "easeInOut" },
-        { at: SLOT_PULL_DURATION * 0.6, pose: { rotate: 18, translate: { x: -12, y: 18 } }, ease: "easeInOut" },
+        { at: SLOT_PULL_DURATION * 0.3, pose: { rotate: 45, translate: { x: -16, y: 42 } }, ease: "easeInOut" },
+        { at: SLOT_PULL_DURATION * 0.6, pose: { rotate: -22, translate: { x: -6, y: 66 } }, ease: "easeInOut" },
         { at: SLOT_PULL_DURATION, pose: { rotate: -6, translate: { x: 0, y: 0 } }, ease: "easeIn" },
       ],
     },
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 0 }, ease: "easeOut" },
-        { at: SLOT_PULL_DURATION * 0.3, pose: { rotate: 3.5, translate: { x: 0, y: 6 } }, ease: "easeInOut" },
-        { at: SLOT_PULL_DURATION * 0.55, pose: { rotate: -2, translate: { x: 0, y: -4 } }, ease: "easeInOut" },
+        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
+        {
+          at: SLOT_PULL_DURATION * 0.3,
+          pose: { rotate: 8, translate: { x: -8, y: 10 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SLOT_PULL_DURATION * 0.55,
+          pose: { rotate: -4, translate: { x: -2, y: -3 } },
+          ease: "easeInOut",
+        },
         { at: SLOT_PULL_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
       ],
     },
