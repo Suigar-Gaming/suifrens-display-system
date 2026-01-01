@@ -47,8 +47,6 @@ export const expressionComponents: Record<CapyExpression, ComponentType> = {
   dizzyFace: DizzyExpression,
   grimace: GrimaceExpression,
   goofy: GoofyExpression,
-  ourah: BigSmileExpression,
-  showing: HappyExpression,
 };
 
 export function Expression({ expression }: ExpressionProps) {

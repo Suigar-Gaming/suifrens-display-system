@@ -31,3 +31,13 @@ pnpm run dev
 ```
 
 We can now test out the `/suifrens/:suiFrenId/svg` API by visiting this [URL](http://localhost:3000/suifrens/0xbe79e1415bb4fd7d0d83b325110086d7604ffeaf526dabb30380fe7ae3c51e19/svg) which returns a Capy image based on a mainnet SuiFren object.
+
+### Installing directly from GitHub
+
+The package is ready to consume without any build step when installed from GitHub (the compiled `dist` output is checked in). Add the dependency to your `package.json`:
+
+```
+"@suigar/suifrens-display-system": "github:Suigar-Gaming/suifrens-display-system"
+```
+
+Then install with your package manager (`npm install`, `pnpm install`, etc.). Only the peer dependencies `react` and `react-dom` are required in the consuming app.

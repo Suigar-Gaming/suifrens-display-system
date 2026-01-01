@@ -97,290 +97,76 @@ type AccessoryProps = BodyAccessoryProps & {
   accessory: string;
 };
 
+type AccessoryRenderer = (props: BodyAccessoryProps) => JSX.Element;
+
+const ACCESSORY_RENDERERS: Record<string, AccessoryRenderer> = {
+  "8 bit glasses": () => <Glasses8Bit />,
+  apron: (props) => <Apron body={props.body} />,
+  "baseball cap": () => <BaseballCap />,
+  beanie: () => <Beanie />,
+  beret: () => <Beret />,
+  "blonde wig": () => <BlondeWig />,
+  "curly wig": () => <CurlyWig />,
+  boots: () => <Boots />,
+  brush: () => <Brush />,
+  "bug eyes": () => <GlassesY2K />,
+  "business shirt": (props) => <BussinessShirt lor={props.lor} body={props.body} />,
+  "business slacks": () => <BusinessSlacks />,
+  cardigan: (props) => <Cardigan lor={props.lor} body={props.body} />,
+  "casual shoes": () => <CasualShoes />,
+  "cowboy hat": () => <CowboyHat />,
+  "cowboy shirt": (props) => <CowboyShirt lor={props.lor} body={props.body} />,
+  cutoffs: () => <Cutoffs />,
+  "dress shoes": () => <DressShoes />,
+  "goth boots": () => <GothBoots />,
+  halo: () => <Halo />,
+  "hair bow": () => <HairBow />,
+  "heart shirt": (props) => <HeartShirt lor={props.lor} body={props.body} />,
+  lasso: () => <Lasso />,
+  "leather jacket": (props) => <LeatherJacket lor={props.lor} body={props.body} />,
+  lifeguard: (props) => <Lifeguard lor={props.lor} body={props.body} />,
+  "magic wand": () => <MagicWand />,
+  microphone: () => <Microphone />,
+  mohawk: () => <Mohawk />,
+  palette: () => <Palette />,
+  pencil: () => <Pencil />,
+  "pink slip ons": () => <PinkSlipons />,
+  "punk skirt": () => <PunkSkirt />,
+  "rock star boots": () => <RockStarBoots />,
+  "rock star ruffle": () => <RockStarRuffle />,
+  "saddle shoes": () => <SaddleShoes />,
+  "santa hat": () => <SantaHat />,
+  sneakers: () => <Sneakers />,
+  snorkel: () => <Snorkel />,
+  "skull shirt": (props) => <SkullShirt lor={props.lor} body={props.body} />,
+  "stripe shirt": (props) => <StripeShirt lor={props.lor} body={props.body} />,
+  "superhero cape": () => <SuperHeroCape />,
+  "superhero mask": () => <SuperHeroMask />,
+  "superhero stars": () => <SuperHeroStars />,
+  swimsuit: (props) => <Swimsuit body={props.body} />,
+  "swim trunks": () => <SwimTrunks />,
+  vest: (props) => <Vest body={props.body} />,
+  "white pants": () => <WhitePants />,
+  wings: (props) => <Wings lor={props.lor} />,
+  "witch boots": () => <WitchBoots />,
+  "wizard hat": () => <WizardHat />,
+  "wizard robe": (props) => <WizardRobe lor={props.lor} body={props.body} />,
+  "xr goggles": () => <XRGoggles />,
+  "blue jeans": () => <BlueJeans />,
+  "bell bottoms": () => <BellBottoms />,
+  "bowler hat": () => <BowlerHat />,
+  "blue slip ons": () => <BlueSlipons />,
+};
+
 export function Accessory(props: AccessoryProps) {
+  const renderer = ACCESSORY_RENDERERS[props.accessory];
+  if (!renderer) {
+    return null;
+  }
   const fallbackPart = resolveFallbackPart(props.accessory);
   return (
-    <>
-      {props.accessory === "baseball cap" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <BaseballCap />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "beanie" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Beanie />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "beret" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Beret />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "blonde wig" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <BlondeWig />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "curly wig" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <CurlyWig />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "mohawk" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Mohawk />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "bowler hat" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <BowlerHat />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "cowboy hat" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <CowboyHat />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "saddle shoes" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <SaddleShoes />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "hair bow" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <HairBow />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "halo" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Halo />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "santa hat" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <SantaHat />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "wizard hat" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <WizardHat />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "snorkel" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Snorkel />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "8 bit glasses" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Glasses8Bit />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "superhero mask" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <SuperHeroMask />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "xr goggles" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <XRGoggles />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "bug eyes" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <GlassesY2K />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "apron" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Apron body={props.body} />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "wings" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Wings lor={props.lor} />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "cardigan" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Cardigan lor={props.lor} body={props.body} />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "leather jacket" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <LeatherJacket lor={props.lor} body={props.body} />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "superhero cape" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <SuperHeroCape />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "wizard robe" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <WizardRobe lor={props.lor} body={props.body} />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "vest" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Vest body={props.body} />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "white pants" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <WhitePants />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "punk skirt" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <PunkSkirt />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "rock star ruffle" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <RockStarRuffle />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "superhero stars" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <SuperHeroStars />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "bell bottoms" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <BellBottoms />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "blue jeans" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <BlueJeans />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "business slacks" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <BusinessSlacks />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "cutoffs" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Cutoffs />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "swim trunks" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <SwimTrunks />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "palette" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Palette />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "brush" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Brush />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "lasso" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Lasso />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "pencil" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Pencil />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "magic wand" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <MagicWand />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "microphone" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Microphone />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "business shirt" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <BussinessShirt lor={props.lor} body={props.body} />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "cowboy shirt" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <CowboyShirt lor={props.lor} body={props.body} />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "swimsuit" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Swimsuit body={props.body} />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "heart shirt" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <HeartShirt lor={props.lor} body={props.body} />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "lifeguard" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Lifeguard lor={props.lor} body={props.body} />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "skull shirt" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <SkullShirt lor={props.lor} body={props.body} />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "stripe shirt" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <StripeShirt lor={props.lor} body={props.body} />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "blue slip ons" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <BlueSlipons />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "boots" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Boots />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "casual shoes" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <CasualShoes />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "dress shoes" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <DressShoes />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "pink slip ons" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <PinkSlipons />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "sneakers" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <Sneakers />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "goth boots" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <GothBoots />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "rock star boots" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <RockStarBoots />
-        </AnimatedAccessory>
-      )}
-      {props.accessory === "witch boots" && (
-        <AnimatedAccessory fallbackPart={fallbackPart}>
-          <WitchBoots />
-        </AnimatedAccessory>
-      )}
-    </>
+    <AnimatedAccessory fallbackPart={fallbackPart}>
+      {renderer({ lor: props.lor, body: props.body })}
+    </AnimatedAccessory>
   );
 }

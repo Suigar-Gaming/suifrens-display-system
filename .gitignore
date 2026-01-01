@@ -1,7 +1,7 @@
 node_modules
 .DS_Store
-dist
 .env
+dist
 
 *storybook.log
 *tsconfig.tsbuildinfo

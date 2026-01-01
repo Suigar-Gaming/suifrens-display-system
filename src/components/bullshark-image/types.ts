@@ -30,9 +30,7 @@ export type BullsharkExpression =
   | "wink"
   | "dizzyFace"
   | "goofy"
-  | "grimace"
-  | "ourah"
-  | "showing";
+  | "grimace";
 
 export type BullsharkFinStyle = "classic";
 

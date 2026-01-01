@@ -9,6 +9,7 @@ type Registration = {
 };
 
 const ZERO_POSE: PartPose = {};
+const TRANSLATE_SCALE = 4;
 
 export class AnimationStore {
   private registrations = new Map<AnimationPart, Set<Registration>>();
@@ -83,7 +84,10 @@ export class AnimationStore {
     }
 
     if (pose.translate) {
-      const translate = translateMatrix(pose.translate.x, pose.translate.y);
+      const translate = translateMatrix(
+        pose.translate.x * TRANSLATE_SCALE,
+        pose.translate.y * TRANSLATE_SCALE
+      );
       composed = multiplyMatrix(translate, composed);
     }
 
