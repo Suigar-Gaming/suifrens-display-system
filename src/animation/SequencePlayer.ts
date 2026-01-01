@@ -263,8 +263,8 @@ export class SequencePlayer {
     for (const track of this.sequence.tracks) {
       const pose = interpolatePose(track, effectiveTime);
       if (pose) {
-      this.currentPoses.set(track.part, pose);
+        this.currentPoses.set(track.part, pose);
+      }
     }
   }
-}
 }

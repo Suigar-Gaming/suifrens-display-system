@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from "react";
+import { CSSProperties, ReactNode, useMemo } from "react";
 import { AnimationProvider } from "../animation/AnimationContext.js";
 import type {
   AnimationConfig,
@@ -20,6 +20,8 @@ export type SuiFrenImageProps = {
   incognito?: boolean;
   shadow?: boolean;
   logo?: ReactNode;
+  className?: string;
+  style?: CSSProperties;
   animation?: AnimationConfig | null;
   animationPreset?: string;
   animationSequence?: AnimationSequence;
@@ -38,6 +40,8 @@ export function SuiFrenImage({
   incognito = false,
   shadow = false,
   logo,
+  className,
+  style,
   animation: animationProp,
   animationPreset,
   animationSequence,
@@ -134,7 +138,8 @@ export function SuiFrenImage({
       x="0px"
       y="0px"
       viewBox="0 0 3000 3000"
-      className="suifren-image"
+      className={["suifren-image", className].filter(Boolean).join(" ")}
+      style={style}
     >
       {shadow ? (
         <ellipse opacity={0.3} cx="1400.4" cy="2615.2" rx="472.8" ry="130.6" />

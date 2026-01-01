@@ -45,10 +45,9 @@ export function BullsharkImage({
       {accessoriesByType?.back?.category === "wings" && (
         <Accessory accessory={accessoriesByType.back.name} lor="left" />
       )}
-      <RightArm expression={expression} fill={colorTheme.hands} />
+      <RightArm fill={colorTheme.hands} />
       {!incognito && (
         <RightArmPattern
-          expression={expression}
           skin={skin}
           fill={colorTheme.patterns}
         />
@@ -98,11 +97,10 @@ export function BullsharkImage({
       {accessoriesByType?.object && (
         <Accessory accessory={accessoriesByType.object.name} />
       )}
-      <LeftArm expression={expression} fill={colorTheme.hands} />
+      <LeftArm fill={colorTheme.hands} />
       {!incognito && (
         <LeftArmPattern
           skin={skin}
-          expression={expression}
           fill={colorTheme.patterns}
         />
       )}

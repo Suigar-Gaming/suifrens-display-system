@@ -5,9 +5,12 @@ import type {
   AnimationConfig,
   AnimationSequence,
   PlaybackOptions,
+  PartPose,
   PlayState,
 } from "./types.js";
 import { getPresetSequence } from "./presets.js";
+
+const DEFAULT_TRANSITION_MS = 140;
 
 type SequenceSource =
   | {
@@ -33,6 +36,41 @@ function playbackSignature(playback?: PlaybackOptions) {
   return `${iterations}|${alternate ? 1 : 0}|${speed}`;
 }
 
+const nowMs = () => (typeof performance === "undefined" ? Date.now() : performance.now());
+const blendPose = (from?: PartPose, to?: PartPose, progress = 1): PartPose | undefined => {
+  if (!from && !to) {
+    return undefined;
+  }
+
+  const eased =
+    progress <= 0 ? 0 : progress >= 1 ? 1 : progress * progress * (3 - 2 * progress);
+  const hasRotate = from?.rotate !== undefined || to?.rotate !== undefined;
+  const hasTranslate = Boolean(from?.translate || to?.translate);
+
+  if (!hasRotate && !hasTranslate) {
+    return undefined;
+  }
+
+  const pose: PartPose = {};
+
+  if (hasRotate) {
+    const start = from?.rotate ?? 0;
+    const end = to?.rotate ?? 0;
+    pose.rotate = start + (end - start) * eased;
+  }
+
+  if (hasTranslate) {
+    const start = from?.translate ?? { x: 0, y: 0 };
+    const end = to?.translate ?? { x: 0, y: 0 };
+    pose.translate = {
+      x: start.x + (end.x - start.x) * eased,
+      y: start.y + (end.y - start.y) * eased,
+    };
+  }
+
+  return pose;
+};
+
 export class AnimationController {
   private readonly store: AnimationStore;
   private readonly player = new SequencePlayer();
@@ -42,6 +80,10 @@ export class AnimationController {
   private currentPlayState: PlayState = "idle";
   private lastTrigger: string | number | undefined;
   private holdOnComplete = false;
+  private transitionFrom: Map<AnimationPart, PartPose> | null = null;
+  private transitionStartedAt = 0;
+  private transitionDurationMs = DEFAULT_TRANSITION_MS;
+  private lastPoses = new Map<AnimationPart, PartPose>();
 
   constructor(store: AnimationStore) {
     this.store = store;
@@ -55,6 +97,8 @@ export class AnimationController {
       this.currentPlayState = "idle";
       this.lastTrigger = undefined;
       this.holdOnComplete = false;
+      this.transitionFrom = null;
+      this.lastPoses.clear();
       this.player.stop();
       this.store.clear();
       return;
@@ -68,6 +112,8 @@ export class AnimationController {
       this.currentPlayState = "idle";
       this.lastTrigger = undefined;
       this.holdOnComplete = false;
+      this.transitionFrom = null;
+      this.lastPoses.clear();
       this.player.stop();
       this.store.clear();
       return;
@@ -78,6 +124,27 @@ export class AnimationController {
     const incomingSignature = playbackSignature(config.playback);
     const sequenceChanged = this.sequenceSource?.sequence !== sequence;
     const playbackChanged = this.playbackSignature !== incomingSignature;
+    const triggerChanged = config.trigger !== undefined && config.trigger !== this.lastTrigger;
+    const directionChanged = direction !== this.currentDirection;
+    const transitionMs =
+      typeof config.transitionMs === "number" && config.transitionMs >= 0
+        ? config.transitionMs
+        : DEFAULT_TRANSITION_MS;
+    this.transitionDurationMs = transitionMs;
+    const playState = this.resolvePlayState(config);
+    const shouldTransition =
+      transitionMs > 0 &&
+      playState !== "idle" &&
+      playState !== "stopped" &&
+      (sequenceChanged || triggerChanged || directionChanged) &&
+      this.lastPoses.size > 0;
+
+    if (shouldTransition) {
+      this.transitionFrom = new Map(this.lastPoses);
+      this.transitionStartedAt = nowMs();
+    } else if (transitionMs === 0) {
+      this.transitionFrom = null;
+    }
 
     if (sequenceChanged) {
       this.player.load(sequence, config.playback, { direction, startAt });
@@ -85,15 +152,15 @@ export class AnimationController {
       if (playbackChanged) {
         this.player.setPlayback(config.playback);
       }
-      if (direction !== this.currentDirection) {
+      if (directionChanged) {
         this.player.setDirection(direction, true, startAt);
       }
     }
 
-    if (config.trigger !== undefined && config.trigger !== this.lastTrigger) {
+    if (triggerChanged) {
       this.player.restart(startAt);
       this.syncCurrentPoses();
-    } else if (sequenceChanged || playbackChanged) {
+    } else if (sequenceChanged || playbackChanged || directionChanged) {
       this.syncCurrentPoses();
     }
 
@@ -103,7 +170,6 @@ export class AnimationController {
     this.holdOnComplete = Boolean(config.holdOnComplete);
     this.lastTrigger = config.trigger;
 
-    const playState = this.resolvePlayState(config);
     this.currentPlayState = playState;
 
     switch (playState) {
@@ -120,6 +186,8 @@ export class AnimationController {
         this.player.stop(true);
         this.player.setDirection(direction, true, startAt);
         this.store.clear();
+        this.transitionFrom = null;
+        this.lastPoses.clear();
         break;
     }
 
@@ -132,6 +200,8 @@ export class AnimationController {
     this.player.stop();
     this.currentPlayState = "idle";
     this.store.clear();
+    this.transitionFrom = null;
+    this.lastPoses.clear();
   }
 
   update(deltaMs: number) {
@@ -144,9 +214,13 @@ export class AnimationController {
             this.syncCurrentPoses();
           } else {
             this.store.clear();
+            this.transitionFrom = null;
+            this.lastPoses.clear();
           }
         } else {
           this.store.clear();
+          this.transitionFrom = null;
+          this.lastPoses.clear();
         }
       }
       return;
@@ -175,10 +249,36 @@ export class AnimationController {
   private syncCurrentPoses() {
     const poses = this.player.getCurrentPoses();
     const touchedParts = new Set<AnimationPart>();
+    const nextPoses = new Map<AnimationPart, PartPose>();
+    const parts = new Set<AnimationPart>(poses.keys());
 
-    for (const [part, pose] of poses.entries()) {
+    if (this.transitionFrom) {
+      for (const part of this.transitionFrom.keys()) {
+        parts.add(part);
+      }
+    }
+
+    let progress = 1;
+    if (this.transitionFrom && this.transitionDurationMs > 0) {
+      const elapsed = nowMs() - this.transitionStartedAt;
+      if (elapsed >= this.transitionDurationMs) {
+        this.transitionFrom = null;
+      } else {
+        progress = Math.min(Math.max(elapsed / this.transitionDurationMs, 0), 1);
+      }
+    }
+
+    for (const part of parts) {
+      const targetPose = poses.get(part);
+      const blendedPose =
+        this.transitionFrom && progress < 1
+          ? blendPose(this.transitionFrom.get(part), targetPose, progress)
+          : targetPose;
       touchedParts.add(part);
-      this.store.setPose(part, pose);
+      this.store.setPose(part, blendedPose);
+      if (blendedPose) {
+        nextPoses.set(part, blendedPose);
+      }
     }
 
     // Reset parts that were animated previously but not in the current frame.
@@ -187,5 +287,7 @@ export class AnimationController {
         this.store.setPose(part, undefined);
       }
     }
+
+    this.lastPoses = nextPoses;
   }
 }

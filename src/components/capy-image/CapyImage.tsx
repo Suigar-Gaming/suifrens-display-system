@@ -50,13 +50,11 @@ export function CapyImage({
       <RightArm
         fill={colorTheme.arms}
         handProps={{ fill: colorTheme.appendages }}
-        expression={expression}
       />
       {!incognito && (
         <RightArmPattern
           skin={skin}
           fill={colorTheme.patterns}
-          expression={expression}
         />
       )}
       {accessoriesByType?.back?.category === "wings" && (
@@ -112,13 +110,11 @@ export function CapyImage({
       <LeftArm
         fill={colorTheme.arms}
         handProps={{ fill: colorTheme.appendages }}
-        expression={expression}
       />
       {!incognito && (
         <LeftArmPattern
           skin={skin}
           fill={colorTheme.patterns}
-          expression={expression}
         />
       )}
 

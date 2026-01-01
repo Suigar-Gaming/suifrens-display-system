@@ -65,6 +65,11 @@ type AnimationBaseConfig = {
    * Keeps the final pose instead of clearing once iterations end.
    */
   holdOnComplete?: boolean;
+  /**
+   * Time in ms to blend from the previous pose into this animation.
+   * Use 0 to disable blending.
+   */
+  transitionMs?: number;
 };
 
 export type AnimationConfig =
