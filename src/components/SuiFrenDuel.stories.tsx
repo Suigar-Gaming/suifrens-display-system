@@ -30,6 +30,7 @@ const RING_COLLISION_DISTANCE = SPRITE_SIZE * 0.78;
 const RING_FIGHT_GAP = SPRITE_SIZE * 0.45;
 const CURRENT_USER_FIGHTER_ID = "capy-1";
 const MAX_PARALLEL_FIGHTS = 2;
+const MIN_RING_FIGHT_MS = 1000;
 const FINAL_VICTORY_PRESET = "victory";
 const FINAL_VICTORY_LOOPS = 2;
 const FINAL_IDLE_PRESET = "idle";
@@ -118,6 +119,19 @@ const randomVelocityVector = () => {
   const speed = randomBetween(WANDER_MIN_SPEED, WANDER_MAX_SPEED);
   const angle = randomBetween(0, Math.PI * 2);
   return { x: Math.cos(angle) * speed, y: Math.sin(angle) * speed };
+};
+const randomRunVelocityVector = () => {
+  const speed = randomBetween(RUN_SPEED_THRESHOLD, WANDER_MAX_SPEED);
+  const angle = randomBetween(0, Math.PI * 2);
+  return { x: Math.cos(angle) * speed, y: Math.sin(angle) * speed };
+};
+const separateVelocityVector = (dx: number, dy: number) => {
+  const distance = Math.hypot(dx, dy);
+  if (!distance) {
+    return randomRunVelocityVector();
+  }
+  const speed = randomBetween(RUN_SPEED_THRESHOLD, WANDER_MAX_SPEED);
+  return { x: (dx / distance) * speed, y: (dy / distance) * speed };
 };
 const seekVelocityVector = (fighter: FighterState, roster: FighterState[]) => {
   let closest: FighterState | null = null;
@@ -778,6 +792,7 @@ export const Ring: Story = {
     const activeFightsRef = useRef<ActiveFight[]>([]);
     const fightIdRef = useRef(0);
     const resolvedFightRef = useRef(new Set<number>());
+    const fightMetaRef = useRef(new Map<number, { duelStarted: boolean; startedAt: number | null }>());
     const ringWinnerRef = useRef<string | null>(null);
     const ringWinnerTimeoutRef = useRef<number | null>(null);
     const [ringWinnerId, setRingWinnerId] = useState<string | null>(null);
@@ -901,6 +916,7 @@ export const Ring: Story = {
       setActiveFights([]);
       activeFightsRef.current = [];
       resolvedFightRef.current.clear();
+      fightMetaRef.current.clear();
       fightIdRef.current = 0;
       ringWinnerRef.current = null;
       setRingWinnerId(null);
@@ -938,6 +954,8 @@ export const Ring: Story = {
         }
         const dt = Math.min(MAX_FRAME_MS, now - last);
         last = now;
+        const canSeekFight =
+          !ringWinnerRef.current && activeFightsRef.current.length < FIGHT_SLOT_COUNT;
 
         let next = fightersRef.current.map((fighter) => {
           if (fighter.status !== "roam") {
@@ -946,7 +964,9 @@ export const Ring: Story = {
 
           let velocity = fighter.velocity;
           if (now >= fighter.nextShiftAt) {
-            velocity = seekVelocityVector(fighter, fightersRef.current);
+            velocity = canSeekFight
+              ? seekVelocityVector(fighter, fightersRef.current)
+              : randomRunVelocityVector();
           }
 
           let x = fighter.position.x + velocity.x * (dt / 1000);
@@ -987,6 +1007,79 @@ export const Ring: Story = {
         }
 
         const startedFights: ActiveFight[] = [];
+        const startFight = (first: FighterState, second: FighterState, slot: number) => {
+          const leftId =
+            first.position.x < second.position.x
+              ? first.id
+              : first.position.x > second.position.x
+                ? second.id
+                : first.id < second.id
+                  ? first.id
+                  : second.id;
+          const rightId = leftId === first.id ? second.id : first.id;
+          const leftFighter = leftId === first.id ? first : second;
+          const rightFighter = leftId === first.id ? second : first;
+          const winnerId =
+            leftFighter.power === rightFighter.power
+              ? leftFighter.id < rightFighter.id
+                ? leftFighter.id
+                : rightFighter.id
+              : leftFighter.power > rightFighter.power
+                ? leftFighter.id
+                : rightFighter.id;
+
+          const midpointX = (leftFighter.position.x + rightFighter.position.x) / 2;
+          const midpointY = (leftFighter.position.y + rightFighter.position.y) / 2;
+          const gap = Math.min(RING_FIGHT_GAP, maxX - minX);
+          const leftPos = {
+            x: clamp(midpointX - gap / 2, minX, maxX),
+            y: clamp(midpointY, minY, maxY),
+          };
+          const rightPos = {
+            x: clamp(midpointX + gap / 2, minX, maxX),
+            y: clamp(midpointY, minY, maxY),
+          };
+
+          next = next.map((fighter): FighterState => {
+            if (fighter.id === leftId) {
+              return {
+                ...fighter,
+                status: "fight",
+                position: leftPos,
+                velocity: { x: 0, y: 0 },
+                facing: "right",
+                animationOverride: undefined,
+                expressionOverride: undefined,
+              };
+            }
+            if (fighter.id === rightId) {
+              return {
+                ...fighter,
+                status: "fight",
+                position: rightPos,
+                velocity: { x: 0, y: 0 },
+                facing: "left",
+                animationOverride: undefined,
+                expressionOverride: undefined,
+              };
+            }
+            return fighter;
+          });
+
+          const fightId = (fightIdRef.current += 1);
+          startedFights.push({
+            id: fightId,
+            leftId,
+            rightId,
+            winnerId,
+            script: winnerId === leftId ? leftWinFightScript : rightWinFightScript,
+            slot,
+          });
+          fightMetaRef.current.set(fightId, { duelStarted: false, startedAt: null });
+
+          activeIds.add(leftId);
+          activeIds.add(rightId);
+        };
         if (!ringWinnerRef.current && availableSlots.length) {
           outer: for (let i = 0; i < next.length; i += 1) {
             const first = next[i];
@@ -1005,75 +1098,7 @@ export const Ring: Story = {
                 if (slot === undefined) {
                   break outer;
                 }
-                const leftId =
-                  first.position.x < second.position.x
-                    ? first.id
-                    : first.position.x > second.position.x
-                      ? second.id
-                      : first.id < second.id
-                        ? first.id
-                        : second.id;
-                const rightId = leftId === first.id ? second.id : first.id;
-                const leftFighter = leftId === first.id ? first : second;
-                const rightFighter = leftId === first.id ? second : first;
-                const winnerId =
-                  leftFighter.power === rightFighter.power
-                    ? leftFighter.id < rightFighter.id
-                      ? leftFighter.id
-                      : rightFighter.id
-                    : leftFighter.power > rightFighter.power
-                      ? leftFighter.id
-                      : rightFighter.id;
-
-                const midpointX = (leftFighter.position.x + rightFighter.position.x) / 2;
-                const midpointY = (leftFighter.position.y + rightFighter.position.y) / 2;
-                const gap = Math.min(RING_FIGHT_GAP, maxX - minX);
-                const leftPos = {
-                  x: clamp(midpointX - gap / 2, minX, maxX),
-                  y: clamp(midpointY, minY, maxY),
-                };
-                const rightPos = {
-                  x: clamp(midpointX + gap / 2, minX, maxX),
-                  y: clamp(midpointY, minY, maxY),
-                };
-
-                next = next.map((fighter): FighterState => {
-                  if (fighter.id === leftId) {
-                    return {
-                      ...fighter,
-                      status: "fight",
-                      position: leftPos,
-                      velocity: { x: 0, y: 0 },
-                      facing: "right",
-                      animationOverride: undefined,
-                      expressionOverride: undefined,
-                    };
-                  }
-                  if (fighter.id === rightId) {
-                    return {
-                      ...fighter,
-                      status: "fight",
-                      position: rightPos,
-                      velocity: { x: 0, y: 0 },
-                      facing: "left",
-                      animationOverride: undefined,
-                      expressionOverride: undefined,
-                    };
-                  }
-                  return fighter;
-                });
-
-                startedFights.push({
-                  id: (fightIdRef.current += 1),
-                  leftId,
-                  rightId,
-                  winnerId,
-                  script: winnerId === leftId ? leftWinFightScript : rightWinFightScript,
-                  slot,
-                });
-
-                activeIds.add(leftId);
-                activeIds.add(rightId);
+                startFight(first, second, slot);
 
                 if (!availableSlots.length) {
                   break outer;
@@ -1084,10 +1109,79 @@ export const Ring: Story = {
           }
         }
 
+        if (!ringWinnerRef.current && availableSlots.length) {
+          let candidates = next.filter(
+            (fighter) => fighter.status === "roam" && !activeIds.has(fighter.id)
+          );
+          while (availableSlots.length && candidates.length >= 2) {
+            let bestA = 0;
+            let bestB = 1;
+            let bestDistanceSq = Number.POSITIVE_INFINITY;
+            for (let i = 0; i < candidates.length; i += 1) {
+              const first = candidates[i];
+              for (let j = i + 1; j < candidates.length; j += 1) {
+                const second = candidates[j];
+                const dx = first.position.x - second.position.x;
+                const dy = first.position.y - second.position.y;
+                const distanceSq = dx * dx + dy * dy;
+                if (distanceSq < bestDistanceSq) {
+                  bestDistanceSq = distanceSq;
+                  bestA = i;
+                  bestB = j;
+                }
+              }
+            }
+            const slot = availableSlots.shift();
+            if (slot === undefined) {
+              break;
+            }
+            const first = candidates[bestA];
+            const second = candidates[bestB];
+            if (!first || !second) {
+              break;
+            }
+            startFight(first, second, slot);
+            const usedIds = new Set([first.id, second.id]);
+            candidates = candidates.filter((fighter) => !usedIds.has(fighter.id));
+          }
+        }
+
         if (startedFights.length) {
           const updatedFights = [...activeFightsRef.current, ...startedFights];
           activeFightsRef.current = updatedFights;
           setActiveFights(updatedFights);
+        }
+
+        if (!ringWinnerRef.current && !availableSlots.length) {
+          const avoidVelocities = new Map<string, { x: number; y: number }>();
+          for (let i = 0; i < next.length; i += 1) {
+            const first = next[i];
+            if (first.status !== "roam" || activeIds.has(first.id)) {
+              continue;
+            }
+            for (let j = i + 1; j < next.length; j += 1) {
+              const second = next[j];
+              if (second.status !== "roam" || activeIds.has(second.id)) {
+                continue;
+              }
+              const dx = first.position.x - second.position.x;
+              const dy = first.position.y - second.position.y;
+              if (dx * dx + dy * dy <= collisionDistanceSq) {
+                const velocity = separateVelocityVector(dx, dy);
+                avoidVelocities.set(first.id, velocity);
+                avoidVelocities.set(second.id, { x: -velocity.x, y: -velocity.y });
+              }
+            }
+          }
+          if (avoidVelocities.size) {
+            next = next.map((fighter): FighterState => {
+              const velocity = avoidVelocities.get(fighter.id);
+              if (!velocity) {
+                return fighter;
+              }
+              return updateVelocity({ ...fighter, velocity }, velocity, now);
+            });
+          }
         }
 
         fightersRef.current = next;
@@ -1111,7 +1205,27 @@ export const Ring: Story = {
 
       for (const fight of activeFights) {
         const duelState = duelStates[fight.slot];
-        if (!duelState || duelState.running || duelState.phase !== "Complete") {
+        if (!duelState) {
+          remainingFights.push(fight);
+          continue;
+        }
+        let fightMeta = fightMetaRef.current.get(fight.id);
+        if (!fightMeta) {
+          fightMeta = { duelStarted: false, startedAt: null };
+          fightMetaRef.current.set(fight.id, fightMeta);
+        }
+
+        const duelHasStarted = duelState.running || duelState.phase !== "Complete";
+        if (duelHasStarted && !fightMeta.duelStarted) {
+          fightMeta.duelStarted = true;
+          fightMeta.startedAt = now;
+        }
+
+        const duelComplete = !duelState.running && duelState.phase === "Complete";
+        const fightDuration = fightMeta.startedAt ? now - fightMeta.startedAt : 0;
+        const readyToResolve = fightMeta.duelStarted && fightDuration >= MIN_RING_FIGHT_MS;
+
+        if (!duelComplete || !readyToResolve) {
           remainingFights.push(fight);
           continue;
         }
@@ -1119,11 +1233,12 @@ export const Ring: Story = {
           continue;
         }
         resolvedFightRef.current.add(fight.id);
+        fightMetaRef.current.delete(fight.id);
 
-                next = next.map((fighter): FighterState => {
-                  if (fighter.id !== fight.leftId && fighter.id !== fight.rightId) {
-                    return fighter;
-                  }
+        next = next.map((fighter): FighterState => {
+          if (fighter.id !== fight.leftId && fighter.id !== fight.rightId) {
+            return fighter;
+          }
           const isLeft = fighter.id === fight.leftId;
           const duelSideState = isLeft ? duelState.left : duelState.right;
 

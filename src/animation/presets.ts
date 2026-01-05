@@ -244,8 +244,8 @@ const slotPullSequence: AnimationSequence = {
       part: "rightArm",
       keyframes: [
         { at: 0, pose: { rotate: -6, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: SLOT_PULL_DURATION * 0.3, pose: { rotate: 45, translate: { x: -16, y: 42 } }, ease: "easeInOut" },
-        { at: SLOT_PULL_DURATION * 0.6, pose: { rotate: -22, translate: { x: -6, y: 66 } }, ease: "easeInOut" },
+        { at: SLOT_PULL_DURATION * 0.3, pose: { rotate: 45, translate: { x: -10, y: 30 } }, ease: "easeInOut" },
+        { at: SLOT_PULL_DURATION * 0.6, pose: { rotate: -22, translate: { x: -4, y: 46 } }, ease: "easeInOut" },
         { at: SLOT_PULL_DURATION, pose: { rotate: -6, translate: { x: 0, y: 0 } }, ease: "easeIn" },
       ],
     },
