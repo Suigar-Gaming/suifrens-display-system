@@ -9,65 +9,161 @@ const runSequence: AnimationSequence = {
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: 22, translate: { x: 10, y: -6 } }, ease: "easeInOut" },
-        { at: RUN_DURATION / 2, pose: { rotate: -22, translate: { x: -10, y: 4 } }, ease: "easeInOut" },
-        { at: RUN_DURATION, pose: { rotate: 22, translate: { x: 10, y: -6 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 22, translate: { x: 10, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION / 2,
+          pose: { rotate: -22, translate: { x: -10, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION,
+          pose: { rotate: 22, translate: { x: 10, y: -6 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: -22, translate: { x: -10, y: -6 } }, ease: "easeInOut" },
-        { at: RUN_DURATION / 2, pose: { rotate: 22, translate: { x: 10, y: 4 } }, ease: "easeInOut" },
-        { at: RUN_DURATION, pose: { rotate: -22, translate: { x: -10, y: -6 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -22, translate: { x: -10, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION / 2,
+          pose: { rotate: 22, translate: { x: 10, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION,
+          pose: { rotate: -22, translate: { x: -10, y: -6 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { rotate: -14, translate: { x: -8, y: 4 } }, ease: "easeInOut" },
-        { at: RUN_DURATION / 2, pose: { rotate: 14, translate: { x: 8, y: -6 } }, ease: "easeInOut" },
-        { at: RUN_DURATION, pose: { rotate: -14, translate: { x: -8, y: 4 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -14, translate: { x: -8, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION / 2,
+          pose: { rotate: 14, translate: { x: 8, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION,
+          pose: { rotate: -14, translate: { x: -8, y: 4 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "rightLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 14, translate: { x: 8, y: -6 } }, ease: "easeInOut" },
-        { at: RUN_DURATION / 2, pose: { rotate: -14, translate: { x: -8, y: 4 } }, ease: "easeInOut" },
-        { at: RUN_DURATION, pose: { rotate: 14, translate: { x: 8, y: -6 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 14, translate: { x: 8, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION / 2,
+          pose: { rotate: -14, translate: { x: -8, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION,
+          pose: { rotate: 14, translate: { x: 8, y: -6 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 3, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
-        { at: RUN_DURATION / 2, pose: { rotate: -3, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: RUN_DURATION, pose: { rotate: 3, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 3, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION / 2,
+          pose: { rotate: -3, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION,
+          pose: { rotate: 3, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: -2, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
-        { at: RUN_DURATION / 2, pose: { rotate: 2, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: RUN_DURATION, pose: { rotate: -2, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -2, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION / 2,
+          pose: { rotate: 2, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION,
+          pose: { rotate: -2, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 1.5, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
-        { at: RUN_DURATION / 2, pose: { rotate: -1.5, translate: { x: 0, y: -4 } }, ease: "easeInOut" },
-        { at: RUN_DURATION, pose: { rotate: 1.5, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 1.5, translate: { x: 0, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION / 2,
+          pose: { rotate: -1.5, translate: { x: 0, y: -4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION,
+          pose: { rotate: 1.5, translate: { x: 0, y: 0 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: -1.2, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
-        { at: RUN_DURATION / 2, pose: { rotate: 1.2, translate: { x: 0, y: -9 } }, ease: "easeInOut" },
-        { at: RUN_DURATION, pose: { rotate: -1.2, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -1.2, translate: { x: 0, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION / 2,
+          pose: { rotate: 1.2, translate: { x: 0, y: -9 } },
+          ease: "easeInOut",
+        },
+        {
+          at: RUN_DURATION,
+          pose: { rotate: -1.2, translate: { x: 0, y: 0 } },
+          ease: "easeInOut",
+        },
       ],
     },
   ],
@@ -82,65 +178,161 @@ const sprintSequence: AnimationSequence = {
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: 30, translate: { x: 12, y: -8 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION / 2, pose: { rotate: -30, translate: { x: -12, y: 6 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION, pose: { rotate: 30, translate: { x: 12, y: -8 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 30, translate: { x: 12, y: -8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION / 2,
+          pose: { rotate: -30, translate: { x: -12, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION,
+          pose: { rotate: 30, translate: { x: 12, y: -8 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: -30, translate: { x: -12, y: -8 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION / 2, pose: { rotate: 30, translate: { x: 12, y: 6 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION, pose: { rotate: -30, translate: { x: -12, y: -8 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -30, translate: { x: -12, y: -8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION / 2,
+          pose: { rotate: 30, translate: { x: 12, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION,
+          pose: { rotate: -30, translate: { x: -12, y: -8 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { rotate: -20, translate: { x: -10, y: 5 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION / 2, pose: { rotate: 20, translate: { x: 10, y: -8 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION, pose: { rotate: -20, translate: { x: -10, y: 5 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -20, translate: { x: -10, y: 5 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION / 2,
+          pose: { rotate: 20, translate: { x: 10, y: -8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION,
+          pose: { rotate: -20, translate: { x: -10, y: 5 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "rightLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 20, translate: { x: 10, y: -8 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION / 2, pose: { rotate: -20, translate: { x: -10, y: 5 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION, pose: { rotate: 20, translate: { x: 10, y: -8 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 20, translate: { x: 10, y: -8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION / 2,
+          pose: { rotate: -20, translate: { x: -10, y: 5 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION,
+          pose: { rotate: 20, translate: { x: 10, y: -8 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 4, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION / 2, pose: { rotate: -4, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION, pose: { rotate: 4, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 4, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION / 2,
+          pose: { rotate: -4, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION,
+          pose: { rotate: 4, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: -2.5, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION / 2, pose: { rotate: 2.5, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION, pose: { rotate: -2.5, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -2.5, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION / 2,
+          pose: { rotate: 2.5, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION,
+          pose: { rotate: -2.5, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 2.5, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION / 2, pose: { rotate: -2.5, translate: { x: 0, y: -5 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION, pose: { rotate: 2.5, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 2.5, translate: { x: 0, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION / 2,
+          pose: { rotate: -2.5, translate: { x: 0, y: -5 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION,
+          pose: { rotate: 2.5, translate: { x: 0, y: 0 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: -2.5, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION / 2, pose: { rotate: 2.5, translate: { x: 0, y: -12 } }, ease: "easeInOut" },
-        { at: SPRINT_DURATION, pose: { rotate: -2.5, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -2.5, translate: { x: 0, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION / 2,
+          pose: { rotate: 2.5, translate: { x: 0, y: -12 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SPRINT_DURATION,
+          pose: { rotate: -2.5, translate: { x: 0, y: 0 } },
+          ease: "easeInOut",
+        },
       ],
     },
   ],
@@ -155,65 +347,161 @@ const crouchSequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: -0.6, translate: { x: 0, y: 18 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION / 2, pose: { rotate: 0.6, translate: { x: 0, y: 20 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION, pose: { rotate: -0.6, translate: { x: 0, y: 18 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -0.6, translate: { x: 0, y: 18 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION / 2,
+          pose: { rotate: 0.6, translate: { x: 0, y: 20 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION,
+          pose: { rotate: -0.6, translate: { x: 0, y: 18 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: -2, translate: { x: 0, y: 3 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION / 2, pose: { rotate: 1.5, translate: { x: 0, y: 5 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION, pose: { rotate: -2, translate: { x: 0, y: 3 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -2, translate: { x: 0, y: 3 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION / 2,
+          pose: { rotate: 1.5, translate: { x: 0, y: 5 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION,
+          pose: { rotate: -2, translate: { x: 0, y: 3 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { rotate: -18, translate: { x: -4, y: 6 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION / 2, pose: { rotate: -20, translate: { x: -5, y: 8 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION, pose: { rotate: -18, translate: { x: -4, y: 6 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -18, translate: { x: -4, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION / 2,
+          pose: { rotate: -20, translate: { x: -5, y: 8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION,
+          pose: { rotate: -18, translate: { x: -4, y: 6 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "rightLeg",
       keyframes: [
-        { at: 0, pose: { rotate: -18, translate: { x: 4, y: 6 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION / 2, pose: { rotate: -20, translate: { x: 5, y: 8 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION, pose: { rotate: -18, translate: { x: 4, y: 6 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -18, translate: { x: 4, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION / 2,
+          pose: { rotate: -20, translate: { x: 5, y: 8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION,
+          pose: { rotate: -18, translate: { x: 4, y: 6 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: -18, translate: { x: -4, y: 4 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION / 2, pose: { rotate: -20, translate: { x: -5, y: 6 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION, pose: { rotate: -18, translate: { x: -4, y: 4 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -18, translate: { x: -4, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION / 2,
+          pose: { rotate: -20, translate: { x: -5, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION,
+          pose: { rotate: -18, translate: { x: -4, y: 4 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: 18, translate: { x: 4, y: 4 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION / 2, pose: { rotate: 20, translate: { x: 5, y: 6 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION, pose: { rotate: 18, translate: { x: 4, y: 4 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 18, translate: { x: 4, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION / 2,
+          pose: { rotate: 20, translate: { x: 5, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION,
+          pose: { rotate: 18, translate: { x: 4, y: 4 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 1.5, translate: { x: 0, y: 2 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION / 2, pose: { rotate: -1.5, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION, pose: { rotate: 1.5, translate: { x: 0, y: 2 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 1.5, translate: { x: 0, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION / 2,
+          pose: { rotate: -1.5, translate: { x: 0, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION,
+          pose: { rotate: 1.5, translate: { x: 0, y: 2 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: -1, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION / 2, pose: { rotate: 1, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: CROUCH_DURATION, pose: { rotate: -1, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -1, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION / 2,
+          pose: { rotate: 1, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_DURATION,
+          pose: { rotate: -1, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
       ],
     },
   ],
@@ -228,65 +516,161 @@ const crouchWalkSequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: -0.8, translate: { x: 0, y: 18 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION / 2, pose: { rotate: 0.8, translate: { x: 0, y: 16 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION, pose: { rotate: -0.8, translate: { x: 0, y: 18 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -0.8, translate: { x: 0, y: 18 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION / 2,
+          pose: { rotate: 0.8, translate: { x: 0, y: 16 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION,
+          pose: { rotate: -0.8, translate: { x: 0, y: 18 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: -1, translate: { x: 0, y: 4 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION / 2, pose: { rotate: 1, translate: { x: 0, y: 3 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION, pose: { rotate: -1, translate: { x: 0, y: 4 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -1, translate: { x: 0, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION / 2,
+          pose: { rotate: 1, translate: { x: 0, y: 3 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION,
+          pose: { rotate: -1, translate: { x: 0, y: 4 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { rotate: -12, translate: { x: -6, y: 6 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION / 2, pose: { rotate: -26, translate: { x: 6, y: 4 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION, pose: { rotate: -12, translate: { x: -6, y: 6 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -12, translate: { x: -6, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION / 2,
+          pose: { rotate: -26, translate: { x: 6, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION,
+          pose: { rotate: -12, translate: { x: -6, y: 6 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "rightLeg",
       keyframes: [
-        { at: 0, pose: { rotate: -26, translate: { x: 6, y: 4 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION / 2, pose: { rotate: -12, translate: { x: -6, y: 6 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION, pose: { rotate: -26, translate: { x: 6, y: 4 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -26, translate: { x: 6, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION / 2,
+          pose: { rotate: -12, translate: { x: -6, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION,
+          pose: { rotate: -26, translate: { x: 6, y: 4 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: -16, translate: { x: -4, y: 4 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION / 2, pose: { rotate: -22, translate: { x: -6, y: 6 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION, pose: { rotate: -16, translate: { x: -4, y: 4 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -16, translate: { x: -4, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION / 2,
+          pose: { rotate: -22, translate: { x: -6, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION,
+          pose: { rotate: -16, translate: { x: -4, y: 4 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: 16, translate: { x: 4, y: 4 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION / 2, pose: { rotate: 22, translate: { x: 6, y: 6 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION, pose: { rotate: 16, translate: { x: 4, y: 4 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 16, translate: { x: 4, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION / 2,
+          pose: { rotate: 22, translate: { x: 6, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION,
+          pose: { rotate: 16, translate: { x: 4, y: 4 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 2, translate: { x: 0, y: 2 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION / 2, pose: { rotate: -2, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION, pose: { rotate: 2, translate: { x: 0, y: 2 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 2, translate: { x: 0, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION / 2,
+          pose: { rotate: -2, translate: { x: 0, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION,
+          pose: { rotate: 2, translate: { x: 0, y: 2 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: -1.2, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION / 2, pose: { rotate: 1.2, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: CROUCH_WALK_DURATION, pose: { rotate: -1.2, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -1.2, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION / 2,
+          pose: { rotate: 1.2, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: CROUCH_WALK_DURATION,
+          pose: { rotate: -1.2, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
       ],
     },
   ],
@@ -301,69 +685,181 @@ const slideSequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: SLIDE_DURATION * 0.25, pose: { rotate: 10, translate: { x: 0, y: 26 } }, ease: "easeInOut" },
-        { at: SLIDE_DURATION * 0.6, pose: { rotate: 6, translate: { x: 0, y: 30 } }, ease: "easeInOut" },
-        { at: SLIDE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 18 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: SLIDE_DURATION * 0.25,
+          pose: { rotate: 10, translate: { x: 0, y: 26 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SLIDE_DURATION * 0.6,
+          pose: { rotate: 6, translate: { x: 0, y: 30 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SLIDE_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 18 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: SLIDE_DURATION * 0.25, pose: { rotate: -10, translate: { x: 0, y: 8 } }, ease: "easeInOut" },
-        { at: SLIDE_DURATION * 0.6, pose: { rotate: -6, translate: { x: 0, y: 6 } }, ease: "easeInOut" },
-        { at: SLIDE_DURATION, pose: { rotate: -2, translate: { x: 0, y: 3 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: SLIDE_DURATION * 0.25,
+          pose: { rotate: -10, translate: { x: 0, y: 8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SLIDE_DURATION * 0.6,
+          pose: { rotate: -6, translate: { x: 0, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SLIDE_DURATION,
+          pose: { rotate: -2, translate: { x: 0, y: 3 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: SLIDE_DURATION * 0.25, pose: { rotate: -26, translate: { x: 6, y: 10 } }, ease: "easeInOut" },
-        { at: SLIDE_DURATION, pose: { rotate: -18, translate: { x: 4, y: 8 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: SLIDE_DURATION * 0.25,
+          pose: { rotate: -26, translate: { x: 6, y: 10 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SLIDE_DURATION,
+          pose: { rotate: -18, translate: { x: 4, y: 8 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeOut" },
-        { at: SLIDE_DURATION * 0.25, pose: { rotate: -18, translate: { x: 8, y: 8 } }, ease: "easeInOut" },
-        { at: SLIDE_DURATION, pose: { rotate: -18, translate: { x: 6, y: 8 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: SLIDE_DURATION * 0.25,
+          pose: { rotate: -18, translate: { x: 8, y: 8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SLIDE_DURATION,
+          pose: { rotate: -18, translate: { x: 6, y: 8 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: -6, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: SLIDE_DURATION * 0.25, pose: { rotate: -32, translate: { x: -12, y: -4 } }, ease: "easeInOut" },
-        { at: SLIDE_DURATION * 0.6, pose: { rotate: -24, translate: { x: -8, y: 0 } }, ease: "easeInOut" },
-        { at: SLIDE_DURATION, pose: { rotate: -18, translate: { x: -6, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: -6, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: SLIDE_DURATION * 0.25,
+          pose: { rotate: -32, translate: { x: -12, y: -4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SLIDE_DURATION * 0.6,
+          pose: { rotate: -24, translate: { x: -8, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SLIDE_DURATION,
+          pose: { rotate: -18, translate: { x: -6, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: 6, translate: { x: 2, y: 2 } }, ease: "easeOut" },
-        { at: SLIDE_DURATION * 0.25, pose: { rotate: 32, translate: { x: 12, y: -4 } }, ease: "easeInOut" },
-        { at: SLIDE_DURATION * 0.6, pose: { rotate: 24, translate: { x: 8, y: 0 } }, ease: "easeInOut" },
-        { at: SLIDE_DURATION, pose: { rotate: 18, translate: { x: 6, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 6, translate: { x: 2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: SLIDE_DURATION * 0.25,
+          pose: { rotate: 32, translate: { x: 12, y: -4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SLIDE_DURATION * 0.6,
+          pose: { rotate: 24, translate: { x: 8, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SLIDE_DURATION,
+          pose: { rotate: 18, translate: { x: 6, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: SLIDE_DURATION * 0.35, pose: { rotate: 10, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: SLIDE_DURATION, pose: { rotate: 1.5, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: SLIDE_DURATION * 0.35,
+          pose: { rotate: 10, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SLIDE_DURATION,
+          pose: { rotate: 1.5, translate: { x: 0, y: 1 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: SLIDE_DURATION * 0.35, pose: { rotate: -4, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: SLIDE_DURATION, pose: { rotate: -1, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: SLIDE_DURATION * 0.35,
+          pose: { rotate: -4, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SLIDE_DURATION,
+          pose: { rotate: -1, translate: { x: 0, y: 1 } },
+          ease: "easeIn",
+        },
       ],
     },
   ],
@@ -378,53 +874,141 @@ const ourahSequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: OURAH_DURATION * 0.3, pose: { rotate: -4, translate: { x: 0, y: -6 } }, ease: "easeInOut" },
-        { at: OURAH_DURATION * 0.6, pose: { rotate: 3, translate: { x: 0, y: -4 } }, ease: "easeInOut" },
-        { at: OURAH_DURATION, pose: { rotate: -2, translate: { x: 0, y: -5 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: OURAH_DURATION * 0.3,
+          pose: { rotate: -4, translate: { x: 0, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: OURAH_DURATION * 0.6,
+          pose: { rotate: 3, translate: { x: 0, y: -4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: OURAH_DURATION,
+          pose: { rotate: -2, translate: { x: 0, y: -5 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: OURAH_DURATION * 0.3, pose: { rotate: -6, translate: { x: 0, y: -6 } }, ease: "easeInOut" },
-        { at: OURAH_DURATION * 0.6, pose: { rotate: 4, translate: { x: 0, y: -3 } }, ease: "easeInOut" },
-        { at: OURAH_DURATION, pose: { rotate: -4, translate: { x: 0, y: -4 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: OURAH_DURATION * 0.3,
+          pose: { rotate: -6, translate: { x: 0, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: OURAH_DURATION * 0.6,
+          pose: { rotate: 4, translate: { x: 0, y: -3 } },
+          ease: "easeInOut",
+        },
+        {
+          at: OURAH_DURATION,
+          pose: { rotate: -4, translate: { x: 0, y: -4 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: -8, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: OURAH_DURATION * 0.25, pose: { rotate: -52, translate: { x: -6, y: -16 } }, ease: "easeInOut" },
-        { at: OURAH_DURATION * 0.55, pose: { rotate: -42, translate: { x: -2, y: -12 } }, ease: "easeInOut" },
-        { at: OURAH_DURATION, pose: { rotate: -48, translate: { x: -4, y: -14 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 4, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: OURAH_DURATION * 0.25,
+          pose: { rotate: 30, translate: { x: -4, y: -10 } },
+          ease: "easeInOut",
+        },
+        {
+          at: OURAH_DURATION * 0.55,
+          pose: { rotate: 24, translate: { x: -2, y: -8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: OURAH_DURATION,
+          pose: { rotate: 26, translate: { x: -3, y: -9 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: 8, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: OURAH_DURATION * 0.25, pose: { rotate: 52, translate: { x: 6, y: -16 } }, ease: "easeInOut" },
-        { at: OURAH_DURATION * 0.55, pose: { rotate: 42, translate: { x: 2, y: -12 } }, ease: "easeInOut" },
-        { at: OURAH_DURATION, pose: { rotate: 48, translate: { x: 4, y: -14 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: -4, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: OURAH_DURATION * 0.25,
+          pose: { rotate: -30, translate: { x: 4, y: -10 } },
+          ease: "easeInOut",
+        },
+        {
+          at: OURAH_DURATION * 0.55,
+          pose: { rotate: -24, translate: { x: 2, y: -8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: OURAH_DURATION,
+          pose: { rotate: -26, translate: { x: 3, y: -9 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: OURAH_DURATION * 0.5, pose: { rotate: 6, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: OURAH_DURATION, pose: { rotate: 2, translate: { x: 0, y: -1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: OURAH_DURATION * 0.5,
+          pose: { rotate: 6, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: OURAH_DURATION,
+          pose: { rotate: 2, translate: { x: 0, y: -1 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: OURAH_DURATION * 0.5, pose: { rotate: -3, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: OURAH_DURATION, pose: { rotate: -1, translate: { x: 0, y: -1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: OURAH_DURATION * 0.5,
+          pose: { rotate: -3, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: OURAH_DURATION,
+          pose: { rotate: -1, translate: { x: 0, y: -1 } },
+          ease: "easeIn",
+        },
       ],
     },
   ],
@@ -439,53 +1023,141 @@ const showingSequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: SHOWING_DURATION * 0.3, pose: { rotate: 4, translate: { x: 0, y: -4 } }, ease: "easeInOut" },
-        { at: SHOWING_DURATION * 0.65, pose: { rotate: 2, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: SHOWING_DURATION, pose: { rotate: 3, translate: { x: 0, y: -3 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: SHOWING_DURATION * 0.3,
+          pose: { rotate: 4, translate: { x: 0, y: -4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SHOWING_DURATION * 0.65,
+          pose: { rotate: 2, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SHOWING_DURATION,
+          pose: { rotate: 3, translate: { x: 0, y: -3 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: SHOWING_DURATION * 0.3, pose: { rotate: 6, translate: { x: 0, y: -4 } }, ease: "easeInOut" },
-        { at: SHOWING_DURATION * 0.65, pose: { rotate: 3, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: SHOWING_DURATION, pose: { rotate: 4, translate: { x: 0, y: -3 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: SHOWING_DURATION * 0.3,
+          pose: { rotate: 6, translate: { x: 0, y: -4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SHOWING_DURATION * 0.65,
+          pose: { rotate: 3, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SHOWING_DURATION,
+          pose: { rotate: 4, translate: { x: 0, y: -3 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: 6, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: SHOWING_DURATION * 0.3, pose: { rotate: 48, translate: { x: 6, y: -14 } }, ease: "easeInOut" },
-        { at: SHOWING_DURATION * 0.6, pose: { rotate: 38, translate: { x: 3, y: -10 } }, ease: "easeInOut" },
-        { at: SHOWING_DURATION, pose: { rotate: 44, translate: { x: 4, y: -12 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 6, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: SHOWING_DURATION * 0.3,
+          pose: { rotate: -48, translate: { x: 6, y: -14 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SHOWING_DURATION * 0.6,
+          pose: { rotate: -38, translate: { x: 3, y: -10 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SHOWING_DURATION,
+          pose: { rotate: 44, translate: { x: 4, y: -12 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: -6, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: SHOWING_DURATION * 0.3, pose: { rotate: -12, translate: { x: -4, y: 0 } }, ease: "easeInOut" },
-        { at: SHOWING_DURATION * 0.6, pose: { rotate: -8, translate: { x: -3, y: 1 } }, ease: "easeInOut" },
-        { at: SHOWING_DURATION, pose: { rotate: -10, translate: { x: -3, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: -6, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: SHOWING_DURATION * 0.3,
+          pose: { rotate: -12, translate: { x: -4, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SHOWING_DURATION * 0.6,
+          pose: { rotate: -8, translate: { x: -3, y: 1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SHOWING_DURATION,
+          pose: { rotate: -10, translate: { x: -3, y: 1 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: SHOWING_DURATION * 0.5, pose: { rotate: 5, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: SHOWING_DURATION, pose: { rotate: 2, translate: { x: 0, y: -1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: SHOWING_DURATION * 0.5,
+          pose: { rotate: 5, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SHOWING_DURATION,
+          pose: { rotate: 2, translate: { x: 0, y: -1 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: SHOWING_DURATION * 0.5, pose: { rotate: -2.5, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: SHOWING_DURATION, pose: { rotate: -1, translate: { x: 0, y: -1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: SHOWING_DURATION * 0.5,
+          pose: { rotate: -2.5, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: SHOWING_DURATION,
+          pose: { rotate: -1, translate: { x: 0, y: -1 } },
+          ease: "easeIn",
+        },
       ],
     },
   ],
@@ -500,69 +1172,181 @@ const victorySequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: VICTORY_DURATION * 0.3, pose: { rotate: -4, translate: { x: 0, y: -8 } }, ease: "easeInOut" },
-        { at: VICTORY_DURATION * 0.6, pose: { rotate: 3, translate: { x: 0, y: -6 } }, ease: "easeInOut" },
-        { at: VICTORY_DURATION, pose: { rotate: -2, translate: { x: 0, y: -7 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: VICTORY_DURATION * 0.3,
+          pose: { rotate: -4, translate: { x: 0, y: -8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: VICTORY_DURATION * 0.6,
+          pose: { rotate: 3, translate: { x: 0, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: VICTORY_DURATION,
+          pose: { rotate: -2, translate: { x: 0, y: -7 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: VICTORY_DURATION * 0.3, pose: { rotate: -8, translate: { x: 0, y: -8 } }, ease: "easeInOut" },
-        { at: VICTORY_DURATION * 0.6, pose: { rotate: 5, translate: { x: 0, y: -5 } }, ease: "easeInOut" },
-        { at: VICTORY_DURATION, pose: { rotate: -5, translate: { x: 0, y: -6 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: VICTORY_DURATION * 0.3,
+          pose: { rotate: -8, translate: { x: 0, y: -8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: VICTORY_DURATION * 0.6,
+          pose: { rotate: 5, translate: { x: 0, y: -5 } },
+          ease: "easeInOut",
+        },
+        {
+          at: VICTORY_DURATION,
+          pose: { rotate: -5, translate: { x: 0, y: -6 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: -8, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: VICTORY_DURATION * 0.25, pose: { rotate: -64, translate: { x: -8, y: -20 } }, ease: "easeInOut" },
-        { at: VICTORY_DURATION * 0.55, pose: { rotate: -54, translate: { x: -4, y: -16 } }, ease: "easeInOut" },
-        { at: VICTORY_DURATION, pose: { rotate: -58, translate: { x: -6, y: -18 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: -8, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: VICTORY_DURATION * 0.25,
+          pose: { rotate: -64, translate: { x: -8, y: -20 } },
+          ease: "easeInOut",
+        },
+        {
+          at: VICTORY_DURATION * 0.55,
+          pose: { rotate: -54, translate: { x: -4, y: -16 } },
+          ease: "easeInOut",
+        },
+        {
+          at: VICTORY_DURATION,
+          pose: { rotate: -58, translate: { x: -6, y: -18 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: 8, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: VICTORY_DURATION * 0.25, pose: { rotate: 64, translate: { x: 8, y: -20 } }, ease: "easeInOut" },
-        { at: VICTORY_DURATION * 0.55, pose: { rotate: 54, translate: { x: 4, y: -16 } }, ease: "easeInOut" },
-        { at: VICTORY_DURATION, pose: { rotate: 58, translate: { x: 6, y: -18 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 8, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: VICTORY_DURATION * 0.25,
+          pose: { rotate: 64, translate: { x: 8, y: -20 } },
+          ease: "easeInOut",
+        },
+        {
+          at: VICTORY_DURATION * 0.55,
+          pose: { rotate: 54, translate: { x: 4, y: -16 } },
+          ease: "easeInOut",
+        },
+        {
+          at: VICTORY_DURATION,
+          pose: { rotate: 58, translate: { x: 6, y: -18 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: VICTORY_DURATION * 0.5, pose: { rotate: 6, translate: { x: -4, y: 0 } }, ease: "easeInOut" },
-        { at: VICTORY_DURATION, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: VICTORY_DURATION * 0.5,
+          pose: { rotate: 6, translate: { x: -4, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: VICTORY_DURATION,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeOut" },
-        { at: VICTORY_DURATION * 0.5, pose: { rotate: -6, translate: { x: 4, y: 0 } }, ease: "easeInOut" },
-        { at: VICTORY_DURATION, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: VICTORY_DURATION * 0.5,
+          pose: { rotate: -6, translate: { x: 4, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: VICTORY_DURATION,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: VICTORY_DURATION * 0.5, pose: { rotate: 6, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: VICTORY_DURATION, pose: { rotate: 2, translate: { x: 0, y: -1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: VICTORY_DURATION * 0.5,
+          pose: { rotate: 6, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: VICTORY_DURATION,
+          pose: { rotate: 2, translate: { x: 0, y: -1 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: VICTORY_DURATION * 0.5, pose: { rotate: -3, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: VICTORY_DURATION, pose: { rotate: -1, translate: { x: 0, y: -1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: VICTORY_DURATION * 0.5,
+          pose: { rotate: -3, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: VICTORY_DURATION,
+          pose: { rotate: -1, translate: { x: 0, y: -1 } },
+          ease: "easeIn",
+        },
       ],
     },
   ],
@@ -577,81 +1361,241 @@ const flossSequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 2, translate: { x: -4, y: 0 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.25, pose: { rotate: -6, translate: { x: 8, y: -2 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.5, pose: { rotate: 6, translate: { x: -8, y: -2 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.75, pose: { rotate: -6, translate: { x: 8, y: -1 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION, pose: { rotate: 2, translate: { x: -4, y: 0 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 2, translate: { x: -4, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.25,
+          pose: { rotate: -6, translate: { x: 8, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.5,
+          pose: { rotate: 6, translate: { x: -8, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.75,
+          pose: { rotate: -6, translate: { x: 8, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION,
+          pose: { rotate: 2, translate: { x: -4, y: 0 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: -2, translate: { x: -2, y: -1 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.25, pose: { rotate: 4, translate: { x: 3, y: -2 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.5, pose: { rotate: -4, translate: { x: -3, y: -2 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.75, pose: { rotate: 4, translate: { x: 3, y: -1 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION, pose: { rotate: -2, translate: { x: -2, y: -1 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -2, translate: { x: -2, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.25,
+          pose: { rotate: 4, translate: { x: 3, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.5,
+          pose: { rotate: -4, translate: { x: -3, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.75,
+          pose: { rotate: 4, translate: { x: 3, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION,
+          pose: { rotate: -2, translate: { x: -2, y: -1 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: -20, translate: { x: 10, y: 0 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.25, pose: { rotate: -70, translate: { x: -12, y: -6 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.5, pose: { rotate: 26, translate: { x: -10, y: 4 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.75, pose: { rotate: -70, translate: { x: 12, y: -6 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION, pose: { rotate: -20, translate: { x: 10, y: 0 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -20, translate: { x: 10, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.25,
+          pose: { rotate: -70, translate: { x: -12, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.5,
+          pose: { rotate: 26, translate: { x: -10, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.75,
+          pose: { rotate: -70, translate: { x: 12, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION,
+          pose: { rotate: -20, translate: { x: 10, y: 0 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: 20, translate: { x: -10, y: 0 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.25, pose: { rotate: 70, translate: { x: 12, y: -6 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.5, pose: { rotate: -26, translate: { x: 10, y: 4 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.75, pose: { rotate: 70, translate: { x: -12, y: -6 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION, pose: { rotate: 20, translate: { x: -10, y: 0 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 20, translate: { x: -10, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.25,
+          pose: { rotate: 70, translate: { x: 12, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.5,
+          pose: { rotate: -26, translate: { x: 10, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.75,
+          pose: { rotate: 70, translate: { x: -12, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION,
+          pose: { rotate: 20, translate: { x: -10, y: 0 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { rotate: -4, translate: { x: -2, y: 2 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.25, pose: { rotate: 6, translate: { x: -4, y: 2 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.5, pose: { rotate: -6, translate: { x: -2, y: 2 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.75, pose: { rotate: 6, translate: { x: -4, y: 2 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION, pose: { rotate: -4, translate: { x: -2, y: 2 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: -4, translate: { x: -2, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.25,
+          pose: { rotate: 6, translate: { x: -4, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.5,
+          pose: { rotate: -6, translate: { x: -2, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.75,
+          pose: { rotate: 6, translate: { x: -4, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION,
+          pose: { rotate: -4, translate: { x: -2, y: 2 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "rightLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 4, translate: { x: 2, y: 2 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.25, pose: { rotate: -6, translate: { x: 4, y: 2 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.5, pose: { rotate: 6, translate: { x: 2, y: 2 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.75, pose: { rotate: -6, translate: { x: 4, y: 2 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION, pose: { rotate: 4, translate: { x: 2, y: 2 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 4, translate: { x: 2, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.25,
+          pose: { rotate: -6, translate: { x: 4, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.5,
+          pose: { rotate: 6, translate: { x: 2, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.75,
+          pose: { rotate: -6, translate: { x: 4, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION,
+          pose: { rotate: 4, translate: { x: 2, y: 2 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.25, pose: { rotate: 6, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.5, pose: { rotate: -6, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.75, pose: { rotate: 6, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.25,
+          pose: { rotate: 6, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.5,
+          pose: { rotate: -6, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.75,
+          pose: { rotate: 6, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.25, pose: { rotate: -3, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.5, pose: { rotate: 3, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION * 0.75, pose: { rotate: -3, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: FLOSS_DURATION, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.25,
+          pose: { rotate: -3, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.5,
+          pose: { rotate: 3, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION * 0.75,
+          pose: { rotate: -3, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: FLOSS_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
       ],
     },
   ],
@@ -666,69 +1610,181 @@ const punchSequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: PUNCH_DURATION * 0.25, pose: { rotate: -6, translate: { x: 0, y: 2 } }, ease: "easeInOut" },
-        { at: PUNCH_DURATION * 0.5, pose: { rotate: 10, translate: { x: 0, y: -6 } }, ease: "easeInOut" },
-        { at: PUNCH_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: PUNCH_DURATION * 0.25,
+          pose: { rotate: -3, translate: { x: 0, y: 1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: PUNCH_DURATION * 0.5,
+          pose: { rotate: 6, translate: { x: 0, y: -4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: PUNCH_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: PUNCH_DURATION * 0.25, pose: { rotate: -3, translate: { x: -2, y: -2 } }, ease: "easeInOut" },
-        { at: PUNCH_DURATION * 0.5, pose: { rotate: 4, translate: { x: 2, y: -4 } }, ease: "easeInOut" },
-        { at: PUNCH_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: PUNCH_DURATION * 0.25,
+          pose: { rotate: -3, translate: { x: -2, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: PUNCH_DURATION * 0.5,
+          pose: { rotate: 4, translate: { x: 2, y: -4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: PUNCH_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: -12, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: PUNCH_DURATION * 0.25, pose: { rotate: 18, translate: { x: -10, y: -10 } }, ease: "easeInOut" },
-        { at: PUNCH_DURATION * 0.5, pose: { rotate: -62, translate: { x: 14, y: 8 } }, ease: "easeInOut" },
-        { at: PUNCH_DURATION, pose: { rotate: -12, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: -12, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: PUNCH_DURATION * 0.25,
+          pose: { rotate: 18, translate: { x: -10, y: -10 } },
+          ease: "easeInOut",
+        },
+        {
+          at: PUNCH_DURATION * 0.5,
+          pose: { rotate: -62, translate: { x: 14, y: 8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: PUNCH_DURATION,
+          pose: { rotate: -12, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: -6, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: PUNCH_DURATION * 0.25, pose: { rotate: 12, translate: { x: 4, y: 0 } }, ease: "easeInOut" },
-        { at: PUNCH_DURATION * 0.5, pose: { rotate: -20, translate: { x: -6, y: 4 } }, ease: "easeInOut" },
-        { at: PUNCH_DURATION, pose: { rotate: -6, translate: { x: -2, y: 2 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: -6, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: PUNCH_DURATION * 0.25,
+          pose: { rotate: 12, translate: { x: 4, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: PUNCH_DURATION * 0.5,
+          pose: { rotate: -20, translate: { x: -6, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: PUNCH_DURATION,
+          pose: { rotate: -6, translate: { x: -2, y: 2 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: PUNCH_DURATION * 0.5, pose: { rotate: -6, translate: { x: -4, y: 4 } }, ease: "easeInOut" },
-        { at: PUNCH_DURATION, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: PUNCH_DURATION * 0.5,
+          pose: { rotate: -6, translate: { x: -4, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: PUNCH_DURATION,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeOut" },
-        { at: PUNCH_DURATION * 0.5, pose: { rotate: 6, translate: { x: 4, y: 4 } }, ease: "easeInOut" },
-        { at: PUNCH_DURATION, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: PUNCH_DURATION * 0.5,
+          pose: { rotate: 6, translate: { x: 4, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: PUNCH_DURATION,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: PUNCH_DURATION * 0.5, pose: { rotate: 7, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: PUNCH_DURATION, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: PUNCH_DURATION * 0.5,
+          pose: { rotate: 7, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: PUNCH_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: PUNCH_DURATION * 0.5, pose: { rotate: -3.5, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: PUNCH_DURATION, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: PUNCH_DURATION * 0.5,
+          pose: { rotate: -3.5, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: PUNCH_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeIn",
+        },
       ],
     },
   ],
@@ -743,71 +1799,191 @@ const kickSequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: KICK_DURATION * 0.22, pose: { rotate: -10, translate: { x: 0, y: 4 } }, ease: "easeInOut" },
-        { at: KICK_DURATION * 0.5, pose: { rotate: 14, translate: { x: 0, y: -10 } }, ease: "easeInOut" },
-        { at: KICK_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: KICK_DURATION * 0.22,
+          pose: { rotate: -10, translate: { x: 0, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KICK_DURATION * 0.5,
+          pose: { rotate: 14, translate: { x: 0, y: -10 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KICK_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: KICK_DURATION * 0.22, pose: { rotate: -5, translate: { x: -2, y: -2 } }, ease: "easeInOut" },
-        { at: KICK_DURATION * 0.5, pose: { rotate: 7, translate: { x: 2, y: -4 } }, ease: "easeInOut" },
-        { at: KICK_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: KICK_DURATION * 0.22,
+          pose: { rotate: -5, translate: { x: -2, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KICK_DURATION * 0.5,
+          pose: { rotate: 7, translate: { x: 2, y: -4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KICK_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: KICK_DURATION * 0.22, pose: { rotate: 10, translate: { x: 4, y: -2 } }, ease: "easeInOut" },
-        { at: KICK_DURATION * 0.5, pose: { rotate: -58, translate: { x: 10, y: -2 } }, ease: "easeInOut" },
-        { at: KICK_DURATION * 0.75, pose: { rotate: -12, translate: { x: 2, y: 2 } }, ease: "easeInOut" },
-        { at: KICK_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: KICK_DURATION * 0.22,
+          pose: { rotate: 10, translate: { x: 4, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KICK_DURATION * 0.5,
+          pose: { rotate: -58, translate: { x: 10, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KICK_DURATION * 0.75,
+          pose: { rotate: -12, translate: { x: 2, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KICK_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: KICK_DURATION * 0.5, pose: { rotate: -10, translate: { x: -6, y: 6 } }, ease: "easeInOut" },
-        { at: KICK_DURATION, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: KICK_DURATION * 0.5,
+          pose: { rotate: -10, translate: { x: -6, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KICK_DURATION,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: KICK_DURATION * 0.22, pose: { rotate: -24, translate: { x: -8, y: 0 } }, ease: "easeInOut" },
-        { at: KICK_DURATION * 0.5, pose: { rotate: -14, translate: { x: -6, y: 2 } }, ease: "easeInOut" },
-        { at: KICK_DURATION, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: KICK_DURATION * 0.22,
+          pose: { rotate: -24, translate: { x: -8, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KICK_DURATION * 0.5,
+          pose: { rotate: -14, translate: { x: -6, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KICK_DURATION,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeOut" },
-        { at: KICK_DURATION * 0.22, pose: { rotate: 24, translate: { x: 8, y: 0 } }, ease: "easeInOut" },
-        { at: KICK_DURATION * 0.5, pose: { rotate: 14, translate: { x: 6, y: 2 } }, ease: "easeInOut" },
-        { at: KICK_DURATION, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: KICK_DURATION * 0.22,
+          pose: { rotate: 24, translate: { x: 8, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KICK_DURATION * 0.5,
+          pose: { rotate: 14, translate: { x: 6, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KICK_DURATION,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: KICK_DURATION * 0.5, pose: { rotate: 10, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: KICK_DURATION, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: KICK_DURATION * 0.5,
+          pose: { rotate: 10, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KICK_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: KICK_DURATION * 0.5, pose: { rotate: -5, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: KICK_DURATION, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: KICK_DURATION * 0.5,
+          pose: { rotate: -5, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KICK_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeIn",
+        },
       ],
     },
   ],
@@ -822,53 +1998,141 @@ const meleeSequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: MELEE_DURATION * 0.22, pose: { rotate: -14, translate: { x: 0, y: 2 } }, ease: "easeInOut" },
-        { at: MELEE_DURATION * 0.5, pose: { rotate: 18, translate: { x: 0, y: -6 } }, ease: "easeInOut" },
-        { at: MELEE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: MELEE_DURATION * 0.22,
+          pose: { rotate: -14, translate: { x: 0, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: MELEE_DURATION * 0.5,
+          pose: { rotate: 18, translate: { x: 0, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: MELEE_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: MELEE_DURATION * 0.22, pose: { rotate: -6, translate: { x: -2, y: -2 } }, ease: "easeInOut" },
-        { at: MELEE_DURATION * 0.5, pose: { rotate: 8, translate: { x: 2, y: -4 } }, ease: "easeInOut" },
-        { at: MELEE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: MELEE_DURATION * 0.22,
+          pose: { rotate: -6, translate: { x: -2, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: MELEE_DURATION * 0.5,
+          pose: { rotate: 8, translate: { x: 2, y: -4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: MELEE_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: MELEE_DURATION * 0.22, pose: { rotate: -26, translate: { x: 10, y: -8 } }, ease: "easeInOut" },
-        { at: MELEE_DURATION * 0.5, pose: { rotate: 75, translate: { x: -12, y: 10 } }, ease: "easeInOut" },
-        { at: MELEE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: MELEE_DURATION * 0.22,
+          pose: { rotate: -26, translate: { x: 10, y: -8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: MELEE_DURATION * 0.5,
+          pose: { rotate: 75, translate: { x: -12, y: 10 } },
+          ease: "easeInOut",
+        },
+        {
+          at: MELEE_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: MELEE_DURATION * 0.22, pose: { rotate: 14, translate: { x: 4, y: 0 } }, ease: "easeInOut" },
-        { at: MELEE_DURATION * 0.5, pose: { rotate: -18, translate: { x: -6, y: 4 } }, ease: "easeInOut" },
-        { at: MELEE_DURATION, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: MELEE_DURATION * 0.22,
+          pose: { rotate: 14, translate: { x: 4, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: MELEE_DURATION * 0.5,
+          pose: { rotate: -18, translate: { x: -6, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: MELEE_DURATION,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: MELEE_DURATION * 0.5, pose: { rotate: 6, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: MELEE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: MELEE_DURATION * 0.5,
+          pose: { rotate: 6, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: MELEE_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: MELEE_DURATION * 0.5, pose: { rotate: -3, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: MELEE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: MELEE_DURATION * 0.5,
+          pose: { rotate: -3, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: MELEE_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeIn",
+        },
       ],
     },
   ],
@@ -883,41 +2147,101 @@ const hitSequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: HIT_DURATION * 0.35, pose: { rotate: -10, translate: { x: -10, y: 6 } }, ease: "easeInOut" },
-        { at: HIT_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: HIT_DURATION * 0.35,
+          pose: { rotate: -10, translate: { x: -10, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: HIT_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: HIT_DURATION * 0.35, pose: { rotate: 12, translate: { x: 6, y: -2 } }, ease: "easeInOut" },
-        { at: HIT_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: HIT_DURATION * 0.35,
+          pose: { rotate: 12, translate: { x: 6, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: HIT_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: HIT_DURATION * 0.35, pose: { rotate: 24, translate: { x: 6, y: 4 } }, ease: "easeInOut" },
-        { at: HIT_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: HIT_DURATION * 0.35,
+          pose: { rotate: 24, translate: { x: 6, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: HIT_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: HIT_DURATION * 0.35, pose: { rotate: -24, translate: { x: -6, y: 4 } }, ease: "easeInOut" },
-        { at: HIT_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: HIT_DURATION * 0.35,
+          pose: { rotate: -24, translate: { x: -6, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: HIT_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: HIT_DURATION * 0.35, pose: { rotate: -8, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: HIT_DURATION, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: HIT_DURATION * 0.35,
+          pose: { rotate: -8, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: HIT_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeIn",
+        },
       ],
     },
   ],
@@ -932,67 +2256,171 @@ const knockdownSequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: KNOCKDOWN_DURATION * 0.25, pose: { rotate: 8, translate: { x: 0, y: 14 } }, ease: "easeInOut" },
-        { at: KNOCKDOWN_DURATION * 0.6, pose: { rotate: 24, translate: { x: 0, y: 48 } }, ease: "easeInOut" },
-        { at: KNOCKDOWN_DURATION, pose: { rotate: 18, translate: { x: 0, y: 54 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION * 0.25,
+          pose: { rotate: 8, translate: { x: 0, y: 14 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION * 0.6,
+          pose: { rotate: 24, translate: { x: 0, y: 48 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION,
+          pose: { rotate: 18, translate: { x: 0, y: 54 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: KNOCKDOWN_DURATION * 0.25, pose: { rotate: 6, translate: { x: 0, y: 8 } }, ease: "easeInOut" },
-        { at: KNOCKDOWN_DURATION * 0.6, pose: { rotate: 14, translate: { x: 0, y: 18 } }, ease: "easeInOut" },
-        { at: KNOCKDOWN_DURATION, pose: { rotate: 10, translate: { x: 0, y: 16 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION * 0.25,
+          pose: { rotate: 6, translate: { x: 0, y: 8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION * 0.6,
+          pose: { rotate: 14, translate: { x: 0, y: 18 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION,
+          pose: { rotate: 10, translate: { x: 0, y: 16 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: KNOCKDOWN_DURATION * 0.35, pose: { rotate: -22, translate: { x: -6, y: 6 } }, ease: "easeInOut" },
-        { at: KNOCKDOWN_DURATION, pose: { rotate: -50, translate: { x: -10, y: 12 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION * 0.35,
+          pose: { rotate: -30, translate: { x: -6, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION,
+          pose: { rotate: -64, translate: { x: -10, y: 12 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeOut" },
-        { at: KNOCKDOWN_DURATION * 0.35, pose: { rotate: -22, translate: { x: 6, y: 6 } }, ease: "easeInOut" },
-        { at: KNOCKDOWN_DURATION, pose: { rotate: -50, translate: { x: 10, y: 12 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION * 0.35,
+          pose: { rotate: -30, translate: { x: 6, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION,
+          pose: { rotate: -64, translate: { x: 10, y: 12 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: KNOCKDOWN_DURATION * 0.35, pose: { rotate: 36, translate: { x: 8, y: -2 } }, ease: "easeInOut" },
-        { at: KNOCKDOWN_DURATION, pose: { rotate: 52, translate: { x: 10, y: -4 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION * 0.35,
+          pose: { rotate: 36, translate: { x: 8, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION,
+          pose: { rotate: 52, translate: { x: 10, y: -4 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeOut" },
-        { at: KNOCKDOWN_DURATION * 0.35, pose: { rotate: -36, translate: { x: -8, y: -2 } }, ease: "easeInOut" },
-        { at: KNOCKDOWN_DURATION, pose: { rotate: -52, translate: { x: -10, y: -4 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION * 0.35,
+          pose: { rotate: -36, translate: { x: -8, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION,
+          pose: { rotate: -52, translate: { x: -10, y: -4 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: KNOCKDOWN_DURATION * 0.6, pose: { rotate: 8, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: KNOCKDOWN_DURATION, pose: { rotate: 4, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION * 0.6,
+          pose: { rotate: 8, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION,
+          pose: { rotate: 4, translate: { x: 0, y: 1 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: KNOCKDOWN_DURATION * 0.6, pose: { rotate: -4, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: KNOCKDOWN_DURATION, pose: { rotate: -2, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION * 0.6,
+          pose: { rotate: -4, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: KNOCKDOWN_DURATION,
+          pose: { rotate: -2, translate: { x: 0, y: 1 } },
+          ease: "easeIn",
+        },
       ],
     },
   ],
@@ -1007,66 +2435,166 @@ const reviveSequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 18, translate: { x: 0, y: 54 } }, ease: "easeOut" },
-        { at: REVIVE_DURATION * 0.45, pose: { rotate: 0, translate: { x: 0, y: 18 } }, ease: "easeInOut" },
-        { at: REVIVE_DURATION * 0.8, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
-        { at: REVIVE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 18, translate: { x: 0, y: 54 } },
+          ease: "easeOut",
+        },
+        {
+          at: REVIVE_DURATION * 0.45,
+          pose: { rotate: 0, translate: { x: 0, y: 18 } },
+          ease: "easeInOut",
+        },
+        {
+          at: REVIVE_DURATION * 0.8,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeInOut",
+        },
+        {
+          at: REVIVE_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 10, translate: { x: 0, y: 16 } }, ease: "easeOut" },
-        { at: REVIVE_DURATION * 0.45, pose: { rotate: -2, translate: { x: 0, y: 4 } }, ease: "easeInOut" },
-        { at: REVIVE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 10, translate: { x: 0, y: 16 } },
+          ease: "easeOut",
+        },
+        {
+          at: REVIVE_DURATION * 0.45,
+          pose: { rotate: -2, translate: { x: 0, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: REVIVE_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { rotate: -50, translate: { x: -10, y: 12 } }, ease: "easeOut" },
-        { at: REVIVE_DURATION * 0.45, pose: { rotate: -18, translate: { x: -6, y: 6 } }, ease: "easeInOut" },
-        { at: REVIVE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: -50, translate: { x: -10, y: 12 } },
+          ease: "easeOut",
+        },
+        {
+          at: REVIVE_DURATION * 0.45,
+          pose: { rotate: -18, translate: { x: -6, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: REVIVE_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightLeg",
       keyframes: [
-        { at: 0, pose: { rotate: -50, translate: { x: 10, y: 12 } }, ease: "easeOut" },
-        { at: REVIVE_DURATION * 0.45, pose: { rotate: -18, translate: { x: 6, y: 6 } }, ease: "easeInOut" },
-        { at: REVIVE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: -50, translate: { x: 10, y: 12 } },
+          ease: "easeOut",
+        },
+        {
+          at: REVIVE_DURATION * 0.45,
+          pose: { rotate: -18, translate: { x: 6, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: REVIVE_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: 52, translate: { x: 10, y: -4 } }, ease: "easeOut" },
-        { at: REVIVE_DURATION * 0.45, pose: { rotate: -18, translate: { x: -4, y: 2 } }, ease: "easeInOut" },
-        { at: REVIVE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 52, translate: { x: 10, y: -4 } },
+          ease: "easeOut",
+        },
+        {
+          at: REVIVE_DURATION * 0.45,
+          pose: { rotate: -18, translate: { x: -4, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: REVIVE_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: -52, translate: { x: -10, y: -4 } }, ease: "easeOut" },
-        { at: REVIVE_DURATION * 0.45, pose: { rotate: 18, translate: { x: 4, y: 2 } }, ease: "easeInOut" },
-        { at: REVIVE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: -52, translate: { x: -10, y: -4 } },
+          ease: "easeOut",
+        },
+        {
+          at: REVIVE_DURATION * 0.45,
+          pose: { rotate: 18, translate: { x: 4, y: 2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: REVIVE_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 4, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: REVIVE_DURATION * 0.45, pose: { rotate: 1.5, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: REVIVE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 4, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: REVIVE_DURATION * 0.45,
+          pose: { rotate: 1.5, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: REVIVE_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: -2, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: REVIVE_DURATION * 0.45, pose: { rotate: -1, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: REVIVE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: -2, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: REVIVE_DURATION * 0.45,
+          pose: { rotate: -1, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: REVIVE_DURATION,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeIn",
+        },
       ],
     },
   ],
@@ -1081,67 +2609,201 @@ const deathSequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.25, pose: { rotate: 12, translate: { x: 0, y: 18 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION * 0.65, pose: { rotate: 62, translate: { x: 18, y: 70 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: 70, translate: { x: 22, y: 78 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.18,
+          pose: { rotate: 8, translate: { x: 2, y: 14 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.55,
+          pose: { rotate: 50, translate: { x: 16, y: 56 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.82,
+          pose: { rotate: 74, translate: { x: 20, y: 72 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: 70, translate: { x: 18, y: 70 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.25, pose: { rotate: 10, translate: { x: 0, y: 40 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION * 0.65, pose: { rotate: 40, translate: { x: 0, y: 96 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: 44, translate: { x: 0, y: 108 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.18,
+          pose: { rotate: -4, translate: { x: 0, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.55,
+          pose: { rotate: 8, translate: { x: 0, y: 12 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.82,
+          pose: { rotate: 12, translate: { x: 0, y: 16 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: 10, translate: { x: 0, y: 14 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.4, pose: { rotate: -34, translate: { x: -8, y: 8 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: -62, translate: { x: -12, y: 14 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.45,
+          pose: { rotate: -18, translate: { x: -5, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.75,
+          pose: { rotate: -42, translate: { x: -10, y: 10 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: -38, translate: { x: -9, y: 10 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.4, pose: { rotate: -34, translate: { x: 8, y: 8 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: -62, translate: { x: 12, y: 14 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.45,
+          pose: { rotate: -18, translate: { x: 5, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.75,
+          pose: { rotate: -42, translate: { x: 10, y: 10 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: -38, translate: { x: 9, y: 10 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.4, pose: { rotate: 54, translate: { x: 10, y: -2 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: 78, translate: { x: 14, y: -6 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.35,
+          pose: { rotate: 24, translate: { x: 6, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.65,
+          pose: { rotate: 58, translate: { x: 12, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: 50, translate: { x: 10, y: -4 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.4, pose: { rotate: -54, translate: { x: -10, y: -2 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: -78, translate: { x: -14, y: -6 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.35,
+          pose: { rotate: -24, translate: { x: -6, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.65,
+          pose: { rotate: -58, translate: { x: -12, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: -50, translate: { x: -10, y: -4 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.5, pose: { rotate: 10, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: 8, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.6,
+          pose: { rotate: 8, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: 6, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.5, pose: { rotate: -5, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: -4, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.6,
+          pose: { rotate: -4, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: -3, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
   ],
@@ -1154,67 +2816,201 @@ const death2Sequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.22, pose: { rotate: -12, translate: { x: 0, y: 16 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION * 0.6, pose: { rotate: -58, translate: { x: -20, y: 68 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: -66, translate: { x: -24, y: 78 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.2,
+          pose: { rotate: -8, translate: { x: -2, y: 14 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.55,
+          pose: { rotate: -50, translate: { x: -16, y: 54 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.8,
+          pose: { rotate: -74, translate: { x: -20, y: 70 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: -70, translate: { x: -18, y: 68 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.22, pose: { rotate: -10, translate: { x: 0, y: 40 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION * 0.6, pose: { rotate: -38, translate: { x: 0, y: 96 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: -42, translate: { x: 0, y: 108 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.2,
+          pose: { rotate: 4, translate: { x: 0, y: 4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.55,
+          pose: { rotate: -8, translate: { x: 0, y: 12 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.8,
+          pose: { rotate: -12, translate: { x: 0, y: 16 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: -10, translate: { x: 0, y: 14 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.35, pose: { rotate: -20, translate: { x: -6, y: 6 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: -48, translate: { x: -10, y: 12 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.4,
+          pose: { rotate: -16, translate: { x: -5, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.75,
+          pose: { rotate: -36, translate: { x: -9, y: 10 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: -32, translate: { x: -8, y: 10 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.35, pose: { rotate: -20, translate: { x: 6, y: 6 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: -48, translate: { x: 10, y: 12 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.4,
+          pose: { rotate: -16, translate: { x: 5, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.75,
+          pose: { rotate: -36, translate: { x: 9, y: 10 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: -32, translate: { x: 8, y: 10 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.35, pose: { rotate: 40, translate: { x: 8, y: -2 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: 66, translate: { x: 12, y: -6 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.35,
+          pose: { rotate: 20, translate: { x: 4, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.65,
+          pose: { rotate: 48, translate: { x: 10, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: 40, translate: { x: 8, y: -4 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.35, pose: { rotate: -40, translate: { x: -8, y: -2 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: -66, translate: { x: -12, y: -6 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.35,
+          pose: { rotate: -20, translate: { x: -4, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.65,
+          pose: { rotate: -48, translate: { x: -10, y: -6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: -40, translate: { x: -8, y: -4 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.5, pose: { rotate: -10, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: -8, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.6,
+          pose: { rotate: -8, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: -6, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.5, pose: { rotate: 5, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: 4, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.6,
+          pose: { rotate: 4, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: 3, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
   ],
@@ -1227,69 +3023,201 @@ const death3Sequence: AnimationSequence = {
     {
       part: "body",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.18, pose: { rotate: 20, translate: { x: 0, y: 14 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION * 0.5, pose: { rotate: 112, translate: { x: 16, y: 66 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION * 0.78, pose: { rotate: 160, translate: { x: 10, y: 84 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: 150, translate: { x: 10, y: 88 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.15,
+          pose: { rotate: 12, translate: { x: 4, y: 12 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.45,
+          pose: { rotate: 78, translate: { x: 18, y: 52 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.75,
+          pose: { rotate: 104, translate: { x: 24, y: 72 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: 100, translate: { x: 22, y: 72 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "head",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.18, pose: { rotate: 12, translate: { x: 0, y: 44 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION * 0.5, pose: { rotate: 70, translate: { x: 0, y: 108 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION * 0.78, pose: { rotate: 92, translate: { x: 0, y: 116 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: 86, translate: { x: 0, y: 116 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 0 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.15,
+          pose: { rotate: -6, translate: { x: 0, y: 6 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.45,
+          pose: { rotate: 18, translate: { x: 0, y: 16 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.75,
+          pose: { rotate: 26, translate: { x: 0, y: 20 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: 22, translate: { x: 0, y: 18 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.42, pose: { rotate: -44, translate: { x: -10, y: 10 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: -78, translate: { x: -16, y: 16 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.45,
+          pose: { rotate: -28, translate: { x: -8, y: 8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.75,
+          pose: { rotate: -58, translate: { x: -12, y: 12 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: -54, translate: { x: -11, y: 12 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightLeg",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.42, pose: { rotate: -44, translate: { x: 10, y: 10 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: -78, translate: { x: 16, y: 16 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.45,
+          pose: { rotate: -28, translate: { x: 8, y: 8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.75,
+          pose: { rotate: -58, translate: { x: 12, y: 12 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: -54, translate: { x: 11, y: 12 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: -2, y: 2 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.42, pose: { rotate: 68, translate: { x: 12, y: -2 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: 100, translate: { x: 18, y: -8 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: -2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.35,
+          pose: { rotate: 36, translate: { x: 8, y: -4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.6,
+          pose: { rotate: 72, translate: { x: 14, y: -8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: 64, translate: { x: 12, y: -6 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "rightArm",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 2, y: 2 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.42, pose: { rotate: -68, translate: { x: -12, y: -2 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: -100, translate: { x: -18, y: -8 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 2, y: 2 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.35,
+          pose: { rotate: -36, translate: { x: -8, y: -4 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION * 0.6,
+          pose: { rotate: -72, translate: { x: -14, y: -8 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: -64, translate: { x: -12, y: -6 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "tail",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.5, pose: { rotate: 14, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: 12, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.5,
+          pose: { rotate: 10, translate: { x: 0, y: -2 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: 8, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
     {
       part: "fin",
       keyframes: [
-        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 1 } }, ease: "easeOut" },
-        { at: DEATH_DURATION * 0.5, pose: { rotate: -7, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
-        { at: DEATH_DURATION, pose: { rotate: -6, translate: { x: 0, y: 1 } }, ease: "easeIn" },
+        {
+          at: 0,
+          pose: { rotate: 0, translate: { x: 0, y: 1 } },
+          ease: "easeOut",
+        },
+        {
+          at: DEATH_DURATION * 0.5,
+          pose: { rotate: -5, translate: { x: 0, y: -1 } },
+          ease: "easeInOut",
+        },
+        {
+          at: DEATH_DURATION,
+          pose: { rotate: -4, translate: { x: 0, y: 0 } },
+          ease: "easeIn",
+        },
       ],
     },
   ],

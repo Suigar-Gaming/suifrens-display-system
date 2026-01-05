@@ -42,7 +42,7 @@ export class AnimationStore {
     } else {
       this.poses.set(part, pose);
     }
-    this.notify(part);
+    this.notifyWithDependents(part);
   }
 
   clear() {
@@ -71,6 +71,25 @@ export class AnimationStore {
     }
   }
 
+  private notifyWithDependents(part: AnimationPart) {
+    for (const registeredPart of this.registrations.keys()) {
+      if (registeredPart === part || this.isDependentOn(registeredPart, part)) {
+        this.notify(registeredPart);
+      }
+    }
+  }
+
+  private isDependentOn(part: AnimationPart, ancestor: AnimationPart) {
+    let current = getPartDefinition(part).parent;
+    while (current) {
+      if (current === ancestor) {
+        return true;
+      }
+      current = getPartDefinition(current).parent;
+    }
+    return false;
+  }
+
   private compose(part: AnimationPart, registration: Registration, pose: PartPose) {
     const baseTransform = registration.getBaseTransform();
     const baseMatrix = parseMatrix(baseTransform) ?? IDENTITY_MATRIX;
@@ -89,6 +108,26 @@ export class AnimationStore {
         pose.translate.y * TRANSLATE_SCALE
       );
       composed = multiplyMatrix(translate, composed);
+    }
+
+    let parent = getPartDefinition(part).parent;
+    while (parent) {
+      const parentPose = this.poses.get(parent);
+      if (parentPose) {
+        const parentPivot = getPartDefinition(parent).pivot;
+        if (parentPose.rotate !== undefined) {
+          const rotate = rotateMatrix(parentPose.rotate, parentPivot.x, parentPivot.y);
+          composed = multiplyMatrix(rotate, composed);
+        }
+        if (parentPose.translate) {
+          const translate = translateMatrix(
+            parentPose.translate.x * TRANSLATE_SCALE,
+            parentPose.translate.y * TRANSLATE_SCALE
+          );
+          composed = multiplyMatrix(translate, composed);
+        }
+      }
+      parent = getPartDefinition(parent).parent;
     }
 
     return matrixToString(composed);

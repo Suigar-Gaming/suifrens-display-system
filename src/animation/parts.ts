@@ -11,6 +11,7 @@ export type AnimationPart =
 type PartDefinition = {
   pivot: { x: number; y: number };
   autoDetectTransforms: string[];
+  parent?: AnimationPart;
 };
 
 const PRECISION = 6;
@@ -28,12 +29,14 @@ const PART_DEFINITIONS: Record<AnimationPart, PartDefinition> = {
   },
   head: {
     pivot: { x: 848.15, y: 585.65 },
+    parent: "body",
     autoDetectTransforms: [
       "matrix(2.9166107177734375,0,0,2.9166107177734375,848.15,585.65)",
     ],
   },
   leftArm: {
     pivot: { x: 1002.9, y: 1719.3 },
+    parent: "body",
     autoDetectTransforms: [
       "matrix(2.9166107177734375,0,0,2.9166107177734375,1002.9,1719.3)",
       "matrix(2.9166107177734375,0,0,-2.9166107177734375,1002.9,2019.3)",
@@ -41,6 +44,7 @@ const PART_DEFINITIONS: Record<AnimationPart, PartDefinition> = {
   },
   rightArm: {
     pivot: { x: 1880.95, y: 1719.3 },
+    parent: "body",
     autoDetectTransforms: [
       "matrix(-2.9166107177734375,0,0,2.9166107177734375,1880.95,1719.3)",
       "matrix(-2.9166107177734375,0,0,-2.9166107177734375,1780.95,2069.3)",
@@ -48,24 +52,28 @@ const PART_DEFINITIONS: Record<AnimationPart, PartDefinition> = {
   },
   leftLeg: {
     pivot: { x: 1042.6, y: 1961.9 },
+    parent: "body",
     autoDetectTransforms: [
       "matrix(2.9166107177734375,0,0,2.9166107177734375,1042.6,1961.9)",
     ],
   },
   rightLeg: {
     pivot: { x: 1463.45, y: 1961.9 },
+    parent: "body",
     autoDetectTransforms: [
       "matrix(2.9166107177734375,0,0,2.9166107177734375,1463.45,1961.9)",
     ],
   },
   tail: {
     pivot: { x: 468.15, y: 1761.65 },
+    parent: "body",
     autoDetectTransforms: [
       "matrix(2.9166107177734375,0,0,2.9166107177734375,468.15,1761.65)",
     ],
   },
   fin: {
     pivot: { x: 1181.8, y: 460.1 },
+    parent: "head",
     autoDetectTransforms: [
       "matrix(2.9166107177734375,0,0,2.9166107177734375,1181.8,460.1)",
     ],
