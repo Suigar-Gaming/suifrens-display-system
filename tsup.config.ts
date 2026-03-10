@@ -5,6 +5,9 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   dts: true,
+  loader: {
+    ".svg": "dataurl",
+  },
   format: ["esm", "cjs"],
   treeshake: true,
   external: ["react", "react-dom"],

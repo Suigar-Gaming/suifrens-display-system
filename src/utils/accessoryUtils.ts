@@ -1,7 +1,28 @@
+import type { AnimationPart } from "../animation/parts.js";
+
+export type SuiFrenSpecies = "capy" | "bullshark";
+
+export type AccessoryPlacement = {
+  x?: number;
+  y?: number;
+  scale?: number;
+  rotation?: number;
+  originX?: number;
+  originY?: number;
+};
+
+export type AccessoryRenderOptions = Record<string, unknown> & {
+  showEars?: boolean;
+  showFin?: boolean;
+  assetSrc?: string;
+  placement?: Partial<Record<SuiFrenSpecies, AccessoryPlacement>>;
+  animationPart?: AnimationPart;
+};
+
 export type AccessoryMetadata = {
   type: string;
   category: string;
-  renderOptions: Record<string, any>;
+  renderOptions: AccessoryRenderOptions;
   name: string;
   price: number;
   quantity: number | null;

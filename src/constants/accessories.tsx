@@ -1,4 +1,5 @@
 import { AccessoryMetadata } from "../utils/accessoryUtils.js";
+import { vipCrownAccessories } from "./vip-crowns.js";
 
 export const accessories: AccessoryMetadata[] = [
   {
@@ -551,4 +552,5 @@ export const accessories: AccessoryMetadata[] = [
     description: "",
     collection: "",
   },
+  ...vipCrownAccessories,
 ];

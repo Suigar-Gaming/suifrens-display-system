@@ -57,6 +57,11 @@ import { XRGoggles } from "./head/XRGoggles.js";
 import { GlassesY2K } from "./eyes/GlassesY2k.js";
 import { Wings } from "./back/Wings.js";
 import { SaddleShoes } from "./feet/SaddleShoes.js";
+import { SvgAccessory } from "./SvgAccessory.js";
+import type {
+  AccessoryMetadata,
+  SuiFrenSpecies,
+} from "../../utils/accessoryUtils.js";
 
 const ACCESSORY_TYPE_BY_NAME = new Map(
   accessories.map((item) => [item.name, item.type])
@@ -94,10 +99,16 @@ export type BodyAccessoryProps = {
 };
 
 type AccessoryProps = BodyAccessoryProps & {
-  accessory: string;
+  accessory: AccessoryMetadata;
+  species: SuiFrenSpecies;
 };
 
-type AccessoryRenderer = (props: BodyAccessoryProps) => JSX.Element;
+type AccessoryRendererProps = BodyAccessoryProps & {
+  accessory: AccessoryMetadata;
+  species: SuiFrenSpecies;
+};
+
+type AccessoryRenderer = (props: AccessoryRendererProps) => JSX.Element;
 
 const ACCESSORY_RENDERERS: Record<string, AccessoryRenderer> = {
   "8 bit glasses": () => <Glasses8Bit />,
@@ -110,7 +121,9 @@ const ACCESSORY_RENDERERS: Record<string, AccessoryRenderer> = {
   boots: () => <Boots />,
   brush: () => <Brush />,
   "bug eyes": () => <GlassesY2K />,
-  "business shirt": (props) => <BussinessShirt lor={props.lor} body={props.body} />,
+  "business shirt": (props) => (
+    <BussinessShirt lor={props.lor} body={props.body} />
+  ),
   "business slacks": () => <BusinessSlacks />,
   cardigan: (props) => <Cardigan lor={props.lor} body={props.body} />,
   "casual shoes": () => <CasualShoes />,
@@ -123,7 +136,9 @@ const ACCESSORY_RENDERERS: Record<string, AccessoryRenderer> = {
   "hair bow": () => <HairBow />,
   "heart shirt": (props) => <HeartShirt lor={props.lor} body={props.body} />,
   lasso: () => <Lasso />,
-  "leather jacket": (props) => <LeatherJacket lor={props.lor} body={props.body} />,
+  "leather jacket": (props) => (
+    <LeatherJacket lor={props.lor} body={props.body} />
+  ),
   lifeguard: (props) => <Lifeguard lor={props.lor} body={props.body} />,
   "magic wand": () => <MagicWand />,
   microphone: () => <Microphone />,
@@ -159,14 +174,32 @@ const ACCESSORY_RENDERERS: Record<string, AccessoryRenderer> = {
 };
 
 export function Accessory(props: AccessoryProps) {
-  const renderer = ACCESSORY_RENDERERS[props.accessory];
-  if (!renderer) {
+  const renderer = ACCESSORY_RENDERERS[props.accessory.name];
+  const fallbackPart =
+    props.accessory.renderOptions.animationPart ??
+    resolveFallbackPart(props.accessory.name);
+
+  if (!renderer && !props.accessory.renderOptions.assetSrc) {
     return null;
   }
-  const fallbackPart = resolveFallbackPart(props.accessory);
+
+  const renderedAccessory = renderer ? (
+    renderer(props)
+  ) : props.accessory.renderOptions.assetSrc ? (
+    <SvgAccessory
+      assetSrc={props.accessory.renderOptions.assetSrc}
+      species={props.species}
+      placement={props.accessory.renderOptions.placement}
+    />
+  ) : null;
+
+  if (!renderedAccessory) {
+    return null;
+  }
+
   return (
     <AnimatedAccessory fallbackPart={fallbackPart}>
-      {renderer({ lor: props.lor, body: props.body })}
+      {renderedAccessory}
     </AnimatedAccessory>
   );
 }
