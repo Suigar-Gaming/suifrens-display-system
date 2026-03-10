@@ -44,27 +44,38 @@ export function CapyImage({
   return (
     <>
       {accessoriesByType?.back?.category === "wings" && (
-        <Accessory accessory={accessoriesByType.back.name} lor="left" />
+        <Accessory
+          accessory={accessoriesByType.back}
+          species="capy"
+          lor="left"
+        />
       )}
 
       <RightArm
         fill={colorTheme.arms}
         handProps={{ fill: colorTheme.appendages }}
       />
-      {!incognito && (
-        <RightArmPattern
-          skin={skin}
-          fill={colorTheme.patterns}
+      {!incognito && <RightArmPattern skin={skin} fill={colorTheme.patterns} />}
+      {accessoriesByType?.back?.category === "wings" && (
+        <Accessory
+          accessory={accessoriesByType.back}
+          species="capy"
+          lor="right"
         />
       )}
-      {accessoriesByType?.back?.category === "wings" && (
-        <Accessory accessory={accessoriesByType.back.name} lor="right" />
-      )}
       {accessoriesByType?.torso && (
-        <Accessory accessory={accessoriesByType?.torso.name} lor="left" />
+        <Accessory
+          accessory={accessoriesByType.torso}
+          species="capy"
+          lor="left"
+        />
       )}
       {accessoriesByType?.body && (
-        <Accessory accessory={accessoriesByType?.body.name} lor="left" />
+        <Accessory
+          accessory={accessoriesByType.body}
+          species="capy"
+          lor="left"
+        />
       )}
 
       <RightLeg
@@ -79,13 +90,13 @@ export function CapyImage({
       )}
       {accessoriesByType?.back &&
         accessoriesByType?.back?.category !== "wings" && (
-          <Accessory accessory={accessoriesByType?.back.name} />
+          <Accessory accessory={accessoriesByType.back} species="capy" />
         )}
       {accessoriesByType?.legs && (
-        <Accessory accessory={accessoriesByType?.legs.name} body />
+        <Accessory accessory={accessoriesByType.legs} species="capy" body />
       )}
       {accessoriesByType?.torso && (
-        <Accessory accessory={accessoriesByType?.torso.name} body />
+        <Accessory accessory={accessoriesByType.torso} species="capy" body />
       )}
 
       <LeftLeg
@@ -95,35 +106,38 @@ export function CapyImage({
       {!incognito && <LeftLegPattern skin={skin} fill={colorTheme.patterns} />}
 
       {accessoriesByType?.feet && (
-        <Accessory accessory={accessoriesByType?.feet.name} />
+        <Accessory accessory={accessoriesByType.feet} species="capy" />
       )}
       {accessoriesByType?.legs && (
-        <Accessory accessory={accessoriesByType?.legs.name} />
+        <Accessory accessory={accessoriesByType.legs} species="capy" />
       )}
       {accessoriesByType?.body && (
-        <Accessory accessory={accessoriesByType?.body.name} body />
+        <Accessory accessory={accessoriesByType.body} species="capy" body />
       )}
       {accessoriesByType?.object && (
-        <Accessory accessory={accessoriesByType?.object.name} />
+        <Accessory accessory={accessoriesByType.object} species="capy" />
       )}
 
       <LeftArm
         fill={colorTheme.arms}
         handProps={{ fill: colorTheme.appendages }}
       />
-      {!incognito && (
-        <LeftArmPattern
-          skin={skin}
-          fill={colorTheme.patterns}
+      {!incognito && <LeftArmPattern skin={skin} fill={colorTheme.patterns} />}
+
+      {accessoriesByType?.torso && (
+        <Accessory
+          accessory={accessoriesByType.torso}
+          species="capy"
+          lor="right"
         />
       )}
 
-      {accessoriesByType?.torso && (
-        <Accessory accessory={accessoriesByType?.torso.name} lor="right" />
-      )}
-
       {accessoriesByType?.body && (
-        <Accessory accessory={accessoriesByType?.body.name} lor="right" />
+        <Accessory
+          accessory={accessoriesByType.body}
+          species="capy"
+          lor="right"
+        />
       )}
 
       {showEars && (
@@ -154,10 +168,10 @@ export function CapyImage({
 
       {!incognito && <Expression expression={expression} />}
       {accessoriesByType?.head && (
-        <Accessory accessory={accessoriesByType?.head.name} />
+        <Accessory accessory={accessoriesByType.head} species="capy" />
       )}
       {accessoriesByType?.eyes && (
-        <Accessory accessory={accessoriesByType?.eyes.name} />
+        <Accessory accessory={accessoriesByType.eyes} species="capy" />
       )}
     </>
   );

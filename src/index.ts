@@ -21,7 +21,12 @@ export type {
   CapySkin,
 } from "./components/capy-image/types.js";
 
-export type { AccessoryMetadata } from "./utils/accessoryUtils.js";
+export type {
+  AccessoryMetadata,
+  AccessoryPlacement,
+  AccessoryRenderOptions,
+  SuiFrenSpecies,
+} from "./utils/accessoryUtils.js";
 export { getAccessoriesByType } from "./utils/accessoryUtils.js";
 
 export {
@@ -48,6 +53,20 @@ export { getPresetSequence } from "./animation/presets.js";
 export { colors } from "./constants/colors.js";
 export { earGeneToEarShape } from "./constants/attributes.js";
 export { accessories } from "./constants/accessories.js";
+export type { ExpressionMood } from "./constants/expressions.js";
+export {
+  ALL_BULLSHARK_EXPRESSIONS,
+  ALL_CAPY_EXPRESSIONS,
+  NEGATIVE_BULLSHARK_EXPRESSIONS,
+  NEGATIVE_CAPY_EXPRESSIONS,
+  POSITIVE_BULLSHARK_EXPRESSIONS,
+  POSITIVE_CAPY_EXPRESSIONS,
+} from "./constants/expressions.js";
+export {
+  VIP_CROWN_ACCESSORY_NAMES,
+  vipCrownAccessories,
+} from "./constants/vip-crowns.js";
+export type { VipCrownAccessoryName } from "./constants/vip-crowns.js";
 
 export { MinecraftHealthBar } from "./components/battle/MinecraftHealthBar.js";
 export type { MinecraftHealthBarProps } from "./components/battle/MinecraftHealthBar.js";
