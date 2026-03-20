@@ -41,3 +41,20 @@ The package is ready to consume without any build step when installed from GitHu
 ```
 
 Then install with your package manager (`npm install`, `pnpm install`, etc.). Only the peer dependencies `react` and `react-dom` are required in the consuming app.
+
+### Recommended imports
+
+For the smallest consumer bundles, prefer subpath imports for runtime values instead of the root entry:
+
+```ts
+import { SuiFrenImage } from "@suigar/suifrens-display-system/image";
+import { accessories } from "@suigar/suifrens-display-system/accessories";
+import { colors } from "@suigar/suifrens-display-system/colors";
+import { earGeneToEarShape } from "@suigar/suifrens-display-system/attributes";
+import {
+  POSITIVE_CAPY_EXPRESSIONS,
+  NEGATIVE_BULLSHARK_EXPRESSIONS,
+} from "@suigar/suifrens-display-system/expressions";
+```
+
+The root package entry still works, but it intentionally exposes the full public API and is heavier for bundlers to analyze.

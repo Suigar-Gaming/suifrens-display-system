@@ -1,5 +1,4 @@
 import { AnimatedAccessory } from "../../animation/AnimatedAccessory.js";
-import { accessories } from "../../constants/accessories.js";
 import type { AnimationPart } from "../../animation/parts.js";
 import { Apron } from "./body/Apron.js";
 import { Cardigan } from "./body/Cardigan.js";
@@ -58,14 +57,11 @@ import { GlassesY2K } from "./eyes/GlassesY2k.js";
 import { Wings } from "./back/Wings.js";
 import { SaddleShoes } from "./feet/SaddleShoes.js";
 import { SvgAccessory } from "./SvgAccessory.js";
+import { getVipCrownAssetSrc } from "./crownAssets.js";
 import type {
   AccessoryMetadata,
   SuiFrenSpecies,
 } from "../../utils/accessoryUtils.js";
-
-const ACCESSORY_TYPE_BY_NAME = new Map(
-  accessories.map((item) => [item.name, item.type])
-);
 
 const TYPE_FALLBACK: Partial<Record<string, AnimationPart>> = {
   head: "head",
@@ -81,16 +77,22 @@ const NAME_SPECIFIC_FALLBACK: Partial<Record<string, AnimationPart>> = {
   "superhero cape": "body",
 };
 
-function resolveFallbackPart(name: string): AnimationPart | undefined {
+function resolveFallbackPart(
+  accessory: Pick<AccessoryMetadata, "name" | "type">
+): AnimationPart | undefined {
+  const { name, type } = accessory;
   const specific = NAME_SPECIFIC_FALLBACK[name];
   if (specific) {
     return specific;
   }
-  const type = ACCESSORY_TYPE_BY_NAME.get(name);
-  if (!type) {
-    return undefined;
-  }
   return TYPE_FALLBACK[type];
+}
+
+function resolveAssetSrc(accessory: AccessoryMetadata) {
+  return accessory.renderOptions.assetSrc ??
+    (accessory.category === "crowns"
+      ? getVipCrownAssetSrc(accessory.name)
+      : undefined);
 }
 
 export type BodyAccessoryProps = {
@@ -175,19 +177,20 @@ const ACCESSORY_RENDERERS: Record<string, AccessoryRenderer> = {
 
 export function Accessory(props: AccessoryProps) {
   const renderer = ACCESSORY_RENDERERS[props.accessory.name];
+  const assetSrc = resolveAssetSrc(props.accessory);
   const fallbackPart =
     props.accessory.renderOptions.animationPart ??
-    resolveFallbackPart(props.accessory.name);
+    resolveFallbackPart(props.accessory);
 
-  if (!renderer && !props.accessory.renderOptions.assetSrc) {
+  if (!renderer && !assetSrc) {
     return null;
   }
 
   const renderedAccessory = renderer ? (
     renderer(props)
-  ) : props.accessory.renderOptions.assetSrc ? (
+  ) : assetSrc ? (
     <SvgAccessory
-      assetSrc={props.accessory.renderOptions.assetSrc}
+      assetSrc={assetSrc}
       species={props.species}
       placement={props.accessory.renderOptions.placement}
     />

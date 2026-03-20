@@ -1,0 +1,24 @@
+import { CSSProperties, ReactNode } from "react";
+import type { AnimationConfig, AnimationSequence, AnimationDirection, PlaybackOptions, PlayState } from "../animation/types.js";
+import { SuiFrenAttributes } from "./types.js";
+import { AccessoryMetadata } from "../utils/accessoryUtils.js";
+export type SuiFrenImageProps = {
+    attributes: SuiFrenAttributes;
+    accessories?: AccessoryMetadata[];
+    incognito?: boolean;
+    shadow?: boolean;
+    logo?: ReactNode;
+    className?: string;
+    style?: CSSProperties;
+    animation?: AnimationConfig | null;
+    animationPreset?: string;
+    animationSequence?: AnimationSequence;
+    animationPlayback?: PlaybackOptions;
+    animationPlayState?: PlayState;
+    animationDirection?: AnimationDirection;
+    animationTrigger?: string | number;
+    animationStartAt?: "start" | "end";
+    animationAutoPlay?: boolean;
+    animationHoldOnComplete?: boolean;
+};
+export declare function SuiFrenImage({ attributes, accessories, incognito, shadow, logo, className, style, animation: animationProp, animationPreset, animationSequence, animationPlayback, animationPlayState, animationDirection, animationTrigger, animationStartAt, animationAutoPlay, animationHoldOnComplete, }: SuiFrenImageProps): import("react/jsx-runtime").JSX.Element;
