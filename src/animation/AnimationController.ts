@@ -8,7 +8,6 @@ import type {
   PartPose,
   PlayState,
 } from "./types.js";
-import { getPresetSequence } from "./presets.js";
 
 const DEFAULT_TRANSITION_MS = 140;
 
@@ -233,7 +232,7 @@ export class AnimationController {
     if ("sequence" in config) {
       return config.sequence;
     }
-    return getPresetSequence(config.preset) ?? null;
+    return null;
   }
 
   private resolvePlayState(config: AnimationConfig): PlayState {

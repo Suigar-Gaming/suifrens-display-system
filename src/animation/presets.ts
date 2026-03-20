@@ -1,6 +1,7 @@
 import type { AnimationSequence, AnimationKeyframe } from "./types.js";
 import type { AnimationPart } from "./parts.js";
 import { BATTLE_ROYALE_PRESETS } from "./battleRoyalePresets.js";
+import { CORE_PRESET_SEQUENCES } from "./corePresets.js";
 
 const WALK_DURATION = 1200;
 
@@ -650,17 +651,8 @@ const showcaseSequence = combineSequences("walkJumpSit", [
 ]);
 
 const PRESETS: Record<string, AnimationSequence> = {
-  walk: walkSequence,
-  celebrate: celebrateSequence,
-  victory: celebrateSequence,
-  jackpot: jackpotSequence,
-  slotPull: slotPullSequence,
-  suspense: suspenseSequence,
-  jump: jumpSequence,
-  sit: sitSequence,
-  stand: standSequence,
-  idle: idleSequence,
-  walkJumpSit: showcaseSequence,
+  ...CORE_PRESET_SEQUENCES,
+  victory: CORE_PRESET_SEQUENCES.celebrate,
   ...BATTLE_ROYALE_PRESETS,
 };
 
