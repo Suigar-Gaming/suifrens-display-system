@@ -1,5 +1,5 @@
 export { SuiFrenImage } from "./components/SuiFrenImage.js";
-export type { SuiFrenImageProps } from "./components/SuiFrenImage.js";
+export type { SuiFrenImageProps, SuiFrenRenderSize, } from "./components/SuiFrenImage.js";
 export { BullsharkImage } from "./components/bullshark-image/BullsharkImage.js";
 export type { BullsharkImageProps } from "./components/bullshark-image/BullsharkImage.js";
 export { CapyImage } from "./components/capy-image/CapyImage.js";

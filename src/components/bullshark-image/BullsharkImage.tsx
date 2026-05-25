@@ -23,12 +23,14 @@ import { Accessory } from "../accessories/index.js";
 export type BullsharkImageProps = {
   attributes: BullsharkAttributes;
   accessoriesByType?: Record<string, AccessoryMetadata>;
+  detail?: "full" | "head";
   incognito?: boolean;
 };
 
 export function BullsharkImage({
   attributes,
   accessoriesByType,
+  detail = "full",
   incognito = false,
 }: BullsharkImageProps) {
   const { mainColor, secondaryColor, skin, expression } = attributes;
@@ -39,6 +41,30 @@ export function BullsharkImage({
   );
   const headAccessory = accessoriesByType?.head;
   const showFin = !headAccessory || headAccessory.renderOptions.showFin;
+
+  if (detail === "head") {
+    return (
+      <>
+        {showFin && (
+          <>
+            <Fin fill={colorTheme.fin} />
+            {!incognito && (
+              <FinPattern skin={skin} fill={colorTheme.patterns} />
+            )}
+          </>
+        )}
+        <Head fill={colorTheme.head} />
+        {!incognito && <HeadPattern skin={skin} fill={colorTheme.patterns} />}
+        {!incognito && <Expression expression={expression} />}
+        {headAccessory && (
+          <Accessory accessory={headAccessory} species="bullshark" />
+        )}
+        {accessoriesByType?.eyes && (
+          <Accessory accessory={accessoriesByType.eyes} species="bullshark" />
+        )}
+      </>
+    );
+  }
 
   return (
     <>

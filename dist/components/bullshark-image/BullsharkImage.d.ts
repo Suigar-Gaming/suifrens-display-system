@@ -3,6 +3,7 @@ import { BullsharkAttributes } from "./types.js";
 export type BullsharkImageProps = {
     attributes: BullsharkAttributes;
     accessoriesByType?: Record<string, AccessoryMetadata>;
+    detail?: "full" | "head";
     incognito?: boolean;
 };
-export declare function BullsharkImage({ attributes, accessoriesByType, incognito, }: BullsharkImageProps): import("react/jsx-runtime").JSX.Element;
+export declare function BullsharkImage({ attributes, accessoriesByType, detail, incognito, }: BullsharkImageProps): import("react/jsx-runtime").JSX.Element;

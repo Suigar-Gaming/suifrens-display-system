@@ -14,9 +14,18 @@ import { assertUnreachable } from "../utils/assertUnreachable.js";
 import { CapyImage } from "./capy-image/CapyImage.js";
 import { getAccessoriesByType } from "../utils/accessoryUtils.js";
 
+export type SuiFrenRenderSize =
+  | number
+  | {
+      width: number;
+      height: number;
+    };
+
 export type SuiFrenImageProps = {
   attributes: SuiFrenAttributes;
   accessories?: AccessoryMetadata[];
+  detail?: "full" | "head";
+  renderSize?: SuiFrenRenderSize;
   incognito?: boolean;
   shadow?: boolean;
   logo?: ReactNode;
@@ -37,6 +46,8 @@ export type SuiFrenImageProps = {
 export function SuiFrenImage({
   attributes,
   accessories,
+  detail = "full",
+  renderSize,
   incognito = false,
   shadow = false,
   logo,
@@ -63,6 +74,7 @@ export function SuiFrenImage({
       <BullsharkImage
         accessoriesByType={accessoriesByType}
         attributes={attributes}
+        detail={detail}
         incognito={incognito}
       />
     );
@@ -71,6 +83,7 @@ export function SuiFrenImage({
       <CapyImage
         accessoriesByType={accessoriesByType}
         attributes={attributes}
+        detail={detail}
         incognito={incognito}
       />
     );
@@ -130,6 +143,11 @@ export function SuiFrenImage({
     animationHoldOnComplete,
   ]);
 
+  const resolvedSize =
+    typeof renderSize === "number"
+      ? { width: renderSize, height: renderSize }
+      : renderSize;
+
   return (
     <svg
       version="1.1"
@@ -137,6 +155,8 @@ export function SuiFrenImage({
       xmlnsXlink="http://www.w3.org/1999/xlink"
       x="0px"
       y="0px"
+      width={resolvedSize?.width}
+      height={resolvedSize?.height}
       viewBox="0 0 3000 3000"
       className={["suifren-image", className].filter(Boolean).join(" ")}
       style={style}

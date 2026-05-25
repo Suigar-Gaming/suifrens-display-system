@@ -1,4 +1,7 @@
-export type { SuiFrenImageProps } from "./components/SuiFrenImage.js";
+export type {
+  SuiFrenImageProps,
+  SuiFrenRenderSize,
+} from "./components/SuiFrenImage.js";
 export type { SuiFrenAttributes, SuiFrenType } from "./components/types.js";
 export type {
   BullsharkAttributes,
