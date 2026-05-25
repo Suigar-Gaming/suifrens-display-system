@@ -23,12 +23,14 @@ import { Accessory } from "../accessories/index.js";
 export type CapyImageProps = {
   attributes: CapyAttributes;
   accessoriesByType?: Record<string, AccessoryMetadata>;
+  detail?: "full" | "head";
   incognito?: boolean;
 };
 
 export function CapyImage({
   attributes,
   accessoriesByType,
+  detail = "full",
   incognito = false,
 }: CapyImageProps) {
   const { mainColor, secondaryColor, skin, earShape, expression } = attributes;
@@ -40,6 +42,46 @@ export function CapyImage({
   );
   const headAccessory = accessoriesByType?.head;
   const showEars = !headAccessory || headAccessory.renderOptions.showEars;
+
+  if (detail === "head") {
+    return (
+      <>
+        {showEars && (
+          <RightEar
+            earShape={earShape}
+            outerEarProps={{ fill: colorTheme.outerEars }}
+            innerEarProps={{ fill: colorTheme.innerEars }}
+            fill={colorTheme.outerEars}
+          />
+        )}
+
+        <Head fill={colorTheme.head} />
+        <HeadPattern
+          skin={skin}
+          fill={colorTheme.patterns}
+          noseProps={{ fill: colorTheme.nose }}
+        />
+        {!incognito && <Nostrils />}
+
+        {showEars && (
+          <LeftEar
+            earShape={earShape}
+            outerEarProps={{ fill: colorTheme.outerEars }}
+            innerEarProps={{ fill: colorTheme.innerEars }}
+            fill={colorTheme.outerEars}
+          />
+        )}
+
+        {!incognito && <Expression expression={expression} />}
+        {accessoriesByType?.head && (
+          <Accessory accessory={accessoriesByType.head} species="capy" />
+        )}
+        {accessoriesByType?.eyes && (
+          <Accessory accessory={accessoriesByType.eyes} species="capy" />
+        )}
+      </>
+    );
+  }
 
   return (
     <>

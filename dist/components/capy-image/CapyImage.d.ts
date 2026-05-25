@@ -3,6 +3,7 @@ import { CapyAttributes } from "./types.js";
 export type CapyImageProps = {
     attributes: CapyAttributes;
     accessoriesByType?: Record<string, AccessoryMetadata>;
+    detail?: "full" | "head";
     incognito?: boolean;
 };
-export declare function CapyImage({ attributes, accessoriesByType, incognito, }: CapyImageProps): import("react/jsx-runtime").JSX.Element;
+export declare function CapyImage({ attributes, accessoriesByType, detail, incognito, }: CapyImageProps): import("react/jsx-runtime").JSX.Element;
