@@ -13,11 +13,14 @@ export declare class AnimationController {
     private transitionStartedAt;
     private transitionDurationMs;
     private lastPoses;
+    private completionSettled;
     constructor(store: AnimationStore);
     applyConfig(config: AnimationConfig | null): void;
     stop(): void;
-    update(deltaMs: number): void;
+    needsAnimationFrame(): boolean;
+    update(deltaMs: number): boolean;
     private resolveSequence;
     private resolvePlayState;
+    private settleCompletedPlayback;
     private syncCurrentPoses;
 }

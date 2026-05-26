@@ -1,19 +1,76 @@
 import { getPartDefinition, type AnimationPart } from "./parts.js";
-import { IDENTITY_MATRIX, matrixToString, multiplyMatrix, parseMatrix, rotateMatrix, translateMatrix } from "./matrix.js";
+import {
+  IDENTITY_MATRIX,
+  matrixToString,
+  multiplyMatrix,
+  parseMatrix,
+  rotateMatrix,
+  translateMatrix,
+} from "./matrix.js";
 import type { PartPose } from "./types.js";
 
 type Registration = {
   getBaseTransform: () => string | undefined;
   setTransform: (value: string) => void;
   pivotOverride?: { x: number; y: number };
+  lastTransform?: string;
+};
+
+type ElementRegistration = {
+  references: number;
+  unregister: () => void;
 };
 
 const ZERO_POSE: PartPose = {};
 const TRANSLATE_SCALE = 4;
 
 export class AnimationStore {
+  public readonly usesDirectDomTransforms = true;
   private registrations = new Map<AnimationPart, Set<Registration>>();
   private poses = new Map<AnimationPart, PartPose>();
+  private elementRegistrations = new WeakMap<
+    SVGGraphicsElement,
+    Map<AnimationPart, ElementRegistration>
+  >();
+
+  registerElement(
+    part: AnimationPart,
+    element: SVGGraphicsElement,
+    pivotOverride?: { x: number; y: number }
+  ) {
+    let partRegistrations = this.elementRegistrations.get(element);
+    if (!partRegistrations) {
+      partRegistrations = new Map();
+      this.elementRegistrations.set(element, partRegistrations);
+    }
+    const existing = partRegistrations.get(part);
+    if (existing) {
+      existing.references += 1;
+      return () => {
+        existing.references -= 1;
+        if (!existing.references) {
+          existing.unregister();
+          partRegistrations.delete(part);
+        }
+      };
+    }
+
+    const baseTransform = element.getAttribute("transform") ?? undefined;
+    const unregister = this.register(part, {
+      getBaseTransform: () => baseTransform,
+      setTransform: (value) => element.setAttribute("transform", value),
+      pivotOverride,
+    });
+    const registration = { references: 1, unregister };
+    partRegistrations.set(part, registration);
+    return () => {
+      registration.references -= 1;
+      if (!registration.references) {
+        registration.unregister();
+        partRegistrations.delete(part);
+      }
+    };
+  }
 
   register(part: AnimationPart, registration: Registration) {
     const existing = this.registrations.get(part);
@@ -23,7 +80,7 @@ export class AnimationStore {
       this.registrations.set(part, new Set([registration]));
     }
     const pose = this.poses.get(part) ?? ZERO_POSE;
-    registration.setTransform(this.compose(part, registration, pose));
+    this.setTransform(registration, this.compose(part, registration, pose));
     return () => {
       const collection = this.registrations.get(part);
       if (!collection) {
@@ -45,7 +102,17 @@ export class AnimationStore {
     this.notifyWithDependents(part);
   }
 
+  setPoses(poses: Map<AnimationPart, PartPose>) {
+    this.poses = new Map(poses);
+    for (const part of this.registrations.keys()) {
+      this.notify(part);
+    }
+  }
+
   clear() {
+    if (!this.poses.size) {
+      return;
+    }
     this.poses.clear();
     for (const part of this.registrations.keys()) {
       this.notify(part);
@@ -67,8 +134,16 @@ export class AnimationStore {
       return;
     }
     for (const registration of registrations) {
-      registration.setTransform(this.compose(part, registration, pose));
+      this.setTransform(registration, this.compose(part, registration, pose));
     }
+  }
+
+  private setTransform(registration: Registration, value: string) {
+    if (registration.lastTransform === value) {
+      return;
+    }
+    registration.lastTransform = value;
+    registration.setTransform(value);
   }
 
   private notifyWithDependents(part: AnimationPart) {
@@ -90,12 +165,17 @@ export class AnimationStore {
     return false;
   }
 
-  private compose(part: AnimationPart, registration: Registration, pose: PartPose) {
+  private compose(
+    part: AnimationPart,
+    registration: Registration,
+    pose: PartPose
+  ) {
     const baseTransform = registration.getBaseTransform();
     const baseMatrix = parseMatrix(baseTransform) ?? IDENTITY_MATRIX;
     let composed = baseMatrix;
 
-    const pivotSource = registration.pivotOverride ?? getPartDefinition(part).pivot;
+    const pivotSource =
+      registration.pivotOverride ?? getPartDefinition(part).pivot;
 
     if (pose.rotate !== undefined) {
       const rotate = rotateMatrix(pose.rotate, pivotSource.x, pivotSource.y);
@@ -116,7 +196,11 @@ export class AnimationStore {
       if (parentPose) {
         const parentPivot = getPartDefinition(parent).pivot;
         if (parentPose.rotate !== undefined) {
-          const rotate = rotateMatrix(parentPose.rotate, parentPivot.x, parentPivot.y);
+          const rotate = rotateMatrix(
+            parentPose.rotate,
+            parentPivot.x,
+            parentPivot.y
+          );
           composed = multiplyMatrix(rotate, composed);
         }
         if (parentPose.translate) {

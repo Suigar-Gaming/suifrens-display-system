@@ -4,5 +4,5 @@ type AnimatedAccessoryProps = {
     children: ReactElement;
     fallbackPart?: AnimationPart;
 };
-export declare function AnimatedAccessory({ children, fallbackPart }: AnimatedAccessoryProps): import("react/jsx-runtime").JSX.Element;
+export declare function AnimatedAccessory({ children, fallbackPart, }: AnimatedAccessoryProps): import("react/jsx-runtime").JSX.Element;
 export {};
