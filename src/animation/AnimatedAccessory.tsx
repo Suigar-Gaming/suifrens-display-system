@@ -93,6 +93,7 @@ export function AnimatedAccessory({
         store.register(fallbackPart, {
           getBaseTransform: () => baseTransform,
           setTransform: (value) => svgElement.setAttribute("transform", value),
+          element: svgElement as SVGGraphicsElement,
         })
       );
     }
@@ -111,11 +112,17 @@ export function AnimatedAccessory({
       children as ReactElement<any>,
       {
         ref: mergeRefs((children as any).ref, localRef),
+        "data-suifren-animation-part": fallbackPart,
       } as any
     );
   }
 
   return (
-    <g ref={localRef as MutableRefObject<SVGGElement | null>}>{children}</g>
+    <g
+      ref={localRef as MutableRefObject<SVGGElement | null>}
+      data-suifren-animation-part={fallbackPart}
+    >
+      {children}
+    </g>
   );
 }
