@@ -36,8 +36,8 @@ function minifySvg(markup: string) {
   return svg;
 }
 
-function importName(accessoryName: string, variant: string) {
-  const parts = `${accessoryName}-${variant}`
+function importName(accessoryName: string) {
+  const parts = accessoryName
     .replace(/[^a-zA-Z0-9]+/g, " ")
     .trim()
     .split(/\s+/);
@@ -49,6 +49,49 @@ function importName(accessoryName: string, variant: string) {
     )
     .join("");
   return /^[0-9]/.test(name) ? `asset${name}` : name;
+}
+
+function extractSvgContent(markup: string) {
+  return markup.replace(/^<svg[^>]*>/, "").replace(/<\/svg>$/, "");
+}
+
+function scopeSvgReferences(markup: string, prefix: string) {
+  return markup
+    .replace(/id="([^"]+)"/g, `id="${prefix}-$1"`)
+    .replace(/url\(#([^)]+)\)/g, `url(#${prefix}-$1)`)
+    .replace(/(href|xlink:href)="#([^"]+)"/g, `$1="#${prefix}-$2"`);
+}
+
+function extractGroupByRole(markup: string, role: string) {
+  const idMatch = new RegExp(`id="[^"]*${role}[^"]*"`).exec(markup);
+  if (!idMatch) {
+    return undefined;
+  }
+
+  const start = markup.lastIndexOf("<g", idMatch.index);
+  if (start === -1) {
+    return undefined;
+  }
+
+  const tagMatcher = /<\/?g\b[^>]*>/g;
+  tagMatcher.lastIndex = start;
+  let depth = 0;
+  for (
+    let match = tagMatcher.exec(markup);
+    match;
+    match = tagMatcher.exec(markup)
+  ) {
+    if (match[0].startsWith("</")) {
+      depth -= 1;
+      if (depth === 0) {
+        return markup.slice(start, tagMatcher.lastIndex);
+      }
+    } else {
+      depth += 1;
+    }
+  }
+
+  return undefined;
 }
 
 function makeAccessory(name: string): AccessoryMetadata {
@@ -70,41 +113,86 @@ await mkdir("src/generated", { recursive: true });
 
 const imports: string[] = [];
 const manifestEntries: string[] = [];
+const splitLimbAssetNames: string[] = [];
 
 for (const [name, renderer] of Object.entries(ACCESSORY_RENDERERS).sort(
   ([left], [right]) => left.localeCompare(right)
 )) {
-  const variants: string[] = [];
+  const symbols: string[] = [];
+  const baseProps: AccessoryRendererProps = {
+    accessory: makeAccessory(name),
+    species: "capy",
+  };
+  const baseContent = extractSvgContent(
+    minifySvg(renderToStaticMarkup(renderer(baseProps)))
+  );
+  const bodyGroup = extractGroupByRole(baseContent, "body");
+  const rightLegGroup = extractGroupByRole(baseContent, "backleg");
+  const leftLegGroup = extractGroupByRole(baseContent, "frontleg");
+  const canSplitLegs = bodyGroup && rightLegGroup && leftLegGroup;
+  const canSplitFeet = !bodyGroup && rightLegGroup && leftLegGroup;
 
-  for (const variant of VARIANTS) {
-    const props: AccessoryRendererProps = {
-      accessory: makeAccessory(name),
-      species: "capy",
-      ...variant.props,
-    };
-    const svg = minifySvg(renderToStaticMarkup(renderer(props)));
-    const filename = `${slugify(name)}-${variant.key}.svg`;
-    const importId = importName(name, variant.key);
-
-    await writeFile(join(OUTPUT_DIR, filename), svg);
-    imports.push(`import ${importId} from "./accessory-assets/${filename}";`);
-    variants.push(
-      `${JSON.stringify(
-        variant.key
-      )}: new URL(${importId}, import.meta.url).href`
-    );
+  if (canSplitLegs || canSplitFeet) {
+    splitLimbAssetNames.push(name);
+    const parts = canSplitLegs
+      ? ([
+          ["body", bodyGroup],
+          ["rightLeg", rightLegGroup],
+          ["leftLeg", leftLegGroup],
+        ] as const)
+      : ([
+          ["rightLeg", rightLegGroup],
+          ["leftLeg", leftLegGroup],
+        ] as const);
+    for (const [part, group] of parts) {
+      symbols.push(
+        `<symbol id="${part}" viewBox="0 0 3000 3000">${scopeSvgReferences(
+          group!,
+          `${slugify(name)}-${part}`
+        )}</symbol>`
+      );
+    }
+  } else {
+    for (const variant of VARIANTS) {
+      const props: AccessoryRendererProps = {
+        accessory: makeAccessory(name),
+        species: "capy",
+        ...variant.props,
+      };
+      const svg = minifySvg(renderToStaticMarkup(renderer(props)));
+      const content = scopeSvgReferences(
+        extractSvgContent(svg),
+        `${slugify(name)}-${variant.key}`
+      );
+      symbols.push(
+        `<symbol id="${variant.key}" viewBox="0 0 3000 3000">${content}</symbol>`
+      );
+    }
   }
 
-  manifestEntries.push(`${JSON.stringify(name)}: { ${variants.join(", ")} }`);
+  const filename = `${slugify(name)}.svg`;
+  const importId = importName(name);
+  await writeFile(
+    join(OUTPUT_DIR, filename),
+    `<svg xmlns="http://www.w3.org/2000/svg">${symbols.join("")}</svg>`
+  );
+  imports.push(`import ${importId} from "./accessory-assets/${filename}";`);
+  manifestEntries.push(
+    `${JSON.stringify(name)}: new URL(${importId}, import.meta.url).href`
+  );
 }
 
 const manifest = `${imports.join("\n")}
 
-export type AccessoryAssetVariant = "default" | "body" | "left" | "right";
+export type AccessoryAssetVariant = "default" | "body" | "left" | "right" | "leftLeg" | "rightLeg";
+
+export const SPLIT_LIMB_ASSET_NAMES = new Set<string>(${JSON.stringify(
+  splitLimbAssetNames
+)} as const);
 
 export const ACCESSORY_ASSET_MANIFEST = {
   ${manifestEntries.join(",\n  ")}
-} as const satisfies Record<string, Partial<Record<AccessoryAssetVariant, string>>>;
+} as const satisfies Record<string, string>;
 `;
 
 await writeFile(MANIFEST_PATH, manifest);

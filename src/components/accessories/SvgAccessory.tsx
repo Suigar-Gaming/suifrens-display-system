@@ -36,12 +36,14 @@ function buildPlacementTransform(placement?: AccessoryPlacement) {
 
 export type SvgAccessoryProps = {
   assetSrc: string;
+  symbolId?: string;
   species: SuiFrenSpecies;
   placement?: Partial<Record<SuiFrenSpecies, AccessoryPlacement>>;
 };
 
 export function SvgAccessory({
   assetSrc,
+  symbolId,
   species,
   placement,
 }: SvgAccessoryProps) {
@@ -50,14 +52,24 @@ export function SvgAccessory({
 
   return (
     <g transform={transform}>
-      <image
-        href={assetSrc}
-        x="0"
-        y="0"
-        width="3000"
-        height="3000"
-        preserveAspectRatio="xMidYMid meet"
-      />
+      {symbolId ? (
+        <use
+          href={`${assetSrc}#${symbolId}`}
+          x="0"
+          y="0"
+          width="3000"
+          height="3000"
+        />
+      ) : (
+        <image
+          href={assetSrc}
+          x="0"
+          y="0"
+          width="3000"
+          height="3000"
+          preserveAspectRatio="xMidYMid meet"
+        />
+      )}
     </g>
   );
 }
