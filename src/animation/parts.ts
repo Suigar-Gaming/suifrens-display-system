@@ -32,6 +32,7 @@ const PART_DEFINITIONS: Record<AnimationPart, PartDefinition> = {
     parent: "body",
     autoDetectTransforms: [
       "matrix(2.9166107177734375,0,0,2.9166107177734375,848.15,585.65)",
+      "matrix(2.9166107177734375,0,0,2.9166107177734375,2037.2,948.05)",
     ],
   },
   leftArm: {
