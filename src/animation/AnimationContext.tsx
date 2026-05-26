@@ -16,6 +16,7 @@ import {
   loadDeferredPresetSequence,
   resolvePresetSequenceSync,
 } from "./presetResolver.js";
+import { startWaapiAnimation } from "./waapiBackend.js";
 
 type AnimationContextValue = {
   store: AnimationStore;
@@ -115,6 +116,12 @@ export function AnimationProvider({
   }, [store]);
 
   useEffect(() => {
+    controller.stop();
+    const waapi = startWaapiAnimation(store, resolvedAnimation);
+    if (waapi.handled) {
+      return waapi.cleanup;
+    }
+
     controller.applyConfig(resolvedAnimation);
     if (!controller.needsAnimationFrame()) {
       return;
@@ -157,7 +164,7 @@ export function AnimationProvider({
       document.removeEventListener("visibilitychange", onVisibilityChange);
       cancelAnimationFrame(raf);
     };
-  }, [controller, resolvedAnimation]);
+  }, [controller, resolvedAnimation, store]);
 
   const value = useMemo<AnimationContextValue>(
     () => ({ store, controller }),

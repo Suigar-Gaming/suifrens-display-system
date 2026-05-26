@@ -9,11 +9,12 @@ import {
 } from "./matrix.js";
 import type { PartPose } from "./types.js";
 
-type Registration = {
+export type AnimationRegistration = {
   getBaseTransform: () => string | undefined;
   setTransform: (value: string) => void;
   pivotOverride?: { x: number; y: number };
   lastTransform?: string;
+  element?: SVGGraphicsElement;
 };
 
 type ElementRegistration = {
@@ -24,9 +25,61 @@ type ElementRegistration = {
 const ZERO_POSE: PartPose = {};
 const TRANSLATE_SCALE = 4;
 
+export function composePartTransform(
+  part: AnimationPart,
+  baseTransform: string | undefined,
+  poses: ReadonlyMap<AnimationPart, PartPose>,
+  pivotOverride?: { x: number; y: number }
+) {
+  const baseMatrix = parseMatrix(baseTransform) ?? IDENTITY_MATRIX;
+  let composed = baseMatrix;
+  const pose = poses.get(part) ?? ZERO_POSE;
+
+  const pivotSource = pivotOverride ?? getPartDefinition(part).pivot;
+
+  if (pose.rotate !== undefined) {
+    const rotate = rotateMatrix(pose.rotate, pivotSource.x, pivotSource.y);
+    composed = multiplyMatrix(rotate, composed);
+  }
+
+  if (pose.translate) {
+    const translate = translateMatrix(
+      pose.translate.x * TRANSLATE_SCALE,
+      pose.translate.y * TRANSLATE_SCALE
+    );
+    composed = multiplyMatrix(translate, composed);
+  }
+
+  let parent = getPartDefinition(part).parent;
+  while (parent) {
+    const parentPose = poses.get(parent);
+    if (parentPose) {
+      const parentPivot = getPartDefinition(parent).pivot;
+      if (parentPose.rotate !== undefined) {
+        const rotate = rotateMatrix(
+          parentPose.rotate,
+          parentPivot.x,
+          parentPivot.y
+        );
+        composed = multiplyMatrix(rotate, composed);
+      }
+      if (parentPose.translate) {
+        const translate = translateMatrix(
+          parentPose.translate.x * TRANSLATE_SCALE,
+          parentPose.translate.y * TRANSLATE_SCALE
+        );
+        composed = multiplyMatrix(translate, composed);
+      }
+    }
+    parent = getPartDefinition(parent).parent;
+  }
+
+  return matrixToString(composed);
+}
+
 export class AnimationStore {
   public readonly usesDirectDomTransforms = true;
-  private registrations = new Map<AnimationPart, Set<Registration>>();
+  private registrations = new Map<AnimationPart, Set<AnimationRegistration>>();
   private poses = new Map<AnimationPart, PartPose>();
   private elementRegistrations = new WeakMap<
     SVGGraphicsElement,
@@ -60,6 +113,7 @@ export class AnimationStore {
       getBaseTransform: () => baseTransform,
       setTransform: (value) => element.setAttribute("transform", value),
       pivotOverride,
+      element,
     });
     const registration = { references: 1, unregister };
     partRegistrations.set(part, registration);
@@ -72,7 +126,7 @@ export class AnimationStore {
     };
   }
 
-  register(part: AnimationPart, registration: Registration) {
+  register(part: AnimationPart, registration: AnimationRegistration) {
     const existing = this.registrations.get(part);
     if (existing) {
       existing.add(registration);
@@ -123,6 +177,18 @@ export class AnimationStore {
     return Array.from(this.registrations.keys());
   }
 
+  getAnimationTargets() {
+    return Array.from(this.registrations.entries()).flatMap(
+      ([part, registrations]) =>
+        Array.from(registrations, (registration) => ({
+          part,
+          element: registration.element,
+          baseTransform: registration.getBaseTransform(),
+          pivotOverride: registration.pivotOverride,
+        }))
+    );
+  }
+
   refresh(part: AnimationPart) {
     this.notify(part);
   }
@@ -138,7 +204,7 @@ export class AnimationStore {
     }
   }
 
-  private setTransform(registration: Registration, value: string) {
+  private setTransform(registration: AnimationRegistration, value: string) {
     if (registration.lastTransform === value) {
       return;
     }
@@ -167,53 +233,16 @@ export class AnimationStore {
 
   private compose(
     part: AnimationPart,
-    registration: Registration,
+    registration: AnimationRegistration,
     pose: PartPose
   ) {
-    const baseTransform = registration.getBaseTransform();
-    const baseMatrix = parseMatrix(baseTransform) ?? IDENTITY_MATRIX;
-    let composed = baseMatrix;
-
-    const pivotSource =
-      registration.pivotOverride ?? getPartDefinition(part).pivot;
-
-    if (pose.rotate !== undefined) {
-      const rotate = rotateMatrix(pose.rotate, pivotSource.x, pivotSource.y);
-      composed = multiplyMatrix(rotate, composed);
-    }
-
-    if (pose.translate) {
-      const translate = translateMatrix(
-        pose.translate.x * TRANSLATE_SCALE,
-        pose.translate.y * TRANSLATE_SCALE
-      );
-      composed = multiplyMatrix(translate, composed);
-    }
-
-    let parent = getPartDefinition(part).parent;
-    while (parent) {
-      const parentPose = this.poses.get(parent);
-      if (parentPose) {
-        const parentPivot = getPartDefinition(parent).pivot;
-        if (parentPose.rotate !== undefined) {
-          const rotate = rotateMatrix(
-            parentPose.rotate,
-            parentPivot.x,
-            parentPivot.y
-          );
-          composed = multiplyMatrix(rotate, composed);
-        }
-        if (parentPose.translate) {
-          const translate = translateMatrix(
-            parentPose.translate.x * TRANSLATE_SCALE,
-            parentPose.translate.y * TRANSLATE_SCALE
-          );
-          composed = multiplyMatrix(translate, composed);
-        }
-      }
-      parent = getPartDefinition(parent).parent;
-    }
-
-    return matrixToString(composed);
+    const poses = new Map(this.poses);
+    poses.set(part, pose);
+    return composePartTransform(
+      part,
+      registration.getBaseTransform(),
+      poses,
+      registration.pivotOverride
+    );
   }
 }

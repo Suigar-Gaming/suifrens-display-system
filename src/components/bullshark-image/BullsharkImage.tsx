@@ -18,7 +18,7 @@ import { LeftLegPattern } from "./legs/left/LeftLegPattern.js";
 import { RightLegPattern } from "./legs/right/RightLegPattern.js";
 import { LeftArmPattern } from "./arms/left/LeftArmPattern.js";
 import { RightArmPattern } from "./arms/right/RightArmPattern.js";
-import { Accessory } from "../accessories/index.js";
+import { AccessorySlot } from "../accessories/AccessorySlot.js";
 
 export type BullsharkImageProps = {
   attributes: BullsharkAttributes;
@@ -57,10 +57,13 @@ export function BullsharkImage({
         {!incognito && <HeadPattern skin={skin} fill={colorTheme.patterns} />}
         {!incognito && <Expression expression={expression} />}
         {headAccessory && (
-          <Accessory accessory={headAccessory} species="bullshark" />
+          <AccessorySlot accessory={headAccessory} species="bullshark" />
         )}
         {accessoriesByType?.eyes && (
-          <Accessory accessory={accessoriesByType.eyes} species="bullshark" />
+          <AccessorySlot
+            accessory={accessoriesByType.eyes}
+            species="bullshark"
+          />
         )}
       </>
     );
@@ -69,7 +72,7 @@ export function BullsharkImage({
   return (
     <>
       {accessoriesByType?.back?.category === "wings" && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.back}
           species="bullshark"
           lor="left"
@@ -78,14 +81,14 @@ export function BullsharkImage({
       <RightArm fill={colorTheme.hands} />
       {!incognito && <RightArmPattern skin={skin} fill={colorTheme.patterns} />}
       {accessoriesByType?.torso && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.torso}
           species="bullshark"
           lor="left"
         />
       )}
       {accessoriesByType?.body && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.body}
           species="bullshark"
           lor="left"
@@ -102,7 +105,7 @@ export function BullsharkImage({
         </>
       )}
       {accessoriesByType?.back?.category === "wings" && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.back}
           species="bullshark"
           lor="right"
@@ -111,14 +114,14 @@ export function BullsharkImage({
       <Body fill={colorTheme.body} />
       {!incognito && <BodyPattern skin={skin} fill={colorTheme.patterns} />}
       {accessoriesByType?.legs && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.legs}
           species="bullshark"
           body
         />
       )}
       {accessoriesByType?.torso && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.torso}
           species="bullshark"
           body
@@ -128,35 +131,41 @@ export function BullsharkImage({
       {!incognito && <LeftLegPattern skin={skin} fill={colorTheme.patterns} />}
       {accessoriesByType?.back &&
         accessoriesByType?.back?.category !== "wings" && (
-          <Accessory accessory={accessoriesByType.back} species="bullshark" />
+          <AccessorySlot
+            accessory={accessoriesByType.back}
+            species="bullshark"
+          />
         )}
       {accessoriesByType?.feet && (
-        <Accessory accessory={accessoriesByType.feet} species="bullshark" />
+        <AccessorySlot accessory={accessoriesByType.feet} species="bullshark" />
       )}
       {accessoriesByType?.legs && (
-        <Accessory accessory={accessoriesByType.legs} species="bullshark" />
+        <AccessorySlot accessory={accessoriesByType.legs} species="bullshark" />
       )}
       {accessoriesByType?.body && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.body}
           species="bullshark"
           body
         />
       )}
       {accessoriesByType?.object && (
-        <Accessory accessory={accessoriesByType.object} species="bullshark" />
+        <AccessorySlot
+          accessory={accessoriesByType.object}
+          species="bullshark"
+        />
       )}
       <LeftArm fill={colorTheme.hands} />
       {!incognito && <LeftArmPattern skin={skin} fill={colorTheme.patterns} />}
       {accessoriesByType?.torso && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.torso}
           species="bullshark"
           lor="right"
         />
       )}
       {accessoriesByType?.body && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.body}
           species="bullshark"
           lor="right"
@@ -166,10 +175,10 @@ export function BullsharkImage({
       {!incognito && <HeadPattern skin={skin} fill={colorTheme.patterns} />}
       {!incognito && <Expression expression={expression} />}
       {headAccessory && (
-        <Accessory accessory={headAccessory} species="bullshark" />
+        <AccessorySlot accessory={headAccessory} species="bullshark" />
       )}
       {accessoriesByType?.eyes && (
-        <Accessory accessory={accessoriesByType.eyes} species="bullshark" />
+        <AccessorySlot accessory={accessoriesByType.eyes} species="bullshark" />
       )}
     </>
   );

@@ -62,6 +62,13 @@ import type {
   AccessoryMetadata,
   SuiFrenSpecies,
 } from "../../utils/accessoryUtils.js";
+import type {
+  AccessoryRenderer,
+  AccessoryRendererProps,
+  BodyAccessoryProps,
+} from "./AccessorySlot.js";
+
+export type { BodyAccessoryProps } from "./AccessorySlot.js";
 
 const TYPE_FALLBACK: Partial<Record<string, AnimationPart>> = {
   head: "head",
@@ -89,30 +96,20 @@ function resolveFallbackPart(
 }
 
 function resolveAssetSrc(accessory: AccessoryMetadata) {
-  return accessory.renderOptions.assetSrc ??
+  return (
+    accessory.renderOptions.assetSrc ??
     (accessory.category === "crowns"
       ? getVipCrownAssetSrc(accessory.name)
-      : undefined);
+      : undefined)
+  );
 }
-
-export type BodyAccessoryProps = {
-  lor?: "left" | "right";
-  body?: boolean;
-};
 
 type AccessoryProps = BodyAccessoryProps & {
   accessory: AccessoryMetadata;
   species: SuiFrenSpecies;
 };
 
-type AccessoryRendererProps = BodyAccessoryProps & {
-  accessory: AccessoryMetadata;
-  species: SuiFrenSpecies;
-};
-
-type AccessoryRenderer = (props: AccessoryRendererProps) => JSX.Element;
-
-const ACCESSORY_RENDERERS: Record<string, AccessoryRenderer> = {
+export const ACCESSORY_RENDERERS: Record<string, AccessoryRenderer> = {
   "8 bit glasses": () => <Glasses8Bit />,
   apron: (props) => <Apron body={props.body} />,
   "baseball cap": () => <BaseballCap />,
@@ -175,7 +172,7 @@ const ACCESSORY_RENDERERS: Record<string, AccessoryRenderer> = {
   "blue slip ons": () => <BlueSlipons />,
 };
 
-export function Accessory(props: AccessoryProps) {
+export function InlineAccessory(props: AccessoryProps) {
   const renderer = ACCESSORY_RENDERERS[props.accessory.name];
   const assetSrc = resolveAssetSrc(props.accessory);
   const fallbackPart =
@@ -206,3 +203,5 @@ export function Accessory(props: AccessoryProps) {
     </AnimatedAccessory>
   );
 }
+
+export const Accessory = InlineAccessory;

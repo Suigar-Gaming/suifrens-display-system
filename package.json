@@ -22,6 +22,11 @@
       "import": "./dist/image.mjs",
       "default": "./dist/image.mjs"
     },
+    "./image-assets": {
+      "types": "./dist/image-assets.d.ts",
+      "import": "./dist/image-assets.mjs",
+      "default": "./dist/image-assets.mjs"
+    },
     "./accessories": {
       "types": "./dist/accessories.d.ts",
       "import": "./dist/accessories.mjs",
