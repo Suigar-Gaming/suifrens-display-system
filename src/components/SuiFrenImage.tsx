@@ -157,7 +157,7 @@ export function SuiFrenImage({
       y="0px"
       width={resolvedSize?.width}
       height={resolvedSize?.height}
-      viewBox="0 0 3000 3000"
+      viewBox="0 -200 3000 3000"
       className={["suifren-image", className].filter(Boolean).join(" ")}
       style={style}
     >
