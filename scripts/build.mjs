@@ -5,6 +5,7 @@ import { build } from "esbuild";
 const entryPoints = {
   index: "src/index.ts",
   image: "src/image.ts",
+  "image-assets": "src/image-assets.ts",
   accessories: "src/accessories.ts",
   colors: "src/colors.ts",
   attributes: "src/attributes.ts",
@@ -14,6 +15,16 @@ const entryPoints = {
   battle: "src/battle.ts",
   types: "src/types.ts",
 };
+
+const assetResult = spawnSync(
+  process.platform === "win32" ? "npx.cmd" : "npx",
+  ["tsx", "./scripts/generate-accessory-assets.tsx"],
+  { stdio: "inherit" }
+);
+
+if (assetResult.status !== 0) {
+  process.exit(assetResult.status ?? 1);
+}
 
 await rm("dist", { recursive: true, force: true });
 

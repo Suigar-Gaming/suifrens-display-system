@@ -1,8 +1,13 @@
 import { getEasing } from "./easing.js";
 import type { AnimationPart } from "./parts.js";
-import type { AnimationSequence, AnimationTrack, PartPose, PlaybackOptions } from "./types.js";
+import type {
+  AnimationSequence,
+  AnimationTrack,
+  PartPose,
+  PlaybackOptions,
+} from "./types.js";
 
-type NormalizedPlayback = {
+export type NormalizedPlayback = {
   iterations: number;
   alternate: boolean;
   speed: number;
@@ -10,7 +15,9 @@ type NormalizedPlayback = {
 
 const EPSILON = 0.0001;
 
-function normalizePlayback(playback?: PlaybackOptions): NormalizedPlayback {
+export function normalizePlayback(
+  playback?: PlaybackOptions
+): NormalizedPlayback {
   let iterations: number;
   if (playback?.iterations === "infinite") {
     iterations = Infinity;
@@ -31,7 +38,10 @@ function normalizePlayback(playback?: PlaybackOptions): NormalizedPlayback {
   };
 }
 
-function interpolatePose(track: AnimationTrack, time: number): PartPose | undefined {
+export function interpolatePose(
+  track: AnimationTrack,
+  time: number
+): PartPose | undefined {
   if (!track.keyframes.length) {
     return undefined;
   }
@@ -87,6 +97,23 @@ function interpolatePose(track: AnimationTrack, time: number): PartPose | undefi
   return pose;
 }
 
+export function interpolateSequencePoses(
+  sequence: AnimationSequence,
+  time: number
+) {
+  const poses = new Map<AnimationPart, PartPose>();
+  const effectiveTime = Math.min(Math.max(time, 0), sequence.duration);
+
+  for (const track of sequence.tracks) {
+    const pose = interpolatePose(track, effectiveTime);
+    if (pose) {
+      poses.set(track.part, pose);
+    }
+  }
+
+  return poses;
+}
+
 export class SequencePlayer {
   private sequence: AnimationSequence | null = null;
   private playback: NormalizedPlayback = normalizePlayback();
@@ -105,7 +132,8 @@ export class SequencePlayer {
     this.playback = normalizePlayback(playback);
     this.direction = options?.direction ?? 1;
     this.time =
-      options?.startAt === "end" || (this.direction === -1 && options?.startAt !== "start")
+      options?.startAt === "end" ||
+      (this.direction === -1 && options?.startAt !== "start")
         ? sequence.duration
         : 0;
     this.completedIterations = 0;

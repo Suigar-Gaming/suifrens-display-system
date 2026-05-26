@@ -18,7 +18,7 @@ import { LeftLegPattern } from "./legs/left/LeftLegPattern.js";
 import { RightLegPattern } from "./legs/right/RightLegPattern.js";
 import { LeftArmPattern } from "./arms/left/LeftArmPattern.js";
 import { RightArmPattern } from "./arms/right/RightArmPattern.js";
-import { Accessory } from "../accessories/index.js";
+import { AccessorySlot } from "../accessories/AccessorySlot.js";
 
 export type CapyImageProps = {
   attributes: CapyAttributes;
@@ -74,10 +74,10 @@ export function CapyImage({
 
         {!incognito && <Expression expression={expression} />}
         {accessoriesByType?.head && (
-          <Accessory accessory={accessoriesByType.head} species="capy" />
+          <AccessorySlot accessory={accessoriesByType.head} species="capy" />
         )}
         {accessoriesByType?.eyes && (
-          <Accessory accessory={accessoriesByType.eyes} species="capy" />
+          <AccessorySlot accessory={accessoriesByType.eyes} species="capy" />
         )}
       </>
     );
@@ -86,7 +86,7 @@ export function CapyImage({
   return (
     <>
       {accessoriesByType?.back?.category === "wings" && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.back}
           species="capy"
           lor="left"
@@ -99,21 +99,21 @@ export function CapyImage({
       />
       {!incognito && <RightArmPattern skin={skin} fill={colorTheme.patterns} />}
       {accessoriesByType?.back?.category === "wings" && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.back}
           species="capy"
           lor="right"
         />
       )}
       {accessoriesByType?.torso && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.torso}
           species="capy"
           lor="left"
         />
       )}
       {accessoriesByType?.body && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.body}
           species="capy"
           lor="left"
@@ -132,13 +132,17 @@ export function CapyImage({
       )}
       {accessoriesByType?.back &&
         accessoriesByType?.back?.category !== "wings" && (
-          <Accessory accessory={accessoriesByType.back} species="capy" />
+          <AccessorySlot accessory={accessoriesByType.back} species="capy" />
         )}
       {accessoriesByType?.legs && (
-        <Accessory accessory={accessoriesByType.legs} species="capy" body />
+        <AccessorySlot accessory={accessoriesByType.legs} species="capy" body />
       )}
       {accessoriesByType?.torso && (
-        <Accessory accessory={accessoriesByType.torso} species="capy" body />
+        <AccessorySlot
+          accessory={accessoriesByType.torso}
+          species="capy"
+          body
+        />
       )}
 
       <LeftLeg
@@ -148,16 +152,16 @@ export function CapyImage({
       {!incognito && <LeftLegPattern skin={skin} fill={colorTheme.patterns} />}
 
       {accessoriesByType?.feet && (
-        <Accessory accessory={accessoriesByType.feet} species="capy" />
+        <AccessorySlot accessory={accessoriesByType.feet} species="capy" />
       )}
       {accessoriesByType?.legs && (
-        <Accessory accessory={accessoriesByType.legs} species="capy" />
+        <AccessorySlot accessory={accessoriesByType.legs} species="capy" />
       )}
       {accessoriesByType?.body && (
-        <Accessory accessory={accessoriesByType.body} species="capy" body />
+        <AccessorySlot accessory={accessoriesByType.body} species="capy" body />
       )}
       {accessoriesByType?.object && (
-        <Accessory accessory={accessoriesByType.object} species="capy" />
+        <AccessorySlot accessory={accessoriesByType.object} species="capy" />
       )}
 
       <LeftArm
@@ -167,7 +171,7 @@ export function CapyImage({
       {!incognito && <LeftArmPattern skin={skin} fill={colorTheme.patterns} />}
 
       {accessoriesByType?.torso && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.torso}
           species="capy"
           lor="right"
@@ -175,7 +179,7 @@ export function CapyImage({
       )}
 
       {accessoriesByType?.body && (
-        <Accessory
+        <AccessorySlot
           accessory={accessoriesByType.body}
           species="capy"
           lor="right"
@@ -210,10 +214,10 @@ export function CapyImage({
 
       {!incognito && <Expression expression={expression} />}
       {accessoriesByType?.head && (
-        <Accessory accessory={accessoriesByType.head} species="capy" />
+        <AccessorySlot accessory={accessoriesByType.head} species="capy" />
       )}
       {accessoriesByType?.eyes && (
-        <Accessory accessory={accessoriesByType.eyes} species="capy" />
+        <AccessorySlot accessory={accessoriesByType.eyes} species="capy" />
       )}
     </>
   );

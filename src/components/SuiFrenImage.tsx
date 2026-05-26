@@ -13,6 +13,8 @@ import { AccessoryMetadata } from "../utils/accessoryUtils.js";
 import { assertUnreachable } from "../utils/assertUnreachable.js";
 import { CapyImage } from "./capy-image/CapyImage.js";
 import { getAccessoriesByType } from "../utils/accessoryUtils.js";
+import { AccessoryRendererProvider } from "./accessories/AccessorySlot.js";
+import { InlineAccessory } from "./accessories/index.js";
 
 export type SuiFrenRenderSize =
   | number
@@ -147,6 +149,11 @@ export function SuiFrenImage({
     typeof renderSize === "number"
       ? { width: renderSize, height: renderSize }
       : renderSize;
+  const renderedContent = (
+    <AccessoryRendererProvider renderer={InlineAccessory}>
+      {suiFrenImageContent}
+    </AccessoryRendererProvider>
+  );
 
   return (
     <svg
@@ -166,10 +173,10 @@ export function SuiFrenImage({
       ) : null}
       {resolvedAnimation ? (
         <AnimationProvider animation={resolvedAnimation}>
-          {suiFrenImageContent}
+          {renderedContent}
         </AnimationProvider>
       ) : (
-        suiFrenImageContent
+        renderedContent
       )}
       {logo}
     </svg>
