@@ -3,11 +3,13 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
 import { AnimationStore } from "./AnimationStore.js";
 import { AnimationController } from "./AnimationController.js";
+import { matchPartByTransform } from "./parts.js";
 import type { AnimationConfig } from "./types.js";
 import {
   isDeferredPreset,
@@ -33,9 +35,9 @@ function useResolvedAnimationConfig(animation: AnimationConfig | null) {
   const immediateSequence = presetName
     ? resolvePresetSequenceSync(presetName)
     : undefined;
-  const [deferredSequence, setDeferredSequence] = useState<
-    ReturnType<typeof resolvePresetSequenceSync> | null
-  >(null);
+  const [deferredSequence, setDeferredSequence] = useState<ReturnType<
+    typeof resolvePresetSequenceSync
+  > | null>(null);
 
   useEffect(() => {
     if (!presetName || immediateSequence || !isDeferredPreset(presetName)) {
@@ -84,37 +86,89 @@ function useResolvedAnimationConfig(animation: AnimationConfig | null) {
   }, [animation, deferredSequence, immediateSequence]);
 }
 
-export function AnimationProvider({ animation = null, children }: AnimationProviderProps) {
+export function AnimationProvider({
+  animation = null,
+  children,
+}: AnimationProviderProps) {
   const resolvedAnimation = useResolvedAnimationConfig(animation);
   const store = useMemo(() => new AnimationStore(), []);
   const controller = useMemo(() => new AnimationController(store), [store]);
+  const rootRef = useRef<SVGGElement | null>(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) {
+      return;
+    }
+
+    const unregister: Array<() => void> = [];
+    root
+      .querySelectorAll<SVGGraphicsElement>("g[transform]")
+      .forEach((target) => {
+        const part = matchPartByTransform(target.getAttribute("transform"));
+        if (part) {
+          unregister.push(store.registerElement(part, target));
+        }
+      });
+
+    return () => unregister.forEach((cleanup) => cleanup());
+  }, [store]);
 
   useEffect(() => {
     controller.applyConfig(resolvedAnimation);
-  }, [controller, resolvedAnimation]);
+    if (!controller.needsAnimationFrame()) {
+      return;
+    }
 
-  useEffect(() => {
     let raf = 0;
     let last = performance.now();
 
     const tick = (time: number) => {
       const delta = time - last;
       last = time;
-      controller.update(delta);
+      if (controller.update(delta)) {
+        raf = requestAnimationFrame(tick);
+      }
+    };
+
+    const schedule = () => {
+      if (
+        document.visibilityState === "hidden" ||
+        !controller.needsAnimationFrame()
+      ) {
+        return;
+      }
+      last = performance.now();
       raf = requestAnimationFrame(tick);
     };
 
-    raf = requestAnimationFrame((time) => {
-      last = time;
-      tick(time);
-    });
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        cancelAnimationFrame(raf);
+      } else {
+        schedule();
+      }
+    };
 
-    return () => cancelAnimationFrame(raf);
-  }, [controller]);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    schedule();
 
-  const value = useMemo<AnimationContextValue>(() => ({ store, controller }), [store, controller]);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      cancelAnimationFrame(raf);
+    };
+  }, [controller, resolvedAnimation]);
 
-  return <AnimationContext.Provider value={value}>{children}</AnimationContext.Provider>;
+  const value = useMemo<AnimationContextValue>(
+    () => ({ store, controller }),
+    [store, controller]
+  );
+
+  return (
+    <AnimationContext.Provider value={value}>
+      <g ref={rootRef}>{children}</g>
+    </AnimationContext.Provider>
+  );
 }
 
 export function useAnimationStore() {

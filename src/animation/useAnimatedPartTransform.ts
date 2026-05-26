@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { AnimationPart } from "./parts.js";
 import { useAnimationStore } from "./AnimationContext.js";
 
@@ -14,18 +14,19 @@ export function useAnimatedPartTransform(
   const store = useAnimationStore();
   const [transform, setTransform] = useState(baseTransform);
   const baseRef = useRef(baseTransform);
+  const directDomTransforms = store?.usesDirectDomTransforms ?? false;
 
   useEffect(() => {
     baseRef.current = baseTransform;
-    if (!store) {
+    if (!store || directDomTransforms) {
       setTransform(baseTransform);
     } else {
       store.refresh(part);
     }
-  }, [baseTransform, part, store]);
+  }, [baseTransform, directDomTransforms, part, store]);
 
   useEffect(() => {
-    if (!store) {
+    if (!store || directDomTransforms) {
       return;
     }
     const registration = {
@@ -35,7 +36,7 @@ export function useAnimatedPartTransform(
     };
     const unregister = store.register(part, registration);
     return unregister;
-  }, [store, part, options?.pivotOverride]);
+  }, [directDomTransforms, store, part, options?.pivotOverride]);
 
-  return transform;
+  return directDomTransforms ? baseTransform : transform;
 }

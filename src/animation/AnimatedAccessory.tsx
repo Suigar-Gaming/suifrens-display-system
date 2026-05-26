@@ -1,7 +1,7 @@
 import {
   cloneElement,
   isValidElement,
-  useLayoutEffect,
+  useEffect,
   useRef,
   type MutableRefObject,
   type ReactElement,
@@ -57,11 +57,14 @@ function mergeRefs<T>(...refs: (Ref<T> | undefined)[]) {
   };
 }
 
-export function AnimatedAccessory({ children, fallbackPart }: AnimatedAccessoryProps) {
+export function AnimatedAccessory({
+  children,
+  fallbackPart,
+}: AnimatedAccessoryProps) {
   const store = useAnimationStore();
   const localRef = useRef<SVGElement | null>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!store) {
       return;
     }
@@ -71,23 +74,20 @@ export function AnimatedAccessory({ children, fallbackPart }: AnimatedAccessoryP
     }
 
     const registrations: Array<() => void> = [];
-    const targets = svgElement.querySelectorAll<SVGGraphicsElement>("g[transform]");
+    const targets =
+      svgElement.querySelectorAll<SVGGraphicsElement>("g[transform]");
+    let matchedTarget = false;
 
     targets.forEach((target) => {
       const part = matchPartByTransform(target.getAttribute("transform"));
       if (!part) {
         return;
       }
-      const baseTransform = target.getAttribute("transform") ?? "";
-      registrations.push(
-        store.register(part, {
-          getBaseTransform: () => baseTransform,
-          setTransform: (value) => target.setAttribute("transform", value),
-        })
-      );
+      matchedTarget = true;
+      registrations.push(store.registerElement(part, target));
     });
 
-    if (!registrations.length && fallbackPart) {
+    if (!matchedTarget && fallbackPart) {
       const baseTransform = svgElement.getAttribute("transform") ?? "";
       registrations.push(
         store.register(fallbackPart, {
@@ -107,10 +107,15 @@ export function AnimatedAccessory({ children, fallbackPart }: AnimatedAccessoryP
   }
 
   if (canAttachRefToType((children as ReactElement).type)) {
-    return cloneElement(children as ReactElement<any>, {
-      ref: mergeRefs((children as any).ref, localRef),
-    } as any);
+    return cloneElement(
+      children as ReactElement<any>,
+      {
+        ref: mergeRefs((children as any).ref, localRef),
+      } as any
+    );
   }
 
-  return <g ref={localRef as MutableRefObject<SVGGElement | null>}>{children}</g>;
+  return (
+    <g ref={localRef as MutableRefObject<SVGGElement | null>}>{children}</g>
+  );
 }

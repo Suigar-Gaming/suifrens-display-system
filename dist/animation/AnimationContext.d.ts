@@ -6,7 +6,7 @@ type AnimationProviderProps = {
     animation?: AnimationConfig | null;
     children: ReactNode;
 };
-export declare function AnimationProvider({ animation, children }: AnimationProviderProps): import("react/jsx-runtime").JSX.Element;
+export declare function AnimationProvider({ animation, children, }: AnimationProviderProps): import("react/jsx-runtime").JSX.Element;
 export declare function useAnimationStore(): AnimationStore | null;
 export declare function useAnimationController(): AnimationController | null;
 export {};

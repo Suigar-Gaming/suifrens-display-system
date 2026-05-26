@@ -11,12 +11,10 @@ import type {
 
 const DEFAULT_TRANSITION_MS = 140;
 
-type SequenceSource =
-  | {
-      sequence: AnimationSequence;
-      playback?: PlaybackOptions;
-    }
-  | null;
+type SequenceSource = {
+  sequence: AnimationSequence;
+  playback?: PlaybackOptions;
+} | null;
 
 function playbackSignature(playback?: PlaybackOptions) {
   let iterations: number;
@@ -35,14 +33,23 @@ function playbackSignature(playback?: PlaybackOptions) {
   return `${iterations}|${alternate ? 1 : 0}|${speed}`;
 }
 
-const nowMs = () => (typeof performance === "undefined" ? Date.now() : performance.now());
-const blendPose = (from?: PartPose, to?: PartPose, progress = 1): PartPose | undefined => {
+const nowMs = () =>
+  typeof performance === "undefined" ? Date.now() : performance.now();
+const blendPose = (
+  from?: PartPose,
+  to?: PartPose,
+  progress = 1
+): PartPose | undefined => {
   if (!from && !to) {
     return undefined;
   }
 
   const eased =
-    progress <= 0 ? 0 : progress >= 1 ? 1 : progress * progress * (3 - 2 * progress);
+    progress <= 0
+      ? 0
+      : progress >= 1
+      ? 1
+      : progress * progress * (3 - 2 * progress);
   const hasRotate = from?.rotate !== undefined || to?.rotate !== undefined;
   const hasTranslate = Boolean(from?.translate || to?.translate);
 
@@ -83,6 +90,7 @@ export class AnimationController {
   private transitionStartedAt = 0;
   private transitionDurationMs = DEFAULT_TRANSITION_MS;
   private lastPoses = new Map<AnimationPart, PartPose>();
+  private completionSettled = true;
 
   constructor(store: AnimationStore) {
     this.store = store;
@@ -100,6 +108,7 @@ export class AnimationController {
       this.lastPoses.clear();
       this.player.stop();
       this.store.clear();
+      this.completionSettled = true;
       return;
     }
 
@@ -115,6 +124,7 @@ export class AnimationController {
       this.lastPoses.clear();
       this.player.stop();
       this.store.clear();
+      this.completionSettled = true;
       return;
     }
 
@@ -123,7 +133,8 @@ export class AnimationController {
     const incomingSignature = playbackSignature(config.playback);
     const sequenceChanged = this.sequenceSource?.sequence !== sequence;
     const playbackChanged = this.playbackSignature !== incomingSignature;
-    const triggerChanged = config.trigger !== undefined && config.trigger !== this.lastTrigger;
+    const triggerChanged =
+      config.trigger !== undefined && config.trigger !== this.lastTrigger;
     const directionChanged = direction !== this.currentDirection;
     const transitionMs =
       typeof config.transitionMs === "number" && config.transitionMs >= 0
@@ -174,10 +185,12 @@ export class AnimationController {
     switch (playState) {
       case "running":
         this.player.play();
+        this.completionSettled = false;
         break;
       case "paused":
         this.player.pause();
         this.syncCurrentPoses();
+        this.completionSettled = true;
         break;
       case "idle":
       case "stopped":
@@ -187,6 +200,7 @@ export class AnimationController {
         this.store.clear();
         this.transitionFrom = null;
         this.lastPoses.clear();
+        this.completionSettled = true;
         break;
     }
 
@@ -201,31 +215,23 @@ export class AnimationController {
     this.store.clear();
     this.transitionFrom = null;
     this.lastPoses.clear();
+    this.completionSettled = true;
+  }
+
+  needsAnimationFrame() {
+    return this.currentPlayState === "running" && this.player.isPlaying();
   }
 
   update(deltaMs: number) {
-    if (!this.player.update(deltaMs)) {
-      if (!this.player.isPlaying()) {
-        if (this.currentPlayState === "paused") {
-          this.syncCurrentPoses();
-        } else if (this.currentPlayState === "running") {
-          if (this.holdOnComplete && this.player.hasActivePose()) {
-            this.syncCurrentPoses();
-          } else {
-            this.store.clear();
-            this.transitionFrom = null;
-            this.lastPoses.clear();
-          }
-        } else {
-          this.store.clear();
-          this.transitionFrom = null;
-          this.lastPoses.clear();
-        }
-      }
-      return;
+    if (this.player.update(deltaMs)) {
+      this.syncCurrentPoses();
     }
 
-    this.syncCurrentPoses();
+    if (!this.player.isPlaying()) {
+      this.settleCompletedPlayback();
+    }
+
+    return this.needsAnimationFrame();
   }
 
   private resolveSequence(config: AnimationConfig): AnimationSequence | null {
@@ -245,9 +251,26 @@ export class AnimationController {
     return "running";
   }
 
+  private settleCompletedPlayback() {
+    if (this.completionSettled) {
+      return;
+    }
+    if (
+      this.currentPlayState === "running" &&
+      this.holdOnComplete &&
+      this.player.hasActivePose()
+    ) {
+      this.syncCurrentPoses();
+    } else {
+      this.store.clear();
+      this.transitionFrom = null;
+      this.lastPoses.clear();
+    }
+    this.completionSettled = true;
+  }
+
   private syncCurrentPoses() {
     const poses = this.player.getCurrentPoses();
-    const touchedParts = new Set<AnimationPart>();
     const nextPoses = new Map<AnimationPart, PartPose>();
     const parts = new Set<AnimationPart>(poses.keys());
 
@@ -263,7 +286,10 @@ export class AnimationController {
       if (elapsed >= this.transitionDurationMs) {
         this.transitionFrom = null;
       } else {
-        progress = Math.min(Math.max(elapsed / this.transitionDurationMs, 0), 1);
+        progress = Math.min(
+          Math.max(elapsed / this.transitionDurationMs, 0),
+          1
+        );
       }
     }
 
@@ -273,20 +299,12 @@ export class AnimationController {
         this.transitionFrom && progress < 1
           ? blendPose(this.transitionFrom.get(part), targetPose, progress)
           : targetPose;
-      touchedParts.add(part);
-      this.store.setPose(part, blendedPose);
       if (blendedPose) {
         nextPoses.set(part, blendedPose);
       }
     }
 
-    // Reset parts that were animated previously but not in the current frame.
-    for (const part of this.store.getRegisteredParts()) {
-      if (!touchedParts.has(part)) {
-        this.store.setPose(part, undefined);
-      }
-    }
-
+    this.store.setPoses(nextPoses);
     this.lastPoses = nextPoses;
   }
 }
