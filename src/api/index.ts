@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import compress from "@fastify/compress";
+import "pino-pretty";
 
 import { suifrens } from "./routes/suifrens.js";
 import { accessories } from "./routes/accessories.js";

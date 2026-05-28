@@ -26,7 +26,7 @@ type ExpressionProps = {
   expression: CapyExpression;
 };
 
-export const expressionComponents: Record<CapyExpression, ComponentType> = {
+const expressionComponents: Record<CapyExpression, ComponentType> = {
   angry: AngryExpression,
   annoyed: AnnoyedExpression,
   bigSmile: BigSmileExpression,

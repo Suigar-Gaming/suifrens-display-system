@@ -6,8 +6,8 @@ export type DefaultRightEarProps = {
 
 export function DefaultRightEar({ earShape, ...props }: DefaultRightEarProps) {
   return (
-    <g transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1097.75,348.85)">
-      <g transform="matrix(-0.799560546875, 0.60052490234375, 0.60052490234375, 0.799560546875, 80.75,8.45)">
+    <g transform="matrix(2.92, 0, 0, 2.92, 1097.75,348.85)">
+      <g transform="matrix(-0.8, 0.6, 0.6, 0.8, 80.75,8.45)">
         <g transform="matrix(1, 0, 0, 1, 0, 0)">
           <g>
             <path

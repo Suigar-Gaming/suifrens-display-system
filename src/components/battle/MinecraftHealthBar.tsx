@@ -93,9 +93,8 @@ function PixelHeart({ fill, size = 16 }: { fill: HeartFill; size?: number }) {
         />
       ))}
       {fill > 0
-        ? HEART_PIXELS.fillPixels
-            .filter((pixel) => pixel.x + 0.5 <= threshold)
-            .map((pixel) => (
+        ? HEART_PIXELS.fillPixels.map((pixel) =>
+            pixel.x + 0.5 <= threshold ? (
               <rect
                 key={`${pixel.x}:${pixel.y}:filled`}
                 x={pixel.x}
@@ -104,7 +103,8 @@ function PixelHeart({ fill, size = 16 }: { fill: HeartFill; size?: number }) {
                 height="1"
                 fill={fullFill}
               />
-            ))
+            ) : null
+          )
         : null}
     </svg>
   );
@@ -134,11 +134,11 @@ export function MinecraftHealthBar({
   const perHeart = resolvedHearts > 0 ? maxHealth / resolvedHearts : 0;
   const half = perHeart / 2;
 
-  const heartStates: HeartFill[] = Array.from({ length: resolvedHearts }, (_, index) => {
+  const heartStates = Array.from({ length: resolvedHearts }, (_, index) => {
     const remaining = clampedHealth - index * perHeart;
-    if (remaining >= perHeart) return 1;
-    if (remaining >= half) return 0.5;
-    return 0;
+    const fill: HeartFill =
+      remaining >= perHeart ? 1 : remaining >= half ? 0.5 : 0;
+    return { id: `heart-${index}`, fill };
   });
 
   return (
@@ -148,7 +148,7 @@ export function MinecraftHealthBar({
         alignItems: "center",
         gap: 8,
         fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
-        fontSize: 11,
+        fontSize: 12,
         color: "#111827",
         ...style,
       }}
@@ -158,8 +158,8 @@ export function MinecraftHealthBar({
       ) : null}
       {resolvedHearts > 0 ? (
         <div style={{ display: "flex", gap: 2, alignItems: "center" }}>
-          {heartStates.map((fill, index) => (
-            <PixelHeart key={index} fill={fill} size={size} />
+          {heartStates.map((heart) => (
+            <PixelHeart key={heart.id} fill={heart.fill} size={size} />
           ))}
         </div>
       ) : null}

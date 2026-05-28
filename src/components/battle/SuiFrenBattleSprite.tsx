@@ -1,5 +1,4 @@
 import type { CSSProperties, ReactNode } from "react";
-import { useEffect, useRef, useState } from "react";
 import type { AnimationConfig } from "../../animation/types.js";
 import type { SuiFrenAttributes } from "../types.js";
 import { SuiFrenImage } from "../SuiFrenImage.js";
@@ -38,42 +37,16 @@ export function SuiFrenBattleSprite({
 }: SuiFrenBattleSpriteProps) {
   const spriteSize = Math.max(120, size);
   const healthBarOffset = spriteSize * 0.12;
-  const [flashActive, setFlashActive] = useState(false);
-  const flashTimeoutRef = useRef<number | null>(null);
   const baseFilter =
     typeof imageStyle?.filter === "string" && imageStyle.filter !== "none" ? imageStyle.filter : "";
   const hitFlashFilter = `url(#${HIT_FLASH_FILTER_ID})`;
-  const combinedFilter = flashActive
-    ? [baseFilter, hitFlashFilter].filter(Boolean).join(" ")
-    : imageStyle?.filter ?? "";
+  const combinedFlashFilter = [baseFilter, hitFlashFilter].filter(Boolean).join(" ");
   const resolvedImageStyle = {
     ...imageStyle,
-    ...(combinedFilter ? { filter: combinedFilter } : {}),
+    ...(baseFilter ? { filter: baseFilter } : {}),
   };
-
-  useEffect(() => {
-    if (hitFlashTrigger === undefined || hitFlashTrigger === null) {
-      return;
-    }
-    setFlashActive(true);
-    if (flashTimeoutRef.current) {
-      window.clearTimeout(flashTimeoutRef.current);
-    }
-    flashTimeoutRef.current = window.setTimeout(() => {
-      setFlashActive(false);
-      flashTimeoutRef.current = null;
-    }, 160);
-  }, [hitFlashTrigger]);
-
-  useEffect(
-    () => () => {
-      if (flashTimeoutRef.current) {
-        window.clearTimeout(flashTimeoutRef.current);
-        flashTimeoutRef.current = null;
-      }
-    },
-    []
-  );
+  const shouldFlash = hitFlashTrigger !== undefined && hitFlashTrigger !== null;
+  const resetFilter = baseFilter || "none";
 
   return (
     <div
@@ -98,6 +71,9 @@ export function SuiFrenBattleSprite({
           </filter>
         </defs>
       </svg>
+      <style>
+        {`@keyframes suifren-hit-flash{0%,80%{filter:${combinedFlashFilter};}100%{filter:${resetFilter};}}`}
+      </style>
       <div
         style={{
           position: "absolute",
@@ -124,7 +100,15 @@ export function SuiFrenBattleSprite({
           transformOrigin: "50% 80%",
         }}
       >
-        <div style={{ width: "100%", height: "100%", ...resolvedImageStyle }}>
+        <div
+          key={shouldFlash ? hitFlashTrigger : "idle"}
+          style={{
+            width: "100%",
+            height: "100%",
+            ...resolvedImageStyle,
+            ...(shouldFlash ? { animation: "suifren-hit-flash 160ms linear" } : {}),
+          }}
+        >
           <SuiFrenImage
             attributes={attributes}
             shadow={shadow}

@@ -13,7 +13,7 @@ export function BlueJeans() {
       <g>
         <g
           id="pants_x5F_bluejeans_x5F_backleg"
-          transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1463.45,1961.9)"
+          transform="matrix(2.92, 0, 0, 2.92, 1463.45,1961.9)"
         >
           <g transform="matrix(1, 0, 0, 1, 0, 0)">
             <g>
@@ -37,7 +37,7 @@ export function BlueJeans() {
         </g>
         <g
           id="pants_x5F_bluejeans_x5F_body"
-          transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 956.65,1516.1)"
+          transform="matrix(2.92, 0, 0, 2.92, 956.65,1516.1)"
         >
           <g transform="matrix(1, 0, 0, 1, 0, 0)">
             <g>
@@ -102,7 +102,7 @@ export function BlueJeans() {
         </g>
         <g
           id="pants_x5F_bluejeans_x5F_frontleg"
-          transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1042.6,1961.9)"
+          transform="matrix(2.92, 0, 0, 2.92, 1042.6,1961.9)"
         >
           <g transform="matrix(1, 0, 0, 1, 0, 0)">
             <g>

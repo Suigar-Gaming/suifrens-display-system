@@ -1,4 +1,4 @@
-import { BodyAccessoryProps } from "../index.js";
+import { BodyAccessoryProps } from "../AccessorySlot.js";
 
 export function Swimsuit(props: BodyAccessoryProps) {
   return (
@@ -15,7 +15,7 @@ export function Swimsuit(props: BodyAccessoryProps) {
       {!!props.body ? (
         <g
           id="shirt_x5F_femmeswimsuit_x5F_body"
-          transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 956.65,1516.1)"
+          transform="matrix(2.92, 0, 0, 2.92, 956.65,1516.1)"
         >
           <g transform="matrix(1, 0, 0, 1, 0, 0)">
             <g>

@@ -11,7 +11,7 @@ export function WildLeftEar({
   innerEarProps,
 }: WildLeftEarProps) {
   return (
-    <g transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 746.1,619.15)">
+    <g transform="matrix(2.92, 0, 0, 2.92, 746.1,619.15)">
       <g transform="matrix(1, 0, 0, 1, 0, 0)">
         <g>
           <path

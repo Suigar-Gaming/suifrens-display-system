@@ -12,7 +12,7 @@ export function Boots() {
     >
       <g
         id="shoes_x5F_boots_x5F_backleg"
-        transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1463.45,1961.9)"
+        transform="matrix(2.92, 0, 0, 2.92, 1463.45,1961.9)"
       >
         <g transform="matrix(1, 0, 0, 1, 0, 0)">
           <g>
@@ -63,7 +63,7 @@ export function Boots() {
       </g>
       <g
         id="shoes_x5F_boots_x5F_frontleg"
-        transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1042.6,1961.9)"
+        transform="matrix(2.92, 0, 0, 2.92, 1042.6,1961.9)"
       >
         <g transform="matrix(1, 0, 0, 1, 0, 0)">
           <g>
