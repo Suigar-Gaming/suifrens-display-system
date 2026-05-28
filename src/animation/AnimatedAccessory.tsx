@@ -8,7 +8,11 @@ import {
   type Ref,
 } from "react";
 import { useAnimationStore } from "./AnimationContext.js";
-import { matchPartByTransform, type AnimationPart } from "./parts.js";
+import {
+  isAnimationPart,
+  matchPartByTransform,
+  type AnimationPart,
+} from "./parts.js";
 
 type AnimatedAccessoryProps = {
   children: ReactElement;
@@ -79,7 +83,10 @@ export function AnimatedAccessory({
     let matchedTarget = false;
 
     targets.forEach((target) => {
-      const part = matchPartByTransform(target.getAttribute("transform"));
+      const explicitPart = target.getAttribute("data-suifren-animation-part");
+      const part = isAnimationPart(explicitPart)
+        ? explicitPart
+        : matchPartByTransform(target.getAttribute("transform"));
       if (!part) {
         return;
       }

@@ -127,6 +127,10 @@ export function getPartDefinition(part: AnimationPart): PartDefinition {
   return PART_DEFINITIONS[part];
 }
 
+export function isAnimationPart(value: string | null): value is AnimationPart {
+  return Boolean(value && value in PART_DEFINITIONS);
+}
+
 export function matchPartByTransform(transform: string | null): AnimationPart | null {
   if (!transform) {
     return null;
