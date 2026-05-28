@@ -95,13 +95,8 @@ export function AnimatedAccessory({
     });
 
     if (!matchedTarget && fallbackPart) {
-      const baseTransform = svgElement.getAttribute("transform") ?? "";
       registrations.push(
-        store.register(fallbackPart, {
-          getBaseTransform: () => baseTransform,
-          setTransform: (value) => svgElement.setAttribute("transform", value),
-          element: svgElement as SVGGraphicsElement,
-        })
+        store.registerElement(fallbackPart, svgElement as SVGGraphicsElement)
       );
     }
 
