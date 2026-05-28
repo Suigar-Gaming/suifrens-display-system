@@ -82,10 +82,45 @@ const PART_DEFINITIONS: Record<AnimationPart, PartDefinition> = {
 };
 
 const TRANSFORM_LOOKUP = new Map<string, AnimationPart>();
+const MATRIX_MATCH_TOLERANCE = 0.02;
+
 for (const [part, definition] of Object.entries(PART_DEFINITIONS)) {
   for (const entry of definition.autoDetectTransforms) {
     TRANSFORM_LOOKUP.set(normalizeTransform(entry), part as AnimationPart);
   }
+}
+
+const MATRIX_LOOKUP = Object.entries(PART_DEFINITIONS).flatMap(
+  ([part, definition]) =>
+    definition.autoDetectTransforms.map((transform) => ({
+      part: part as AnimationPart,
+      values: parseMatrixValues(transform),
+    }))
+);
+
+function parseMatrixValues(transform: string | null) {
+  const match = transform?.match(/^matrix\(([^)]+)\)$/i);
+  if (!match) {
+    return null;
+  }
+  const values = match[1].split(/[\s,]+/).map(Number);
+  return values.length === 6 && values.every(Number.isFinite) ? values : null;
+}
+
+function matricesMatch(
+  left: number[] | null,
+  right: number[] | null
+): boolean {
+  if (!left || !right) {
+    return false;
+  }
+  return (
+    left.length === right.length &&
+    left.every(
+      (value, index) =>
+        Math.abs(value - right[index]) <= MATRIX_MATCH_TOLERANCE
+    )
+  );
 }
 
 export function getPartDefinition(part: AnimationPart): PartDefinition {
@@ -97,7 +132,16 @@ export function matchPartByTransform(transform: string | null): AnimationPart | 
     return null;
   }
   const normalized = normalizeTransform(transform);
-  return TRANSFORM_LOOKUP.get(normalized) ?? null;
+  const exactMatch = TRANSFORM_LOOKUP.get(normalized);
+  if (exactMatch) {
+    return exactMatch;
+  }
+
+  const transformValues = parseMatrixValues(transform);
+  const matrixMatch = MATRIX_LOOKUP.find((entry) =>
+    matricesMatch(entry.values, transformValues)
+  );
+  return matrixMatch?.part ?? null;
 }
 
 export function formatNumber(value: number) {

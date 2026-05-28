@@ -10,7 +10,7 @@ export function BowlerHat() {
       viewBox="0 0 3000 3000"
       xmlSpace="preserve"
     >
-      <g transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 698.6,402.35)">
+      <g transform="matrix(2.92, 0, 0, 2.92, 698.6,402.35)">
         <g transform="matrix(1, 0, 0, 1, 0, 0)">
           <g>
             <g id="HATS_2_Layer0_0_FILL">

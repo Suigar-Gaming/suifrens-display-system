@@ -1,4 +1,4 @@
-import { BodyAccessoryProps } from "../index.js";
+import { BodyAccessoryProps } from "../AccessorySlot.js";
 
 export function SkullShirt(props: BodyAccessoryProps) {
   return (
@@ -15,7 +15,7 @@ export function SkullShirt(props: BodyAccessoryProps) {
       {props.lor === "left" ? (
         <g
           id="shirt_x5F_skull_x5F_backarm"
-          transform="matrix(-2.9166107177734375, 0, 0, 2.9166107177734375, 1880.95,1719.3)"
+          transform="matrix(-2.92, 0, 0, 2.92, 1880.95,1719.3)"
         >
           <g transform="matrix(1, 0, 0, 1, 0, 0)">
             <g>
@@ -40,7 +40,7 @@ export function SkullShirt(props: BodyAccessoryProps) {
       ) : !!props.body ? (
         <g
           id="shirt_x5F_skull_x5F_body"
-          transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 956.65,1516.1)"
+          transform="matrix(2.92, 0, 0, 2.92, 956.65,1516.1)"
         >
           <g transform="matrix(1, 0, 0, 1, 0, 0)">
             <g>
@@ -162,7 +162,7 @@ export function SkullShirt(props: BodyAccessoryProps) {
       ) : props.lor === "right" ? (
         <g
           id="shirt_x5F_skull_x5F_frontarm"
-          transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1002.9,1719.3)"
+          transform="matrix(2.92, 0, 0, 2.92, 1002.9,1719.3)"
         >
           <g transform="matrix(1, 0, 0, 1, 0, 0)">
             <g>

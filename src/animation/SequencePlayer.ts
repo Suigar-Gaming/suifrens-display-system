@@ -38,7 +38,7 @@ export function normalizePlayback(
   };
 }
 
-export function interpolatePose(
+function interpolatePose(
   track: AnimationTrack,
   time: number
 ): PartPose | undefined {

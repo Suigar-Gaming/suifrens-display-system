@@ -3,7 +3,7 @@ export function LaughingExpression() {
     <svg x="0px" y="0px" viewBox="0 0 3000 3000">
       <g
         id="emotion_x5F_laughing_x5F_eyes"
-        transform="matrix(2.862030029296875, -0.5612640380859375, 0.5612640380859375, 2.862030029296875, 1072.45,942.75)"
+        transform="matrix(2.86, -0.56, 0.56, 2.86, 1072.45,942.75)"
       >
         <g transform="matrix(1, 0, 0, 1, 0, 0)">
           <g>
@@ -42,7 +42,7 @@ export function LaughingExpression() {
       </g>
       <g
         id="emotion_x5F_laughing_x5F_mouth_x5F_capy"
-        transform="matrix(2.8626556396484375, -0.55804443359375, 0.55804443359375, 2.8626556396484375, 2017.75,1110.25)"
+        transform="matrix(2.86, -0.56, 0.56, 2.86, 2017.75,1110.25)"
       >
         <g transform="matrix(1, 0, 0, 1, 0, 0)">
           <g>

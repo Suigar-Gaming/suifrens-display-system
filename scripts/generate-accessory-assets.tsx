@@ -26,6 +26,13 @@ function minifySvg(markup: string) {
   let svg = markup
     .replace(/\s+/g, " ")
     .replace(/>\s+</g, "><")
+    .replace(/-?\d+\.\d{3,}/g, (value) => {
+      const rounded = Number(value)
+        .toFixed(2)
+        .replace(/\.00$/, "")
+        .replace(/(\.\d)0$/, "$1");
+      return rounded === "-0" ? "0" : rounded;
+    })
     .replace(/\s?data-reactroot=\"\"/g, "")
     .trim();
 

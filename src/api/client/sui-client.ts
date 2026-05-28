@@ -14,6 +14,9 @@ import { AccessoryMetadata } from "../../utils/accessoryUtils.js";
 
 const rpcUrl = getFullnodeUrl(NETWORK);
 const suiClient = new SuiClient({ url: rpcUrl });
+const accessoriesByName = new Map(
+  accessories.map((accessory) => [accessory.name, accessory])
+);
 
 export async function getSuiFrenAttributesAndAccessories(suiFrenId: string) {
   return suiClient
@@ -56,36 +59,40 @@ export async function getSuiFrenAttributesAndAccessories(suiFrenId: string) {
     });
 }
 
-export async function getSuiFrenAccessories(suiFrenId: string) {
-  const suiFrenAccessories: AccessoryMetadata[] = [];
+async function getSuiFrenAccessories(suiFrenId: string) {
   const dynamicFields = await suiClient.getDynamicFields({
     parentId: suiFrenId,
   });
 
-  for (const data of dynamicFields.data) {
-    const objName = data.name;
-    if (objName.type === ACCESSORIES_KEY_TYPE) {
-      const objectResponse = await suiClient.getDynamicFieldObject({
+  const accessoryFields = dynamicFields.data.filter(
+    (data) => data.name.type === ACCESSORIES_KEY_TYPE
+  );
+  const objectResponses = await Promise.all(
+    accessoryFields.map((data) =>
+      suiClient.getDynamicFieldObject({
         parentId: suiFrenId,
-        name: objName,
-      });
+        name: data.name,
+      })
+    )
+  );
 
-      const objectFields =
-        objectResponse?.data?.content?.dataType === "moveObject"
-          ? objectResponse.data.content.fields
-          : null;
-
-      const name =
-        objectFields && "name" in objectFields ? objectFields.name : null;
-      const accessory = objectFields
-        ? accessories.find((accessory) => accessory.name === name)
+  const suiFrenAccessories: AccessoryMetadata[] = [];
+  for (const objectResponse of objectResponses) {
+    const objectFields =
+      objectResponse?.data?.content?.dataType === "moveObject"
+        ? objectResponse.data.content.fields
         : null;
 
-      if (accessory) {
-        suiFrenAccessories.push(accessory);
-      }
+    const name =
+      objectFields && "name" in objectFields ? objectFields.name : null;
+    const accessory =
+      typeof name === "string" ? accessoriesByName.get(name) : null;
+
+    if (accessory) {
+      suiFrenAccessories.push(accessory);
     }
   }
+
   return suiFrenAccessories;
 }
 
@@ -95,7 +102,7 @@ export async function getSuiFrenAccessories(suiFrenId: string) {
  *
  * @example getSuiFrenTypeFromObjectType('SuiFren<Capy>') -> SuiFrenType.CAPY
  */
-export function getSuiFrenTypeFromObjectType(suiFrenObjectType: string) {
+function getSuiFrenTypeFromObjectType(suiFrenObjectType: string) {
   const frenObjectType = extractBaseFrenType(suiFrenObjectType);
   if (frenObjectType === CAPY_TYPE) {
     return SuiFrenType.CAPY;

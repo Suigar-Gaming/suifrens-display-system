@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useSyncExternalStore,
+} from "react";
 import type { PlaybackOptions } from "../animation/types.js";
 import { getPresetSequence } from "../animation/presets.js";
 
@@ -185,9 +191,12 @@ export function useSuiFrenActor<TExpression extends string = string>(
       bounds,
       options.crouchMultiplier,
       options.defaultExpression,
+      options.deceleration,
       options.gravity,
       options.jumpStrength,
       options.moveSpeed,
+      options.acceleration,
+      options.bounds?.padding,
       options.runMultiplier,
       options.reactSyncIntervalMs,
       startPosition,
@@ -239,7 +248,28 @@ export function useSuiFrenActor<TExpression extends string = string>(
 
   const stateRef = useRef<SuiFrenActorSnapshot<TExpression>>(initialState);
   const syncedStateRef = useRef<SuiFrenActorSnapshot<TExpression>>(initialState);
-  const [reactState, setReactState] = useState<SuiFrenActorSnapshot<TExpression>>(initialState);
+  const stateListenersRef = useRef(new Set<() => void>());
+
+  const publishState = useCallback((next: SuiFrenActorSnapshot<TExpression>) => {
+    syncedStateRef.current = next;
+    for (const listener of stateListenersRef.current) {
+      listener();
+    }
+  }, []);
+
+  const subscribeState = useCallback((listener: () => void) => {
+    stateListenersRef.current.add(listener);
+    return () => {
+      stateListenersRef.current.delete(listener);
+    };
+  }, []);
+
+  const getStateSnapshot = useCallback(() => syncedStateRef.current, []);
+  const reactState = useSyncExternalStore(
+    subscribeState,
+    getStateSnapshot,
+    getStateSnapshot
+  );
 
   useEffect(() => {
     baseExpressionRef.current = options.defaultExpression;
@@ -250,10 +280,9 @@ export function useSuiFrenActor<TExpression extends string = string>(
         baseExpression: options.defaultExpression,
       };
       stateRef.current = next;
-      syncedStateRef.current = next;
-      setReactState(next);
+      publishState(next);
     }
-  }, [options.defaultExpression]);
+  }, [options.defaultExpression, publishState]);
 
   useEffect(() => {
     let raf = 0;
@@ -462,8 +491,7 @@ export function useSuiFrenActor<TExpression extends string = string>(
         baseExpressionChanged
       ) {
         lastReactSync = time;
-        syncedStateRef.current = nextState;
-        setReactState(nextState);
+        publishState(nextState);
       }
 
       raf = requestAnimationFrame(tick);
@@ -475,7 +503,7 @@ export function useSuiFrenActor<TExpression extends string = string>(
     });
 
     return () => cancelAnimationFrame(raf);
-  }, [config]);
+  }, [config, publishState]);
 
   const setDirection = useCallback((x: number, y: number) => {
     controlsRef.current.x = clamp(x, -1, 1);
@@ -508,19 +536,17 @@ export function useSuiFrenActor<TExpression extends string = string>(
     emoteRef.current = { expression, until };
     const next = { ...stateRef.current, expression };
     stateRef.current = next;
-    syncedStateRef.current = next;
-    setReactState(next);
-  }, []);
+    publishState(next);
+  }, [publishState]);
 
   const setBaseExpression = useCallback((expression: TExpression) => {
     baseExpressionRef.current = expression;
     if (!emoteRef.current) {
       const next = { ...stateRef.current, expression, baseExpression: expression };
       stateRef.current = next;
-      syncedStateRef.current = next;
-      setReactState(next);
+      publishState(next);
     }
-  }, []);
+  }, [publishState]);
 
   const reset = useCallback(
     (position?: { x: number; y: number }) => {
@@ -551,10 +577,9 @@ export function useSuiFrenActor<TExpression extends string = string>(
 
       poseRef.current = { position: nextPosition, elevation: 0, facing: "right" };
       stateRef.current = nextState;
-      syncedStateRef.current = nextState;
-      setReactState(nextState);
+      publishState(nextState);
     },
-    [config.runMultiplier, config.startPosition]
+    [config.runMultiplier, config.startPosition, publishState]
   );
 
   const controls = useMemo<SuiFrenActorControls<TExpression>>(

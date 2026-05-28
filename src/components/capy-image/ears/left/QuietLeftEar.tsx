@@ -6,7 +6,7 @@ export type QuietLeftEarProps = {
 
 export function QuietLeftEar({ earShape, ...props }: QuietLeftEarProps) {
   return (
-    <g transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 746.1,619.15)">
+    <g transform="matrix(2.92, 0, 0, 2.92, 746.1,619.15)">
       <g transform="matrix(1, 0, 0, 1, 0, 0)" {...props}>
         <path
           d="M44.4,89.1c2.2,1.4,4.5,2.8,6.8,4.2c2.2,1.3,4.4,2.2,6.6,2.7L67,84.1C60.5,92.1,52.9,93.8,44.4,89.1

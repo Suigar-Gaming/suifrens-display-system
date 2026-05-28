@@ -1,12 +1,11 @@
 import type { AnimationPart } from "./parts.js";
-import type { AnimationSequence, AnimationTrack, PartPose, PlaybackOptions } from "./types.js";
+import type { AnimationSequence, PartPose, PlaybackOptions } from "./types.js";
 export type NormalizedPlayback = {
     iterations: number;
     alternate: boolean;
     speed: number;
 };
 export declare function normalizePlayback(playback?: PlaybackOptions): NormalizedPlayback;
-export declare function interpolatePose(track: AnimationTrack, time: number): PartPose | undefined;
 export declare function interpolateSequencePoses(sequence: AnimationSequence, time: number): Map<AnimationPart, PartPose>;
 export declare class SequencePlayer {
     private sequence;
