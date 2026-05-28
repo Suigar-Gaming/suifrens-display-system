@@ -9,7 +9,7 @@ import {
 } from "react";
 import { AnimationStore } from "./AnimationStore.js";
 import { AnimationController } from "./AnimationController.js";
-import { matchPartByTransform } from "./parts.js";
+import { isAnimationPart, matchPartByTransform } from "./parts.js";
 import type { AnimationConfig } from "./types.js";
 import {
   isDeferredPreset,
@@ -112,7 +112,10 @@ export function AnimationProvider({
     root
       .querySelectorAll<SVGGraphicsElement>("g[transform]")
       .forEach((target) => {
-        const part = matchPartByTransform(target.getAttribute("transform"));
+        const explicitPart = target.getAttribute("data-suifren-animation-part");
+        const part = isAnimationPart(explicitPart)
+          ? explicitPart
+          : matchPartByTransform(target.getAttribute("transform"));
         if (part) {
           unregister.push(store.registerElement(part, target));
         }

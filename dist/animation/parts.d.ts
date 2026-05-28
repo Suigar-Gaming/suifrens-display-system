@@ -8,6 +8,7 @@ type PartDefinition = {
     parent?: AnimationPart;
 };
 export declare function getPartDefinition(part: AnimationPart): PartDefinition;
+export declare function isAnimationPart(value: string | null): value is AnimationPart;
 export declare function matchPartByTransform(transform: string | null): AnimationPart | null;
 export declare function formatNumber(value: number): string;
 export {};
