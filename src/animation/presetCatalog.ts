@@ -36,6 +36,7 @@ export const PRESET_CATALOG: PresetCatalogGroup[] = [
       { label: "Jackpot", name: "jackpot", config: { preset: "jackpot", playback: LOOP } },
       { label: "Slot Pull", name: "slotPull", config: { preset: "slotPull", playback: LOOP } },
       { label: "Suspense", name: "suspense", config: { preset: "suspense", playback: LOOP } },
+      { label: "Talk Mic", name: "talkMicrophone", config: { preset: "talkMicrophone", playback: LOOP } },
     ],
   },
   {

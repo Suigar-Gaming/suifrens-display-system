@@ -587,6 +587,59 @@ const idleSequence: AnimationSequence = {
   ],
 };
 
+const TALK_MICROPHONE_DURATION = 1280;
+
+const talkMicrophoneSequence: AnimationSequence = {
+  name: "talkMicrophone",
+  duration: TALK_MICROPHONE_DURATION,
+  tracks: [
+    {
+      part: "leftArm",
+      keyframes: [
+        { at: 0, pose: { rotate: -58, translate: { x: 34, y: -58 } }, ease: "easeInOut" },
+        { at: 220, pose: { rotate: -62, translate: { x: 37, y: -62 } }, ease: "easeInOut" },
+        { at: 560, pose: { rotate: -64, translate: { x: 38, y: -64 } }, ease: "easeInOut" },
+        { at: 920, pose: { rotate: -56, translate: { x: 32, y: -56 } }, ease: "easeInOut" },
+        { at: TALK_MICROPHONE_DURATION, pose: { rotate: -58, translate: { x: 34, y: -58 } }, ease: "easeInOut" },
+      ],
+    },
+    {
+      part: "rightArm",
+      keyframes: [
+        { at: 0, pose: { rotate: 1, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
+        { at: TALK_MICROPHONE_DURATION * 0.5, pose: { rotate: -3, translate: { x: -1, y: -1 } }, ease: "easeInOut" },
+        { at: TALK_MICROPHONE_DURATION, pose: { rotate: 1, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
+      ],
+    },
+    {
+      part: "body",
+      keyframes: [
+        { at: 0, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
+        { at: 560, pose: { rotate: -1.2, translate: { x: 0, y: -5 } }, ease: "easeInOut" },
+        { at: 920, pose: { rotate: 0.8, translate: { x: 0, y: -2 } }, ease: "easeInOut" },
+        { at: TALK_MICROPHONE_DURATION, pose: { rotate: 0, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
+      ],
+    },
+    {
+      part: "head",
+      keyframes: [
+        { at: 0, pose: { rotate: -0.5, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
+        { at: 360, pose: { rotate: 2.5, translate: { x: 1, y: -2 } }, ease: "easeInOut" },
+        { at: 760, pose: { rotate: -2, translate: { x: -1, y: -1 } }, ease: "easeInOut" },
+        { at: TALK_MICROPHONE_DURATION, pose: { rotate: -0.5, translate: { x: 0, y: 0 } }, ease: "easeInOut" },
+      ],
+    },
+    {
+      part: "tail",
+      keyframes: [
+        { at: 0, pose: { rotate: 1, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
+        { at: TALK_MICROPHONE_DURATION * 0.5, pose: { rotate: -2, translate: { x: 0, y: -1 } }, ease: "easeInOut" },
+        { at: TALK_MICROPHONE_DURATION, pose: { rotate: 1, translate: { x: 0, y: 1 } }, ease: "easeInOut" },
+      ],
+    },
+  ],
+};
+
 type SequenceWithHold = {
   sequence: AnimationSequence;
   hold?: number;
@@ -658,6 +711,7 @@ export const CORE_PRESET_SEQUENCES: Record<string, AnimationSequence> = {
   sit: sitSequence,
   stand: standSequence,
   idle: idleSequence,
+  talkMicrophone: talkMicrophoneSequence,
   walkJumpSit: showcaseSequence,
 };
 
