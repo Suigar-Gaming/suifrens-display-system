@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { rm } from "node:fs/promises";
+import { readFile, rm } from "node:fs/promises";
 import { build } from "esbuild";
 
 const entryPoints = {
@@ -14,6 +14,38 @@ const entryPoints = {
   animation: "src/animation.ts",
   battle: "src/battle.ts",
   types: "src/types.ts",
+};
+
+function formatSvgNumber(value) {
+  if (!Number.isFinite(value)) {
+    return String(value);
+  }
+
+  const rounded = value.toFixed(2);
+  return rounded
+    .replace(/\.0+$/, "")
+    .replace(/(\.\d*?)0+$/, "$1")
+    .replace(/^-0$/, "0")
+    .replace(/^-0\./, "-.")
+    .replace(/^0\./, ".");
+}
+
+function minifySvg(markup) {
+  return markup
+    .replace(/\s+/g, " ")
+    .replace(/>\s+</g, "><")
+    .replace(/-?\d+\.\d+/g, (match) => formatSvgNumber(Number(match)))
+    .trim();
+}
+
+const svgFilePlugin = {
+  name: "svg-file-minifier",
+  setup(build) {
+    build.onLoad({ filter: /\.svg$/ }, async (args) => ({
+      contents: minifySvg(await readFile(args.path, "utf8")),
+      loader: "file",
+    }));
+  },
 };
 
 const assetResult = spawnSync(
@@ -47,6 +79,7 @@ await build({
   loader: {
     ".svg": "file",
   },
+  plugins: [svgFilePlugin],
   outExtension: {
     ".js": ".mjs",
   },

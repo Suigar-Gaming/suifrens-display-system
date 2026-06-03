@@ -26,6 +26,7 @@ function minifySvg(markup: string) {
   let svg = markup
     .replace(/\s+/g, " ")
     .replace(/>\s+</g, "><")
+    .replace(/-?\d+\.\d+/g, (match) => formatSvgNumber(Number(match)))
     .replace(/\s?data-reactroot=\"\"/g, "")
     .trim();
 
@@ -34,6 +35,20 @@ function minifySvg(markup: string) {
   }
 
   return svg;
+}
+
+function formatSvgNumber(value: number) {
+  if (!Number.isFinite(value)) {
+    return String(value);
+  }
+
+  const rounded = value.toFixed(2);
+  return rounded
+    .replace(/\.0+$/, "")
+    .replace(/(\.\d*?)0+$/, "$1")
+    .replace(/^-0$/, "0")
+    .replace(/^-0\./, "-.")
+    .replace(/^0\./, ".");
 }
 
 function importName(accessoryName: string) {
