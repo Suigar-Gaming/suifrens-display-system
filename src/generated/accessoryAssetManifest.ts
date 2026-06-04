@@ -26,6 +26,7 @@ import halo from "./accessory-assets/halo.svg";
 import heartShirt from "./accessory-assets/heart-shirt.svg";
 import lasso from "./accessory-assets/lasso.svg";
 import leatherJacket from "./accessory-assets/leather-jacket.svg";
+import leftGothBoot from "./accessory-assets/left-goth-boot.svg";
 import lifeguard from "./accessory-assets/lifeguard.svg";
 import magicWand from "./accessory-assets/magic-wand.svg";
 import microphone from "./accessory-assets/microphone.svg";
@@ -34,6 +35,7 @@ import palette from "./accessory-assets/palette.svg";
 import pencil from "./accessory-assets/pencil.svg";
 import pinkSlipOns from "./accessory-assets/pink-slip-ons.svg";
 import punkSkirt from "./accessory-assets/punk-skirt.svg";
+import rightGothBoot from "./accessory-assets/right-goth-boot.svg";
 import rockStarBoots from "./accessory-assets/rock-star-boots.svg";
 import rockStarRuffle from "./accessory-assets/rock-star-ruffle.svg";
 import saddleShoes from "./accessory-assets/saddle-shoes.svg";
@@ -90,6 +92,7 @@ export const ACCESSORY_ASSET_MANIFEST = {
   "heart shirt": new URL(heartShirt, import.meta.url).href,
   "lasso": new URL(lasso, import.meta.url).href,
   "leather jacket": new URL(leatherJacket, import.meta.url).href,
+  "left goth boot": new URL(leftGothBoot, import.meta.url).href,
   "lifeguard": new URL(lifeguard, import.meta.url).href,
   "magic wand": new URL(magicWand, import.meta.url).href,
   "microphone": new URL(microphone, import.meta.url).href,
@@ -98,6 +101,7 @@ export const ACCESSORY_ASSET_MANIFEST = {
   "pencil": new URL(pencil, import.meta.url).href,
   "pink slip ons": new URL(pinkSlipOns, import.meta.url).href,
   "punk skirt": new URL(punkSkirt, import.meta.url).href,
+  "right goth boot": new URL(rightGothBoot, import.meta.url).href,
   "rock star boots": new URL(rockStarBoots, import.meta.url).href,
   "rock star ruffle": new URL(rockStarRuffle, import.meta.url).href,
   "saddle shoes": new URL(saddleShoes, import.meta.url).href,

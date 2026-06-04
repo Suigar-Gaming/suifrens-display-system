@@ -81,10 +81,10 @@ const TYPE_FALLBACK: Partial<Record<string, AnimationPart>> = {
   eyes: "head",
   body: "body",
   torso: "body",
-	back: "body",
-	object: "leftArm",
-	legs: "body",
-	feet: "rightLeg",
+  back: "body",
+  object: "leftArm",
+  legs: "body",
+  feet: "rightLeg",
 };
 
 const NAME_SPECIFIC_FALLBACK: Partial<Record<string, AnimationPart>> = {
@@ -139,6 +139,8 @@ export const ACCESSORY_RENDERERS: Record<string, AccessoryRenderer> = {
   cutoffs: () => <Cutoffs />,
   "dress shoes": () => <DressShoes />,
   "goth boots": () => <GothBoots />,
+  "left goth boot": () => <GothBoots side="left" />,
+  "right goth boot": () => <GothBoots side="right" />,
   halo: () => <Halo />,
   "hair bow": () => <HairBow />,
   "heart shirt": (props) => <HeartShirt lor={props.lor} body={props.body} />,
