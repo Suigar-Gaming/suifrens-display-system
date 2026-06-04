@@ -1,6 +1,7 @@
 import { AnimatedAccessory } from "../../animation/AnimatedAccessory.js";
 import type { AnimationPart } from "../../animation/parts.js";
 import { getVipCrownAssetSrc } from "./crownAssets.js";
+import { ACCESSORY_RENDERERS } from "./inlineRegistry.js";
 import { SvgAccessory } from "./SvgAccessory.js";
 import type {
   AccessoryRendererProps,
@@ -11,16 +12,17 @@ import {
   SPLIT_LIMB_ASSET_NAMES,
   type AccessoryAssetVariant,
 } from "../../generated/accessoryAssetManifest.js";
+import { SOCCER_TEAM_ACCESSORY_NAMES } from "./soccerTeamKit.js";
 
 const TYPE_FALLBACK: Partial<Record<string, AnimationPart>> = {
   head: "head",
   eyes: "head",
   body: "body",
   torso: "body",
-  back: "body",
-  object: "leftArm",
-  legs: "body",
-  feet: "body",
+	back: "body",
+	object: "leftArm",
+	legs: "body",
+	feet: "rightLeg",
 };
 
 const NAME_SPECIFIC_FALLBACK: Partial<Record<string, AnimationPart>> = {
@@ -77,6 +79,19 @@ function resolveAssetSrc(
 }
 
 export function AssetAccessory(props: AccessoryRendererProps) {
+  if (SOCCER_TEAM_ACCESSORY_NAMES.has(props.accessory.name)) {
+    const renderer = ACCESSORY_RENDERERS[props.accessory.name];
+    const fallbackPart =
+      props.accessory.renderOptions.animationPart ?? resolveFallbackPart(props);
+    const renderedAccessory = renderer ? renderer(props) : null;
+
+    return renderedAccessory ? (
+      <AnimatedAccessory fallbackPart={fallbackPart}>
+        {renderedAccessory}
+      </AnimatedAccessory>
+    ) : null;
+  }
+
   const asset = resolveAssetSrc(props);
   if (!asset) {
     return null;

@@ -14,6 +14,8 @@ export type AccessoryPlacement = {
 export type AccessoryRenderOptions = Record<string, unknown> & {
   showEars?: boolean;
   showFin?: boolean;
+  country?: string;
+  side?: "home" | "away";
   assetSrc?: string;
   placement?: Partial<Record<SuiFrenSpecies, AccessoryPlacement>>;
   animationPart?: AnimationPart;

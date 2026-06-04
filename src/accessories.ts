@@ -5,6 +5,16 @@ export {
 } from "./constants/vip-crowns.js";
 export type { VipCrownAccessoryName } from "./constants/vip-crowns.js";
 export {
+  SOCCER_TEAM_KITS,
+  resolveSoccerCountryCode,
+  resolveSoccerTeamKit,
+} from "./components/accessories/soccerTeamKit.js";
+export type {
+  SoccerTeamCountryCode,
+  SoccerTeamKit,
+  SoccerTeamSide,
+} from "./components/accessories/soccerTeamKit.js";
+export {
   getAccessoriesByType,
   type AccessoryMetadata,
   type AccessoryPlacement,
