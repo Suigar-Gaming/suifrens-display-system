@@ -16,6 +16,7 @@ import { AccessoryRendererProvider } from "./accessories/AccessorySlot.js";
 import { AssetAccessory } from "./accessories/AssetAccessory.js";
 import { BullsharkImage } from "./bullshark-image/BullsharkImage.js";
 import { CapyImage } from "./capy-image/CapyImage.js";
+import { shouldRenderMicrophoneArmInForeground } from "./foregroundLayering.js";
 import { SuiFrenAttributes } from "./types.js";
 import type { SuiFrenRenderSize } from "./SuiFrenImage.js";
 
@@ -65,29 +66,6 @@ export function SuiFrenImageAssets({
   const accessoriesByType = accessories
     ? getAccessoriesByType(accessories)
     : undefined;
-
-  let suiFrenImageContent: ReactNode | undefined;
-  if ("finStyle" in attributes) {
-    suiFrenImageContent = (
-      <BullsharkImage
-        accessoriesByType={accessoriesByType}
-        attributes={attributes}
-        detail={detail}
-        incognito={incognito}
-      />
-    );
-  } else if ("earShape" in attributes) {
-    suiFrenImageContent = (
-      <CapyImage
-        accessoriesByType={accessoriesByType}
-        attributes={attributes}
-        detail={detail}
-        incognito={incognito}
-      />
-    );
-  } else {
-    assertUnreachable(attributes);
-  }
 
   const resolvedAnimation = useMemo<AnimationConfig | null>(() => {
     if (animationProp !== undefined) {
@@ -140,6 +118,36 @@ export function SuiFrenImageAssets({
     animationAutoPlay,
     animationHoldOnComplete,
   ]);
+
+  const renderMicrophoneArmInForeground = shouldRenderMicrophoneArmInForeground(
+    resolvedAnimation,
+    accessoriesByType
+  );
+
+  let suiFrenImageContent: ReactNode | undefined;
+  if ("finStyle" in attributes) {
+    suiFrenImageContent = (
+      <BullsharkImage
+        accessoriesByType={accessoriesByType}
+        attributes={attributes}
+        detail={detail}
+        incognito={incognito}
+        renderMicrophoneArmInForeground={renderMicrophoneArmInForeground}
+      />
+    );
+  } else if ("earShape" in attributes) {
+    suiFrenImageContent = (
+      <CapyImage
+        accessoriesByType={accessoriesByType}
+        attributes={attributes}
+        detail={detail}
+        incognito={incognito}
+        renderMicrophoneArmInForeground={renderMicrophoneArmInForeground}
+      />
+    );
+  } else {
+    assertUnreachable(attributes);
+  }
 
   const resolvedSize =
     typeof renderSize === "number"

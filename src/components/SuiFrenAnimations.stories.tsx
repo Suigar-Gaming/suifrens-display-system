@@ -1,6 +1,7 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { SuiFrenImage } from "./SuiFrenImage.js";
 import { PRESET_CATALOG } from "../animation/presetCatalog.js";
+import { accessories } from "../constants/accessories.js";
 
 const bullsharkAttributes = {
   mainColor: "6FBBEE",
@@ -17,6 +18,16 @@ const capyAttributes = {
   earShape: "default",
   expression: "happy",
 } as const;
+
+const microphoneAccessory = accessories.find(
+  (accessory) => accessory.name === "microphone"
+);
+
+function getPreviewAccessories(presetName: string) {
+  return presetName === "talkMicrophone" && microphoneAccessory
+    ? [microphoneAccessory]
+    : undefined;
+}
 
 const meta = {
   title: "SuiFrenImage/Animations",
@@ -49,6 +60,7 @@ export const Presets: Story = {
                     <div className="h-44 w-44">
                       <SuiFrenImage
                         attributes={bullsharkAttributes}
+                        accessories={getPreviewAccessories(preset.name)}
                         shadow
                         style={{ width: "100%", height: "100%" }}
                         animation={preset.config}
@@ -60,6 +72,7 @@ export const Presets: Story = {
                     <div className="h-44 w-44">
                       <SuiFrenImage
                         attributes={capyAttributes}
+                        accessories={getPreviewAccessories(preset.name)}
                         shadow
                         style={{ width: "100%", height: "100%" }}
                         animation={preset.config}
@@ -76,4 +89,3 @@ export const Presets: Story = {
     </div>
   ),
 };
-

@@ -25,6 +25,7 @@ export type BullsharkImageProps = {
   accessoriesByType?: Record<string, AccessoryMetadata>;
   detail?: "full" | "head";
   incognito?: boolean;
+  renderMicrophoneArmInForeground?: boolean;
 };
 
 export function BullsharkImage({
@@ -32,6 +33,7 @@ export function BullsharkImage({
   accessoriesByType,
   detail = "full",
   incognito = false,
+  renderMicrophoneArmInForeground = false,
 }: BullsharkImageProps) {
   const { mainColor, secondaryColor, skin, expression } = attributes;
   const colorTheme = getThemeFromSkin(
@@ -166,14 +168,20 @@ export function BullsharkImage({
           body
         />
       )}
-      {accessoriesByType?.object && (
+      {accessoriesByType?.object && !renderMicrophoneArmInForeground && (
         <AccessorySlot
           accessory={accessoriesByType.object}
           species="bullshark"
         />
       )}
-      <LeftArm fill={colorTheme.hands} />
-      {!incognito && <LeftArmPattern skin={skin} fill={colorTheme.patterns} />}
+      {!renderMicrophoneArmInForeground && (
+        <>
+          <LeftArm fill={colorTheme.hands} />
+          {!incognito && (
+            <LeftArmPattern skin={skin} fill={colorTheme.patterns} />
+          )}
+        </>
+      )}
       {accessoriesByType?.torso && (
         <AccessorySlot
           accessory={accessoriesByType.torso}
@@ -196,6 +204,20 @@ export function BullsharkImage({
       )}
       {accessoriesByType?.eyes && (
         <AccessorySlot accessory={accessoriesByType.eyes} species="bullshark" />
+      )}
+      {renderMicrophoneArmInForeground && (
+        <>
+          {accessoriesByType?.object && (
+            <AccessorySlot
+              accessory={accessoriesByType.object}
+              species="bullshark"
+            />
+          )}
+          <LeftArm fill={colorTheme.hands} />
+          {!incognito && (
+            <LeftArmPattern skin={skin} fill={colorTheme.patterns} />
+          )}
+        </>
       )}
     </>
   );
