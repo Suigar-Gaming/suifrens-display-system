@@ -151,9 +151,17 @@ export function CapyImage({
       />
       {!incognito && <LeftLegPattern skin={skin} fill={colorTheme.patterns} />}
 
-      {accessoriesByType?.feet && (
-        <AccessorySlot accessory={accessoriesByType.feet} species="capy" />
+      {accessoriesByType?.rightFeet && (
+        <AccessorySlot accessory={accessoriesByType.rightFeet} species="capy" />
       )}
+      {accessoriesByType?.leftFeet && (
+        <AccessorySlot accessory={accessoriesByType.leftFeet} species="capy" />
+      )}
+      {!accessoriesByType?.rightFeet &&
+        !accessoriesByType?.leftFeet &&
+        accessoriesByType?.feet && (
+          <AccessorySlot accessory={accessoriesByType.feet} species="capy" />
+        )}
       {accessoriesByType?.legs && (
         <AccessorySlot accessory={accessoriesByType.legs} species="capy" />
       )}

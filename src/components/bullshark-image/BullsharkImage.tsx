@@ -136,9 +136,26 @@ export function BullsharkImage({
             species="bullshark"
           />
         )}
-      {accessoriesByType?.feet && (
-        <AccessorySlot accessory={accessoriesByType.feet} species="bullshark" />
+      {accessoriesByType?.rightFeet && (
+        <AccessorySlot
+          accessory={accessoriesByType.rightFeet}
+          species="bullshark"
+        />
       )}
+      {accessoriesByType?.leftFeet && (
+        <AccessorySlot
+          accessory={accessoriesByType.leftFeet}
+          species="bullshark"
+        />
+      )}
+      {!accessoriesByType?.rightFeet &&
+        !accessoriesByType?.leftFeet &&
+        accessoriesByType?.feet && (
+          <AccessorySlot
+            accessory={accessoriesByType.feet}
+            species="bullshark"
+          />
+        )}
       {accessoriesByType?.legs && (
         <AccessorySlot accessory={accessoriesByType.legs} species="bullshark" />
       )}
