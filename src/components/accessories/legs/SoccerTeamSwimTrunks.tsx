@@ -1,7 +1,6 @@
 import type { SoccerTeamAccessoryProps } from "../soccerTeamKit.js";
 import {
   SOCCER_TEAM_DARK_STROKE,
-  SoccerKitMotif,
   resolveSoccerTeamKit,
 } from "../soccerTeamKit.js";
 import { useId } from "react";
@@ -56,20 +55,20 @@ function renderBody(country: unknown, side: unknown, idPrefix: string) {
       <clipPath id={clipId}>
         <path d={TRUNKS_BODY_PATH} />
       </clipPath>
-      <SoccerKitMotif
-        kit={{
-          ...kit,
-          primary: kit.secondary,
-          secondary: kit.primary,
-        }}
-        x={0}
-        y={188}
-        width={293}
-        height={106}
-        clipId={clipId}
-        strokeWidth={4.5}
-        patchScale={0.95}
-      />
+      <g clipPath={`url(#${clipId})`}>
+        <rect x="0" y="188" width="293" height="106" fill={kit.secondary} />
+        <rect x="0" y="220" width="293" height="12" fill={kit.accent} />
+        <rect x="72" y="188" width="22" height="106" fill={kit.primary} />
+        <rect x="198" y="188" width="22" height="106" fill={kit.primary} />
+        <rect
+          x="0"
+          y="246"
+          width="293"
+          height="14"
+          fill={kit.primary}
+          opacity="0.9"
+        />
+      </g>
       <path
         d="M0 188 C58 192 115 194 171 193 C224 192 263 190 293 188"
         fill="none"

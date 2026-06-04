@@ -84,6 +84,8 @@ export const ACCESSORY_RENDERERS: Record<string, AccessoryRenderer> = {
   cutoffs: () => <Cutoffs />,
   "dress shoes": () => <DressShoes />,
   "goth boots": () => <GothBoots />,
+  "left goth boot": () => <GothBoots side="left" />,
+  "right goth boot": () => <GothBoots side="right" />,
   halo: () => <Halo />,
   "hair bow": () => <HairBow />,
   "heart shirt": (props) => <HeartShirt lor={props.lor} body={props.body} />,

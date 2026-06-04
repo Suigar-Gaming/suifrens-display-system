@@ -29,6 +29,7 @@ export declare const ACCESSORY_ASSET_MANIFEST: {
     readonly "heart shirt": string;
     readonly lasso: string;
     readonly "leather jacket": string;
+    readonly "left goth boot": string;
     readonly lifeguard: string;
     readonly "magic wand": string;
     readonly microphone: string;
@@ -37,6 +38,7 @@ export declare const ACCESSORY_ASSET_MANIFEST: {
     readonly pencil: string;
     readonly "pink slip ons": string;
     readonly "punk skirt": string;
+    readonly "right goth boot": string;
     readonly "rock star boots": string;
     readonly "rock star ruffle": string;
     readonly "saddle shoes": string;

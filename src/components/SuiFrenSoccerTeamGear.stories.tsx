@@ -29,7 +29,12 @@ const teamShirt = accessories.find(
 const teamTrunks = accessories.find(
   (accessory) => accessory.name === "soccer team swim trunks"
 )!;
-const gothBoots = accessories.find((accessory) => accessory.name === "goth boots")!;
+const leftGothBoot = accessories.find(
+  (accessory) => accessory.name === "left goth boot"
+)!;
+const rightGothBoot = accessories.find(
+  (accessory) => accessory.name === "right goth boot"
+)!;
 
 const countries = Object.keys(SOCCER_TEAM_KITS).filter(
   (code) => code !== "GLOBAL"
@@ -45,7 +50,8 @@ function buildTeamGear(country: SoccerTeamCountryCode, side = "home" as const) {
       ...teamTrunks,
       renderOptions: { ...teamTrunks.renderOptions, country, side },
     },
-    gothBoots,
+    leftGothBoot,
+    rightGothBoot,
   ];
 }
 
@@ -102,8 +108,13 @@ export const InlineAndAssetRenderers: Story = {
     return (
       <div className="grid grid-cols-1 gap-4 bg-slate-100 p-4 md:grid-cols-2">
         {showcaseCountries.map((country) => (
-          <div key={country} className="rounded-xl border border-slate-300 bg-white p-3">
-            <h2 className="mb-2 text-sm font-black text-slate-900">{country}</h2>
+          <div
+            key={country}
+            className="rounded-xl border border-slate-300 bg-white p-3"
+          >
+            <h2 className="mb-2 text-sm font-black text-slate-900">
+              {country}
+            </h2>
             <div className="grid grid-cols-2 gap-3">
               <div className="h-56">
                 <SuiFrenImage
