@@ -32,10 +32,23 @@ export type AccessoryMetadata = {
   collection: string;
 };
 
+function getAccessorySlotKey(accessory: AccessoryMetadata) {
+  if (accessory.type === "feet") {
+    if (accessory.renderOptions.animationPart === "leftLeg") {
+      return "leftFeet";
+    }
+    if (accessory.renderOptions.animationPart === "rightLeg") {
+      return "rightFeet";
+    }
+  }
+
+  return accessory.type;
+}
+
 export function getAccessoriesByType(accessories: AccessoryMetadata[]) {
   return accessories.reduce<Record<string, AccessoryMetadata>>(
     (accumulator, accessory) => {
-      accumulator[accessory.type] = accessory;
+      accumulator[getAccessorySlotKey(accessory)] = accessory;
       return accumulator;
     },
     {}

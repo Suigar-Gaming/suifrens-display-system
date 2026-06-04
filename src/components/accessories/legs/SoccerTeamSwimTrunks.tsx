@@ -36,9 +36,10 @@ function renderLeg(
         <rect x="0" y="100" width="98" height="8" fill={kit.primary} />
       </g>
       <path
-        d={TRUNKS_LEG_PATH}
+        d="M-5.5 102.2 V148.3 L10.3 148.9 L84.2 149.8 L97.2 149.6 V102.2"
         fill="none"
         stroke={SOCCER_TEAM_DARK_STROKE}
+        strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="4.5"
       />
