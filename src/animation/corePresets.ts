@@ -596,11 +596,11 @@ const talkMicrophoneSequence: AnimationSequence = {
     {
       part: "leftArm",
       keyframes: [
-        { at: 0, pose: { rotate: -58, translate: { x: 34, y: -58 } }, ease: "easeInOut" },
-        { at: 220, pose: { rotate: -62, translate: { x: 37, y: -62 } }, ease: "easeInOut" },
-        { at: 560, pose: { rotate: -64, translate: { x: 38, y: -64 } }, ease: "easeInOut" },
-        { at: 920, pose: { rotate: -56, translate: { x: 32, y: -56 } }, ease: "easeInOut" },
-        { at: TALK_MICROPHONE_DURATION, pose: { rotate: -58, translate: { x: 34, y: -58 } }, ease: "easeInOut" },
+        { at: 0, pose: { rotate: -50, translate: { x: -4, y: 74 } }, ease: "easeInOut" },
+        { at: 220, pose: { rotate: -56, translate: { x: -2, y: 68 } }, ease: "easeInOut" },
+        { at: 560, pose: { rotate: -52, translate: { x: -3, y: 71 } }, ease: "easeInOut" },
+        { at: 920, pose: { rotate: -46, translate: { x: -5, y: 78 } }, ease: "easeInOut" },
+        { at: TALK_MICROPHONE_DURATION, pose: { rotate: -50, translate: { x: -4, y: 74 } }, ease: "easeInOut" },
       ],
     },
     {

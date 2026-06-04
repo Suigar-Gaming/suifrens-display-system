@@ -25,6 +25,7 @@ export type CapyImageProps = {
   accessoriesByType?: Record<string, AccessoryMetadata>;
   detail?: "full" | "head";
   incognito?: boolean;
+  renderMicrophoneArmInForeground?: boolean;
 };
 
 export function CapyImage({
@@ -32,6 +33,7 @@ export function CapyImage({
   accessoriesByType,
   detail = "full",
   incognito = false,
+  renderMicrophoneArmInForeground = false,
 }: CapyImageProps) {
   const { mainColor, secondaryColor, skin, earShape, expression } = attributes;
   const colorTheme = getThemeFromSkin(
@@ -168,15 +170,21 @@ export function CapyImage({
       {accessoriesByType?.body && (
         <AccessorySlot accessory={accessoriesByType.body} species="capy" body />
       )}
-      {accessoriesByType?.object && (
+      {accessoriesByType?.object && !renderMicrophoneArmInForeground && (
         <AccessorySlot accessory={accessoriesByType.object} species="capy" />
       )}
 
-      <LeftArm
-        fill={colorTheme.arms}
-        handProps={{ fill: colorTheme.appendages }}
-      />
-      {!incognito && <LeftArmPattern skin={skin} fill={colorTheme.patterns} />}
+      {!renderMicrophoneArmInForeground && (
+        <>
+          <LeftArm
+            fill={colorTheme.arms}
+            handProps={{ fill: colorTheme.appendages }}
+          />
+          {!incognito && (
+            <LeftArmPattern skin={skin} fill={colorTheme.patterns} />
+          )}
+        </>
+      )}
 
       {accessoriesByType?.torso && (
         <AccessorySlot
@@ -226,6 +234,24 @@ export function CapyImage({
       )}
       {accessoriesByType?.eyes && (
         <AccessorySlot accessory={accessoriesByType.eyes} species="capy" />
+      )}
+
+      {renderMicrophoneArmInForeground && (
+        <>
+          {accessoriesByType?.object && (
+            <AccessorySlot
+              accessory={accessoriesByType.object}
+              species="capy"
+            />
+          )}
+          <LeftArm
+            fill={colorTheme.arms}
+            handProps={{ fill: colorTheme.appendages }}
+          />
+          {!incognito && (
+            <LeftArmPattern skin={skin} fill={colorTheme.patterns} />
+          )}
+        </>
       )}
     </>
   );
