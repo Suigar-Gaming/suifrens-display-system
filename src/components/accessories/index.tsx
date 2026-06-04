@@ -24,6 +24,7 @@ import { BlueJeans } from "./legs/BlueJeans.js";
 import { BusinessSlacks } from "./legs/BusinessSlacks.js";
 import { Cutoffs } from "./legs/Cutoffs.js";
 import { SwimTrunks } from "./legs/SwimTrunks.js";
+import { SoccerTeamSwimTrunks } from "./legs/SoccerTeamSwimTrunks.js";
 import { WhitePants } from "./legs/WhitePants.js";
 import { Brush } from "./objects/Brush.js";
 import { Lasso } from "./objects/Lasso.js";
@@ -32,6 +33,7 @@ import { Pencil } from "./objects/Pencil.js";
 import { BussinessShirt } from "./torso/BusinessShirt.js";
 import { CowboyShirt } from "./torso/CowboyShirt.js";
 import { HeartShirt } from "./torso/HeartShirt.js";
+import { SoccerTeamShirt } from "./torso/SoccerTeamShirt.js";
 import { Lifeguard } from "./torso/Lifeguard.js";
 import { SkullShirt } from "./torso/SkullShirt.js";
 import { StripeShirt } from "./torso/StripeShirt.js";
@@ -58,6 +60,10 @@ import { Wings } from "./back/Wings.js";
 import { SaddleShoes } from "./feet/SaddleShoes.js";
 import { SvgAccessory } from "./SvgAccessory.js";
 import { getVipCrownAssetSrc } from "./crownAssets.js";
+import {
+  resolveSoccerCountryCode,
+  resolveSoccerTeamSide,
+} from "./soccerTeamKit.js";
 import type {
   AccessoryMetadata,
   SuiFrenSpecies,
@@ -75,8 +81,10 @@ const TYPE_FALLBACK: Partial<Record<string, AnimationPart>> = {
   eyes: "head",
   body: "body",
   torso: "body",
-  back: "body",
-  object: "leftArm",
+	back: "body",
+	object: "leftArm",
+	legs: "body",
+	feet: "rightLeg",
 };
 
 const NAME_SPECIFIC_FALLBACK: Partial<Record<string, AnimationPart>> = {
@@ -152,6 +160,21 @@ export const ACCESSORY_RENDERERS: Record<string, AccessoryRenderer> = {
   "santa hat": () => <SantaHat />,
   sneakers: () => <Sneakers />,
   snorkel: () => <Snorkel />,
+  "soccer team shirt": (props) => (
+    <SoccerTeamShirt
+      lor={props.lor}
+      body={props.body}
+      country={resolveSoccerCountryCode(props.accessory.renderOptions.country)}
+      side={resolveSoccerTeamSide(props.accessory.renderOptions.side)}
+    />
+  ),
+  "soccer team swim trunks": (props) => (
+    <SoccerTeamSwimTrunks
+      body={props.body}
+      country={resolveSoccerCountryCode(props.accessory.renderOptions.country)}
+      side={resolveSoccerTeamSide(props.accessory.renderOptions.side)}
+    />
+  ),
   "skull shirt": (props) => <SkullShirt lor={props.lor} body={props.body} />,
   "stripe shirt": (props) => <StripeShirt lor={props.lor} body={props.body} />,
   "superhero cape": () => <SuperHeroCape />,

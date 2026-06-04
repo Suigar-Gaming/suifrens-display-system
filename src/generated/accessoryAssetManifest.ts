@@ -41,6 +41,8 @@ import santaHat from "./accessory-assets/santa-hat.svg";
 import skullShirt from "./accessory-assets/skull-shirt.svg";
 import sneakers from "./accessory-assets/sneakers.svg";
 import snorkel from "./accessory-assets/snorkel.svg";
+import soccerTeamShirt from "./accessory-assets/soccer-team-shirt.svg";
+import soccerTeamSwimTrunks from "./accessory-assets/soccer-team-swim-trunks.svg";
 import stripeShirt from "./accessory-assets/stripe-shirt.svg";
 import superheroCape from "./accessory-assets/superhero-cape.svg";
 import superheroMask from "./accessory-assets/superhero-mask.svg";
@@ -57,7 +59,7 @@ import xrGoggles from "./accessory-assets/xr-goggles.svg";
 
 export type AccessoryAssetVariant = "default" | "body" | "left" | "right" | "leftLeg" | "rightLeg";
 
-export const SPLIT_LIMB_ASSET_NAMES = new Set<string>(["bell bottoms","blue jeans","blue slip ons","boots","business slacks","casual shoes","cutoffs","dress shoes","pink slip ons","sneakers","swim trunks"] as const);
+export const SPLIT_LIMB_ASSET_NAMES = new Set<string>(["bell bottoms","blue jeans","blue slip ons","boots","business slacks","casual shoes","cutoffs","dress shoes","pink slip ons","sneakers","soccer team swim trunks","swim trunks"] as const);
 
 export const ACCESSORY_ASSET_MANIFEST = {
   "8 bit glasses": new URL(asset8BitGlasses, import.meta.url).href,
@@ -103,6 +105,8 @@ export const ACCESSORY_ASSET_MANIFEST = {
   "skull shirt": new URL(skullShirt, import.meta.url).href,
   "sneakers": new URL(sneakers, import.meta.url).href,
   "snorkel": new URL(snorkel, import.meta.url).href,
+  "soccer team shirt": new URL(soccerTeamShirt, import.meta.url).href,
+  "soccer team swim trunks": new URL(soccerTeamSwimTrunks, import.meta.url).href,
   "stripe shirt": new URL(stripeShirt, import.meta.url).href,
   "superhero cape": new URL(superheroCape, import.meta.url).href,
   "superhero mask": new URL(superheroMask, import.meta.url).href,

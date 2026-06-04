@@ -44,6 +44,8 @@ export declare const ACCESSORY_ASSET_MANIFEST: {
     readonly "skull shirt": string;
     readonly sneakers: string;
     readonly snorkel: string;
+    readonly "soccer team shirt": string;
+    readonly "soccer team swim trunks": string;
     readonly "stripe shirt": string;
     readonly "superhero cape": string;
     readonly "superhero mask": string;
