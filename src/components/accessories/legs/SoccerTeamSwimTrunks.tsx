@@ -1,6 +1,7 @@
 import type { SoccerTeamAccessoryProps } from "../soccerTeamKit.js";
 import {
   SOCCER_TEAM_DARK_STROKE,
+  SoccerKitPattern,
   resolveSoccerTeamKit,
 } from "../soccerTeamKit.js";
 import { useId } from "react";
@@ -30,10 +31,7 @@ function renderLeg(
         <path d={TRUNKS_LEG_PATH} />
       </clipPath>
       <g clipPath={`url(#${clipId})`}>
-        <rect x="-7" y="90" width="106" height="64" fill={kit.secondary} />
-        <rect x="-7" y="122" width="106" height="10" fill={kit.accent} />
-        <rect x="40" y="90" width="14" height="64" fill={kit.primary} />
-        <rect x="0" y="100" width="98" height="8" fill={kit.primary} />
+        <SoccerKitPattern kit={kit} x={-7} y={90} width={106} height={64} />
       </g>
       <path
         d="M-5.5 102.2 V148.3 L10.3 148.9 L84.2 149.8 L97.2 149.6 V102.2"
@@ -57,18 +55,7 @@ function renderBody(country: unknown, side: unknown, idPrefix: string) {
         <path d={TRUNKS_BODY_PATH} />
       </clipPath>
       <g clipPath={`url(#${clipId})`}>
-        <rect x="0" y="188" width="293" height="106" fill={kit.secondary} />
-        <rect x="0" y="220" width="293" height="12" fill={kit.accent} />
-        <rect x="72" y="188" width="22" height="106" fill={kit.primary} />
-        <rect x="198" y="188" width="22" height="106" fill={kit.primary} />
-        <rect
-          x="0"
-          y="246"
-          width="293"
-          height="14"
-          fill={kit.primary}
-          opacity="0.9"
-        />
+        <SoccerKitPattern kit={kit} x={0} y={188} width={293} height={106} />
       </g>
       <path
         d="M0 188 C58 192 115 194 171 193 C224 192 263 190 293 188"
