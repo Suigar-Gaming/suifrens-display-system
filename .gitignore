@@ -1,9 +1,18 @@
 node_modules
 .DS_Store
 .env
+dist/
+build/
+coverage/
+storybook-static/
 dist-esbuild-test
 meta.json
 *.tgz
 
 *storybook.log
 *tsconfig.tsbuildinfo
+.cache/
+.turbo/
+.vite/
+.tsup/
+.eslintcache
