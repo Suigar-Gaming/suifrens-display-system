@@ -74,6 +74,75 @@ const walkSequence: AnimationSequence = {
   ],
 };
 
+const GOALKEEPER_CRAB_DURATION = 980;
+
+const goalkeeperCrabSequence: AnimationSequence = {
+  name: "goalkeeperCrab",
+  duration: GOALKEEPER_CRAB_DURATION,
+  tracks: [
+    {
+      part: "leftArm",
+      keyframes: [
+        { at: 0, pose: { rotate: -24, translate: { x: -7, y: -6 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION * 0.25, pose: { rotate: -31, translate: { x: -10, y: -8 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION * 0.5, pose: { rotate: -22, translate: { x: -5, y: -5 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION * 0.75, pose: { rotate: -29, translate: { x: -9, y: -7 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION, pose: { rotate: -24, translate: { x: -7, y: -6 } }, ease: "easeInOut" },
+      ],
+    },
+    {
+      part: "rightArm",
+      keyframes: [
+        { at: 0, pose: { rotate: 24, translate: { x: 7, y: -6 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION * 0.25, pose: { rotate: 29, translate: { x: 9, y: -7 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION * 0.5, pose: { rotate: 22, translate: { x: 5, y: -5 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION * 0.75, pose: { rotate: 31, translate: { x: 10, y: -8 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION, pose: { rotate: 24, translate: { x: 7, y: -6 } }, ease: "easeInOut" },
+      ],
+    },
+    {
+      part: "leftLeg",
+      keyframes: [
+        { at: 0, pose: { scale: { x: -1, y: 1 }, rotate: 7, translate: { x: -5, y: 5 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION * 0.5, pose: { scale: { x: -1, y: 1 }, rotate: -9, translate: { x: 6, y: 1 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION, pose: { scale: { x: -1, y: 1 }, rotate: 7, translate: { x: -5, y: 5 } }, ease: "easeInOut" },
+      ],
+    },
+    {
+      part: "rightLeg",
+      keyframes: [
+        { at: 0, pose: { rotate: -8, translate: { x: 6, y: 1 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION * 0.5, pose: { rotate: 8, translate: { x: -5, y: 5 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION, pose: { rotate: -8, translate: { x: 6, y: 1 } }, ease: "easeInOut" },
+      ],
+    },
+    {
+      part: "body",
+      keyframes: [
+        { at: 0, pose: { rotate: -0.8, translate: { x: -1, y: 5 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION * 0.5, pose: { rotate: 0.8, translate: { x: 1, y: 2 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION, pose: { rotate: -0.8, translate: { x: -1, y: 5 } }, ease: "easeInOut" },
+      ],
+    },
+    {
+      part: "head",
+      keyframes: [
+        { at: 0, pose: { rotate: -1.5, translate: { x: -1, y: 1 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION * 0.5, pose: { rotate: 1.5, translate: { x: 1, y: -1 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION, pose: { rotate: -1.5, translate: { x: -1, y: 1 } }, ease: "easeInOut" },
+      ],
+    },
+    {
+      part: "tail",
+      keyframes: [
+        { at: 0, pose: { rotate: -2, translate: { x: -1, y: 1 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION * 0.5, pose: { rotate: 2, translate: { x: 1, y: -1 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION, pose: { rotate: -2, translate: { x: -1, y: 1 } }, ease: "easeInOut" },
+      ],
+    },
+  ],
+};
+
 const CELEBRATE_DURATION = 900;
 
 const celebrateSequence: AnimationSequence = {
@@ -703,6 +772,7 @@ const showcaseSequence = combineSequences("walkJumpSit", [
 
 export const CORE_PRESET_SEQUENCES: Record<string, AnimationSequence> = {
   walk: walkSequence,
+  goalkeeperCrab: goalkeeperCrabSequence,
   celebrate: celebrateSequence,
   jackpot: jackpotSequence,
   slotPull: slotPullSequence,

@@ -19,6 +19,7 @@ export const PRESET_CATALOG: PresetCatalogGroup[] = [
     presets: [
       { label: "Idle", name: "idle", config: { preset: "idle", playback: LOOP } },
       { label: "Walk", name: "walk", config: { preset: "walk", playback: { ...LOOP, alternate: true } } },
+      { label: "Goalkeeper Crab", name: "goalkeeperCrab", config: { preset: "goalkeeperCrab", playback: LOOP } },
       { label: "Run", name: "run", config: { preset: "run", playback: LOOP } },
       { label: "Sprint", name: "sprint", config: { preset: "sprint", playback: LOOP } },
       { label: "Jump", name: "jump", config: { preset: "jump", playback: { ...LOOP, alternate: true } } },
