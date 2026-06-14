@@ -46,3 +46,10 @@ export function rotateMatrix(angleDeg: number, pivotX: number, pivotY: number): 
   const translateBack = translateMatrix(pivotX, pivotY);
   return multiplyMatrix(translateBack, multiplyMatrix(rotation, translateToOrigin));
 }
+
+export function scaleMatrix(scaleX: number, scaleY: number, pivotX: number, pivotY: number): Matrix {
+  const translateToOrigin = translateMatrix(-pivotX, -pivotY);
+  const scale: Matrix = [scaleX, 0, 0, scaleY, 0, 0];
+  const translateBack = translateMatrix(pivotX, pivotY);
+  return multiplyMatrix(translateBack, multiplyMatrix(scale, translateToOrigin));
+}

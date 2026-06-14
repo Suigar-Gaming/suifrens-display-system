@@ -5,6 +5,7 @@ import {
   multiplyMatrix,
   parseMatrix,
   rotateMatrix,
+  scaleMatrix,
   translateMatrix,
 } from "./matrix.js";
 import type { PartPose } from "./types.js";
@@ -37,6 +38,16 @@ export function composePartTransform(
 
   const pivotSource = pivotOverride ?? getPartDefinition(part).pivot;
 
+  if (pose.scale) {
+    const scale = scaleMatrix(
+      pose.scale.x ?? 1,
+      pose.scale.y ?? 1,
+      pivotSource.x,
+      pivotSource.y
+    );
+    composed = multiplyMatrix(scale, composed);
+  }
+
   if (pose.rotate !== undefined) {
     const rotate = rotateMatrix(pose.rotate, pivotSource.x, pivotSource.y);
     composed = multiplyMatrix(rotate, composed);
@@ -55,6 +66,15 @@ export function composePartTransform(
     const parentPose = poses.get(parent);
     if (parentPose) {
       const parentPivot = getPartDefinition(parent).pivot;
+      if (parentPose.scale) {
+        const scale = scaleMatrix(
+          parentPose.scale.x ?? 1,
+          parentPose.scale.y ?? 1,
+          parentPivot.x,
+          parentPivot.y
+        );
+        composed = multiplyMatrix(scale, composed);
+      }
       if (parentPose.rotate !== undefined) {
         const rotate = rotateMatrix(
           parentPose.rotate,
@@ -148,7 +168,7 @@ export class AnimationStore {
   }
 
   setPose(part: AnimationPart, pose: PartPose | undefined) {
-    if (!pose || (pose.rotate === undefined && !pose.translate)) {
+    if (!pose || (pose.rotate === undefined && !pose.translate && !pose.scale)) {
       this.poses.delete(part);
     } else {
       this.poses.set(part, pose);

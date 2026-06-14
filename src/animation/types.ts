@@ -3,6 +3,7 @@ import type { AnimationPart } from "./parts.js";
 export type PartPose = {
   rotate?: number;
   translate?: { x: number; y: number };
+  scale?: { x?: number; y?: number };
 };
 
 export type EasingName = "linear" | "easeIn" | "easeOut" | "easeInOut";

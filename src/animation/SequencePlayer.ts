@@ -15,6 +15,13 @@ export type NormalizedPlayback = {
 
 const EPSILON = 0.0001;
 
+function interpolateScaleAxis(start: number, end: number, eased: number) {
+  if (start * end < 0) {
+    return eased < 0.5 ? start : end;
+  }
+  return start + (end - start) * eased;
+}
+
 export function normalizePlayback(
   playback?: PlaybackOptions
 ): NormalizedPlayback {
@@ -91,6 +98,19 @@ export function interpolatePose(
     pose.translate = {
       x: start.x + (end.x - start.x) * eased,
       y: start.y + (end.y - start.y) * eased,
+    };
+  }
+
+  if (previous.pose.scale || next.pose.scale) {
+    const start = previous.pose.scale ?? { x: 1, y: 1 };
+    const end = next.pose.scale ?? { x: 1, y: 1 };
+    const startX = start.x ?? 1;
+    const startY = start.y ?? 1;
+    const endX = end.x ?? 1;
+    const endY = end.y ?? 1;
+    pose.scale = {
+      x: interpolateScaleAxis(startX, endX, eased),
+      y: interpolateScaleAxis(startY, endY, eased),
     };
   }
 
