@@ -103,9 +103,9 @@ const goalkeeperCrabSequence: AnimationSequence = {
     {
       part: "leftLeg",
       keyframes: [
-        { at: 0, pose: { scale: { x: -1, y: 1 }, rotate: 7, translate: { x: -5, y: 5 } }, ease: "easeInOut" },
-        { at: GOALKEEPER_CRAB_DURATION * 0.5, pose: { scale: { x: -1, y: 1 }, rotate: -9, translate: { x: 6, y: 1 } }, ease: "easeInOut" },
-        { at: GOALKEEPER_CRAB_DURATION, pose: { scale: { x: -1, y: 1 }, rotate: 7, translate: { x: -5, y: 5 } }, ease: "easeInOut" },
+        { at: 0, pose: { scale: { x: -1, y: 1 }, rotate: 7, translate: { x: -2, y: 5 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION * 0.5, pose: { scale: { x: -1, y: 1 }, rotate: -9, translate: { x: 2, y: 1 } }, ease: "easeInOut" },
+        { at: GOALKEEPER_CRAB_DURATION, pose: { scale: { x: -1, y: 1 }, rotate: 7, translate: { x: -2, y: 5 } }, ease: "easeInOut" },
       ],
     },
     {
