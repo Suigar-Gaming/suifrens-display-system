@@ -51,8 +51,8 @@ export const PRESET_CATALOG: PresetCatalogGroup[] = [
   {
     title: "Gestures",
     presets: [
-      { label: "Ourah", name: "ourah", config: { preset: "ourah", playback: LOOP } },
-      { label: "Showing", name: "showing", config: { preset: "showing", playback: LOOP } },
+      { label: "Ourah", name: "ourah", config: { preset: "ourah", playback: { ...LOOP, alternate: true } } },
+      { label: "Showing", name: "showing", config: { preset: "showing", playback: { ...LOOP, alternate: true } } },
     ],
   },
   {
