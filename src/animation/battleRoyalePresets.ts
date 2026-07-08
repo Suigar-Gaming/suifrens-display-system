@@ -2174,7 +2174,7 @@ const hitSequence: AnimationSequence = {
         },
         {
           at: HIT_DURATION * 0.35,
-          pose: { rotate: 12, translate: { x: 6, y: -2 } },
+          pose: { rotate: 7, translate: { x: 4, y: -1 } },
           ease: "easeInOut",
         },
         {
@@ -2268,12 +2268,12 @@ const knockdownSequence: AnimationSequence = {
         },
         {
           at: KNOCKDOWN_DURATION * 0.6,
-          pose: { rotate: 24, translate: { x: 0, y: 48 } },
+          pose: { rotate: 22, translate: { x: 0, y: 42 } },
           ease: "easeInOut",
         },
         {
           at: KNOCKDOWN_DURATION,
-          pose: { rotate: 18, translate: { x: 0, y: 54 } },
+          pose: { rotate: 16, translate: { x: 0, y: 46 } },
           ease: "easeIn",
         },
       ],
@@ -2288,17 +2288,17 @@ const knockdownSequence: AnimationSequence = {
         },
         {
           at: KNOCKDOWN_DURATION * 0.25,
-          pose: { rotate: 6, translate: { x: 0, y: 8 } },
+          pose: { rotate: 4, translate: { x: 0, y: 5 } },
           ease: "easeInOut",
         },
         {
           at: KNOCKDOWN_DURATION * 0.6,
-          pose: { rotate: 14, translate: { x: 0, y: 18 } },
+          pose: { rotate: 8, translate: { x: 0, y: 10 } },
           ease: "easeInOut",
         },
         {
           at: KNOCKDOWN_DURATION,
-          pose: { rotate: 10, translate: { x: 0, y: 16 } },
+          pose: { rotate: 6, translate: { x: 0, y: 9 } },
           ease: "easeIn",
         },
       ],
@@ -2437,7 +2437,7 @@ const reviveSequence: AnimationSequence = {
       keyframes: [
         {
           at: 0,
-          pose: { rotate: 18, translate: { x: 0, y: 54 } },
+          pose: { rotate: 16, translate: { x: 0, y: 46 } },
           ease: "easeOut",
         },
         {
@@ -2462,7 +2462,7 @@ const reviveSequence: AnimationSequence = {
       keyframes: [
         {
           at: 0,
-          pose: { rotate: 10, translate: { x: 0, y: 16 } },
+          pose: { rotate: 6, translate: { x: 0, y: 9 } },
           ease: "easeOut",
         },
         {
@@ -2621,17 +2621,17 @@ const deathSequence: AnimationSequence = {
         },
         {
           at: DEATH_DURATION * 0.55,
-          pose: { rotate: 50, translate: { x: 16, y: 56 } },
+          pose: { rotate: 48, translate: { x: 16, y: 30 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION * 0.82,
-          pose: { rotate: 74, translate: { x: 20, y: 72 } },
+          pose: { rotate: 68, translate: { x: 20, y: 32 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION,
-          pose: { rotate: 70, translate: { x: 18, y: 70 } },
+          pose: { rotate: 64, translate: { x: 18, y: 30 } },
           ease: "easeIn",
         },
       ],
@@ -2646,22 +2646,22 @@ const deathSequence: AnimationSequence = {
         },
         {
           at: DEATH_DURATION * 0.18,
-          pose: { rotate: -4, translate: { x: 0, y: 4 } },
+          pose: { rotate: -3, translate: { x: 0, y: 3 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION * 0.55,
-          pose: { rotate: 8, translate: { x: 0, y: 12 } },
+          pose: { rotate: 4, translate: { x: 0, y: 6 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION * 0.82,
-          pose: { rotate: 12, translate: { x: 0, y: 16 } },
+          pose: { rotate: 7, translate: { x: 0, y: 8 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION,
-          pose: { rotate: 10, translate: { x: 0, y: 14 } },
+          pose: { rotate: 6, translate: { x: 0, y: 7 } },
           ease: "easeIn",
         },
       ],
@@ -2828,17 +2828,17 @@ const death2Sequence: AnimationSequence = {
         },
         {
           at: DEATH_DURATION * 0.55,
-          pose: { rotate: -50, translate: { x: -16, y: 54 } },
+          pose: { rotate: -48, translate: { x: -16, y: 30 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION * 0.8,
-          pose: { rotate: -74, translate: { x: -20, y: 70 } },
+          pose: { rotate: -68, translate: { x: -20, y: 34 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION,
-          pose: { rotate: -70, translate: { x: -18, y: 68 } },
+          pose: { rotate: -64, translate: { x: -18, y: 32 } },
           ease: "easeIn",
         },
       ],
@@ -2853,22 +2853,22 @@ const death2Sequence: AnimationSequence = {
         },
         {
           at: DEATH_DURATION * 0.2,
-          pose: { rotate: 4, translate: { x: 0, y: 4 } },
+          pose: { rotate: 3, translate: { x: 0, y: 3 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION * 0.55,
-          pose: { rotate: -8, translate: { x: 0, y: 12 } },
+          pose: { rotate: -4, translate: { x: 0, y: 6 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION * 0.8,
-          pose: { rotate: -12, translate: { x: 0, y: 16 } },
+          pose: { rotate: -7, translate: { x: 0, y: 8 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION,
-          pose: { rotate: -10, translate: { x: 0, y: 14 } },
+          pose: { rotate: -6, translate: { x: 0, y: 7 } },
           ease: "easeIn",
         },
       ],
@@ -3035,17 +3035,17 @@ const death3Sequence: AnimationSequence = {
         },
         {
           at: DEATH_DURATION * 0.45,
-          pose: { rotate: 78, translate: { x: 18, y: 52 } },
+          pose: { rotate: 64, translate: { x: 18, y: 24 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION * 0.75,
-          pose: { rotate: 104, translate: { x: 24, y: 72 } },
+          pose: { rotate: 84, translate: { x: 24, y: 28 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION,
-          pose: { rotate: 100, translate: { x: 22, y: 72 } },
+          pose: { rotate: 82, translate: { x: 22, y: 26 } },
           ease: "easeIn",
         },
       ],
@@ -3060,22 +3060,22 @@ const death3Sequence: AnimationSequence = {
         },
         {
           at: DEATH_DURATION * 0.15,
-          pose: { rotate: -6, translate: { x: 0, y: 6 } },
+          pose: { rotate: -4, translate: { x: 0, y: 4 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION * 0.45,
-          pose: { rotate: 18, translate: { x: 0, y: 16 } },
+          pose: { rotate: 10, translate: { x: 0, y: 8 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION * 0.75,
-          pose: { rotate: 26, translate: { x: 0, y: 20 } },
+          pose: { rotate: 14, translate: { x: 0, y: 10 } },
           ease: "easeInOut",
         },
         {
           at: DEATH_DURATION,
-          pose: { rotate: 22, translate: { x: 0, y: 18 } },
+          pose: { rotate: 12, translate: { x: 0, y: 9 } },
           ease: "easeIn",
         },
       ],

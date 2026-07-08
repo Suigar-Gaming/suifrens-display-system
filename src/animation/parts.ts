@@ -28,7 +28,8 @@ const PART_DEFINITIONS: Record<AnimationPart, PartDefinition> = {
     ],
   },
   head: {
-    pivot: { x: 848.15, y: 585.65 },
+    // Shared neck joint: lower-left within both head silhouettes, just above the torso.
+    pivot: { x: 1180, y: 1580 },
     parent: "body",
     autoDetectTransforms: [
       "matrix(2.9166107177734375,0,0,2.9166107177734375,848.15,585.65)",
