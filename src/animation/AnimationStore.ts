@@ -209,6 +209,19 @@ export class AnimationStore {
     );
   }
 
+  getAnimationTargetsForParts(parts: ReadonlySet<AnimationPart>) {
+    return this.getAnimationTargets().filter(({ part }) => {
+      let current: AnimationPart | undefined = part;
+      while (current) {
+        if (parts.has(current)) {
+          return true;
+        }
+        current = getPartDefinition(current).parent;
+      }
+      return false;
+    });
+  }
+
   refresh(part: AnimationPart) {
     this.notify(part);
   }

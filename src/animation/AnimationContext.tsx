@@ -118,8 +118,52 @@ export function AnimationProvider({
   useEffect(() => {
     controller.stop();
     const waapi = startWaapiAnimation(store, resolvedAnimation);
+    const root = rootRef.current;
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let isIntersecting = true;
+
     if (waapi.handled) {
-      return waapi.cleanup;
+      const syncPlayback = () => {
+        if (
+          document.visibilityState !== "hidden" &&
+          isIntersecting &&
+          !media.matches
+        ) {
+          waapi.play();
+        } else {
+          waapi.pause();
+        }
+      };
+      const observer =
+        root && typeof IntersectionObserver !== "undefined"
+          ? new IntersectionObserver(
+              ([entry]) => {
+                isIntersecting = entry?.isIntersecting ?? true;
+                syncPlayback();
+              },
+              { rootMargin: "100px" }
+            )
+          : null;
+
+      if (root && observer) {
+        const rect = root.getBoundingClientRect();
+        isIntersecting =
+          rect.bottom >= -100 &&
+          rect.right >= -100 &&
+          rect.top <= window.innerHeight + 100 &&
+          rect.left <= window.innerWidth + 100;
+        observer.observe(root);
+      }
+      document.addEventListener("visibilitychange", syncPlayback);
+      media.addEventListener?.("change", syncPlayback);
+      syncPlayback();
+
+      return () => {
+        observer?.disconnect();
+        document.removeEventListener("visibilitychange", syncPlayback);
+        media.removeEventListener?.("change", syncPlayback);
+        waapi.cleanup();
+      };
     }
 
     controller.applyConfig(resolvedAnimation);
@@ -131,6 +175,7 @@ export function AnimationProvider({
     let last = performance.now();
 
     const tick = (time: number) => {
+      raf = 0;
       const delta = time - last;
       last = time;
       if (controller.update(delta)) {
@@ -141,6 +186,9 @@ export function AnimationProvider({
     const schedule = () => {
       if (
         document.visibilityState === "hidden" ||
+        !isIntersecting ||
+        media.matches ||
+        raf !== 0 ||
         !controller.needsAnimationFrame()
       ) {
         return;
@@ -149,19 +197,48 @@ export function AnimationProvider({
       raf = requestAnimationFrame(tick);
     };
 
-    const onVisibilityChange = () => {
-      if (document.visibilityState === "hidden") {
+    const onPlaybackAvailabilityChange = () => {
+      if (document.visibilityState === "hidden" || media.matches) {
         cancelAnimationFrame(raf);
+        raf = 0;
       } else {
         schedule();
       }
     };
 
-    document.addEventListener("visibilitychange", onVisibilityChange);
+    const observer =
+      root && typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver(
+            ([entry]) => {
+              isIntersecting = entry?.isIntersecting ?? true;
+              if (isIntersecting) {
+                schedule();
+              } else {
+                cancelAnimationFrame(raf);
+                raf = 0;
+              }
+            },
+            { rootMargin: "100px" }
+          )
+        : null;
+    if (root && observer) {
+      observer.observe(root);
+    }
+
+    document.addEventListener(
+      "visibilitychange",
+      onPlaybackAvailabilityChange
+    );
+    media.addEventListener?.("change", onPlaybackAvailabilityChange);
     schedule();
 
     return () => {
-      document.removeEventListener("visibilitychange", onVisibilityChange);
+      observer?.disconnect();
+      document.removeEventListener(
+        "visibilitychange",
+        onPlaybackAvailabilityChange
+      );
+      media.removeEventListener?.("change", onPlaybackAvailabilityChange);
       cancelAnimationFrame(raf);
     };
   }, [controller, resolvedAnimation, store]);

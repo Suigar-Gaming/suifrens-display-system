@@ -1,8 +1,8 @@
-export { SuiFrenImage } from "./components/SuiFrenImage.js";
+export { SuiFrenImageAssets as SuiFrenImage } from "./components/SuiFrenImageAssets.js";
 export type {
-  SuiFrenImageProps,
-  SuiFrenRenderSize,
-} from "./components/SuiFrenImage.js";
+  SuiFrenImageAssetsProps as SuiFrenImageProps,
+} from "./components/SuiFrenImageAssets.js";
+export type { SuiFrenRenderSize } from "./components/SuiFrenImage.js";
 
 export { BullsharkImage } from "./components/bullshark-image/BullsharkImage.js";
 export type { BullsharkImageProps } from "./components/bullshark-image/BullsharkImage.js";

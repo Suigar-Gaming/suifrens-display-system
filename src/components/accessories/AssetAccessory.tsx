@@ -1,8 +1,9 @@
 import { AnimatedAccessory } from "../../animation/AnimatedAccessory.js";
 import type { AnimationPart } from "../../animation/parts.js";
 import { getVipCrownAssetSrc } from "./crownAssets.js";
-import { ACCESSORY_RENDERERS } from "./inlineRegistry.js";
 import { SvgAccessory } from "./SvgAccessory.js";
+import { SoccerTeamSwimTrunks } from "./legs/SoccerTeamSwimTrunks.js";
+import { SoccerTeamShirt } from "./torso/SoccerTeamShirt.js";
 import type {
   AccessoryRendererProps,
   BodyAccessoryProps,
@@ -12,7 +13,11 @@ import {
   SPLIT_LIMB_ASSET_NAMES,
   type AccessoryAssetVariant,
 } from "../../generated/accessoryAssetManifest.js";
-import { SOCCER_TEAM_ACCESSORY_NAMES } from "./soccerTeamKit.js";
+import {
+  resolveSoccerCountryCode,
+  resolveSoccerTeamSide,
+  SOCCER_TEAM_ACCESSORY_NAMES,
+} from "./soccerTeamKit.js";
 
 const TYPE_FALLBACK: Partial<Record<string, AnimationPart>> = {
   head: "head",
@@ -80,16 +85,33 @@ function resolveAssetSrc(
 
 export function AssetAccessory(props: AccessoryRendererProps) {
   if (SOCCER_TEAM_ACCESSORY_NAMES.has(props.accessory.name)) {
-    const renderer = ACCESSORY_RENDERERS[props.accessory.name];
     const fallbackPart =
       props.accessory.renderOptions.animationPart ?? resolveFallbackPart(props);
-    const renderedAccessory = renderer ? renderer(props) : null;
+    const country = resolveSoccerCountryCode(
+      props.accessory.renderOptions.country
+    );
+    const side = resolveSoccerTeamSide(props.accessory.renderOptions.side);
+    const renderedAccessory =
+      props.accessory.name === "soccer team shirt" ? (
+        <SoccerTeamShirt
+          lor={props.lor}
+          body={props.body}
+          country={country}
+          side={side}
+        />
+      ) : (
+        <SoccerTeamSwimTrunks
+          body={props.body}
+          country={country}
+          side={side}
+        />
+      );
 
-    return renderedAccessory ? (
+    return (
       <AnimatedAccessory fallbackPart={fallbackPart}>
         {renderedAccessory}
       </AnimatedAccessory>
-    ) : null;
+    );
   }
 
   const asset = resolveAssetSrc(props);

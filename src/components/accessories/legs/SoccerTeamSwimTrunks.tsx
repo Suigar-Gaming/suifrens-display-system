@@ -12,6 +12,8 @@ const TRUNKS_BODY_PATH =
 const TRUNKS_LEG_PATH =
   "M-5.5 102.2 C9.5 95.5 34.5 90.5 69.2 92.5 C80.4 94 91 98.2 97.2 102.2 V149.6 L84.2 149.8 L10.3 148.9 L-5.5 148.3Z";
 
+const TRUNKS_INK_STROKE_WIDTH = 10;
+
 function svgId(prefix: string, id: string) {
   return `${prefix}-${id.replace(/:/g, "")}`;
 }
@@ -39,7 +41,7 @@ function renderLeg(
         stroke={SOCCER_TEAM_DARK_STROKE}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="4.5"
+        strokeWidth={TRUNKS_INK_STROKE_WIDTH}
       />
     </g>
   );
@@ -69,7 +71,7 @@ function renderBody(country: unknown, side: unknown, idPrefix: string) {
         fill="none"
         stroke={SOCCER_TEAM_DARK_STROKE}
         strokeLinecap="round"
-        strokeWidth="4.5"
+        strokeWidth={TRUNKS_INK_STROKE_WIDTH}
         opacity="0.8"
       />
       <path
@@ -77,7 +79,7 @@ function renderBody(country: unknown, side: unknown, idPrefix: string) {
         fill="none"
         stroke={SOCCER_TEAM_DARK_STROKE}
         strokeLinejoin="round"
-        strokeWidth="5"
+        strokeWidth={TRUNKS_INK_STROKE_WIDTH}
       />
     </g>
   );

@@ -63,9 +63,10 @@ export function SuiFrenImageAssets({
   animationAutoPlay,
   animationHoldOnComplete,
 }: SuiFrenImageAssetsProps) {
-  const accessoriesByType = accessories
-    ? getAccessoriesByType(accessories)
-    : undefined;
+  const accessoriesByType = useMemo(
+    () => (accessories ? getAccessoriesByType(accessories) : undefined),
+    [accessories]
+  );
 
   const resolvedAnimation = useMemo<AnimationConfig | null>(() => {
     if (animationProp !== undefined) {
