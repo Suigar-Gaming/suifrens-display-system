@@ -22,6 +22,11 @@
       "import": "./dist/image.mjs",
       "default": "./dist/image.mjs"
     },
+    "./image-inline": {
+      "types": "./dist/image-inline.d.ts",
+      "import": "./dist/image-inline.mjs",
+      "default": "./dist/image-inline.mjs"
+    },
     "./image-assets": {
       "types": "./dist/image-assets.d.ts",
       "import": "./dist/image-assets.mjs",

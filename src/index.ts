@@ -1,4 +1,4 @@
-export * from "./image.js";
+export * from "./image-inline.js";
 export * from "./accessories.js";
 export * from "./animation.js";
 export * from "./battle.js";

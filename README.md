@@ -57,4 +57,12 @@ import {
 } from "@suigar/suifrens-display-system/expressions";
 ```
 
+The `/image` entry uses cacheable external SVG assets for accessories. If you
+need fully self-contained SVG markup (for example, for server-side SVG export),
+use the compatibility entry:
+
+```ts
+import { SuiFrenImage } from "@suigar/suifrens-display-system/image-inline";
+```
+
 The root package entry still works, but it intentionally exposes the full public API and is heavier for bundlers to analyze.
