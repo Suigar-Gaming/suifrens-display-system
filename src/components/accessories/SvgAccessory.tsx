@@ -1,7 +1,9 @@
+import { useMemo } from "react";
 import type {
   AccessoryPlacement,
   SuiFrenSpecies,
 } from "../../utils/accessoryUtils.js";
+import { resolveEmbeddedSvgSymbolSource } from "./svgSymbolDataUrl.js";
 
 const DEFAULT_ORIGIN = 1500;
 const SCALE_EPSILON = 0.0001;
@@ -49,27 +51,31 @@ export function SvgAccessory({
 }: SvgAccessoryProps) {
   const resolvedPlacement = placement?.[species];
   const transform = buildPlacementTransform(resolvedPlacement);
+  const embeddedSymbolSrc = useMemo(
+    () =>
+      symbolId ? resolveEmbeddedSvgSymbolSource(assetSrc, symbolId) : undefined,
+    [assetSrc, symbolId]
+  );
+  const imageSrc = embeddedSymbolSrc ?? (!symbolId ? assetSrc : null);
+  const fragmentSrc =
+    symbolId && embeddedSymbolSrc === undefined
+      ? `${assetSrc}#${symbolId}`
+      : null;
 
   return (
     <g transform={transform}>
-      {symbolId ? (
-        <use
-          href={`${assetSrc}#${symbolId}`}
-          x="0"
-          y="0"
-          width="3000"
-          height="3000"
-        />
-      ) : (
+      {imageSrc ? (
         <image
-          href={assetSrc}
+          href={imageSrc}
           x="0"
           y="0"
           width="3000"
           height="3000"
           preserveAspectRatio="xMidYMid meet"
         />
-      )}
+      ) : fragmentSrc ? (
+        <use href={fragmentSrc} x="0" y="0" width="3000" height="3000" />
+      ) : null}
     </g>
   );
 }
