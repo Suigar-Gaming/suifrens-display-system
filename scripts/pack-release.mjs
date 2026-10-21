@@ -13,7 +13,7 @@ if (!/^\d+\.\d+\.\d+$/.test(manifest.version)) {
 const pending = (await readdir(resolve(root, '.changeset'))).filter(
 	(name) => name.endsWith('.md') && name !== 'README.md',
 );
-assert.equal(pending.length, 0, 'Run pnpm release:version before packaging pending changesets.');
+assert.equal(pending.length, 0, 'Run pnpm changeset version before packaging pending changesets.');
 const changelog = await readFile(resolve(root, 'CHANGELOG.md'), 'utf8');
 const sections = [...changelog.matchAll(/^## (\d+\.\d+\.\d+)\s*$/gm)];
 assert.equal(

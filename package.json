@@ -93,9 +93,7 @@
 		"lint": "pnpm run oxlint && pnpm run oxfmt",
 		"lint:fix": "pnpm run oxlint:fix && pnpm run oxfmt:fix",
 		"release:pack": "pnpm run build && node scripts/pack-release.mjs",
-		"changeset": "changeset",
-		"release:status": "changeset status",
-		"release:version": "changeset version"
+		"changeset": "changeset"
 	},
 	"devDependencies": {
 		"@changesets/cli": "^3.0.3",
@@ -140,7 +138,7 @@
 		"react-dom": "^18.2.0 || ^19.0.0"
 	},
 	"engines": {
-		"node": "^22.22.1 || ^24.11.0 || >=26.0.0"
+		"node": "^24.22.1"
 	},
-	"packageManager": "pnpm@11.25.0"
+	"packageManager": "pnpm@12.14.0"
 }

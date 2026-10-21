@@ -1,6 +1,6 @@
 # Suifrens Display System
 
-This repository owns the source, generated SVG assets and compiled releases of `@suigar/suifrens-display-system`. Read `.changeset/README.md` before changing the package version or its distribution. Read `docs/dependency-migration.md` when updating the toolchain or dependencies.
+This repository owns the source, generated SVG assets and compiled releases of `@suigar/suifrens-display-system`. Read `.changeset/README.md` before changing the package version or its distribution.
 
 ## Working tree and scope
 
@@ -19,15 +19,16 @@ For each consumer-visible change, add or update a `.changeset/*.md` entry withou
 
 Determine the release baseline from existing tags and the pending release diff; do not infer publication merely from `package.json`. Use stable `X.Y.Z` versions, never prerelease versions by default. Bump once per pending release, considering all accumulated changes. Reuse an already prepared, unpublished version when it covers the required bump; do not increment for every edit, follow-up or rebuild. Never reuse a published version for changed contents. If publication history cannot be established, report the uncertainty instead of assuming a version is available. An explicit user version takes precedence.
 
-Use Changesets as the source of truth: `pnpm changeset` records intent and `pnpm release:status` reviews the plan. At release preparation, run `pnpm release:version` once to consume pending changesets and update `package.json` and `CHANGELOG.md` together. Do not manually increment versions or invent historical changelog entries. Multiple pending changesets are aggregated using the highest required bump. For follow-ups to an already prepared local release, update its unreleased changelog entry instead of applying another bump unnecessarily. Never edit an already published changelog entry.
+Use Changesets as the source of truth: `pnpm changeset` records intent and `pnpm changeset status` reviews the plan. At release preparation, run `pnpm changeset version` once to consume pending changesets and update `package.json` and `CHANGELOG.md` together. Do not manually increment versions or invent historical changelog entries. Multiple pending changesets are aggregated using the highest required bump. For follow-ups to an already prepared local release, update its unreleased changelog entry instead of applying another bump unnecessarily. Never edit an already published changelog entry.
 
 The package is private to prevent npm publication; `.changeset/config.json` enables versioning private packages with `commit: false` and tagging disabled. Do not run `changeset publish` or `changeset git-tag` for local preparation. Keep any lockfile root version metadata in sync if present; avoid unrelated dependency resolution changes. Update applicable release documentation and archive references to the selected version, but preserve explicitly historical comparisons. Summarize the version decision and consumer-visible changes in the handoff.
 
 ## Build, style and compatibility
 
-- Use the pnpm version in `packageManager` and the Node version pinned by CI. Keep runtime pins and workflow setup aligned when changing the toolchain. Use `pnpm/setup` for the GitHub Actions runtime and package-manager setup, matching the Suigar SDK convention; read pnpm from `packageManager` and keep the Node runtime pinned explicitly.
+- Use the pnpm version in `packageManager` and the Node version pinned by CI. Keep runtime pins and workflow setup aligned when changing the toolchain. Use `pnpm/setup` for the GitHub Actions runtime and package-manager setup, matching the Suigar SDK convention; read pnpm from `packageManager` and keep the Node runtime pinned explicitly. Support only released LTS lines starting at Node 24; do not allow Node 22, odd-numbered Current lines or future non-LTS lines through an open-ended engine range. Add a newer major only after its LTS status and compatibility have been verified.
 - Use tsdown for bundling, Vitest for tests, Oxlint for linting and Oxfmt for formatting. Keep Husky/lint-staged consistent with the existing setup.
 - Always use braces for `if`/`else` bodies, including single statements.
+- When updating dependencies, consult their official changelogs and migration guides, preserve peer compatibility and verify affected behavior.
 - Prefer stable dependency versions and stable React peer ranges, without prerelease suffixes. Preserve dependency installation safeguards; do not add release-age exclusions or enable dependency build scripts to bypass failures.
 - Treat package exports, declarations, refs, animation behavior, inline/external SVG rendering and emitted asset URLs as public compatibility concerns. Preserve historical root exports such as `CapyImage` and `BullsharkImage`.
 - Edit authored sources and regenerate derived accessory assets through the build script. Do not hand-edit `dist` or copy compiled files into consumers.
