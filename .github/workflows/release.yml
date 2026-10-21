@@ -2,15 +2,25 @@ name: Build and release package
 on:
   pull_request:
   push:
-    tags: ['v*']
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
-  package:
+  validate:
     runs-on: ubuntu-latest
+    outputs:
+      pending: ${{ steps.plan.outputs.pending }}
+      version: ${{ steps.plan.outputs.version }}
+      version-changed: ${{ steps.plan.outputs.version-changed }}
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Checkout repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
       - name: Setup Node.js and pnpm
         uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
         with:
@@ -21,50 +31,113 @@ jobs:
         run: pnpm doctor
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Read release plan
+        id: plan
+        env:
+          PREVIOUS_SHA: ${{ github.event.before }}
+        run: |
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import { execFileSync } from 'node:child_process';
+          import { appendFileSync, readFileSync, readdirSync } from 'node:fs';
+          const { version } = JSON.parse(readFileSync('package.json', 'utf8'));
+          assert.match(version, /^\d+\.\d+\.\d+$/);
+          const pending = readdirSync('.changeset').some(name => name.endsWith('.md') && name !== 'README.md');
+          let changed = false;
+          if (process.env.PREVIOUS_SHA && !/^0+$/.test(process.env.PREVIOUS_SHA)) {
+            const previous = JSON.parse(execFileSync('git', ['show', `${process.env.PREVIOUS_SHA}:package.json`], { encoding: 'utf8' }));
+            changed = previous.version !== version;
+          }
+          appendFileSync(process.env.GITHUB_OUTPUT, `pending=${pending}\nversion=${version}\nversion-changed=${changed}\n`);
+          JS
+      - name: Validate pending changesets
+        if: steps.plan.outputs.pending == 'true'
+        run: pnpm changeset status
       - name: Check lint and formatting
         run: pnpm lint
       - name: Check TypeScript types
         run: pnpm typecheck
-      - name: Build and pack compiled release archive
-        run: pnpm release:pack
+      - name: Build library
+        run: pnpm build
       - name: Run unit and package tests
         run: pnpm test
       - name: Build Storybook
         run: pnpm build:storybook
-      - name: Check tag and build provenance
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          RELEASE_TAG: ${{ github.ref_name }}
-        run: |
-          node --input-type=module <<'JS'
-          import assert from 'node:assert/strict';
-          import { readFileSync } from 'node:fs';
-          const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
-          assert.match(pkg.version, /^\d+\.\d+\.\d+$/);
-          assert.equal(process.env.RELEASE_TAG, `v${pkg.version}`);
-          JS
-      - name: Verify generated assets match the tagged sources
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Verify generated assets match sources
         run: git diff --exit-code
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+      - name: Pack versioned release archive
+        if: steps.plan.outputs.pending == 'false'
+        run: node scripts/pack-release.mjs
+      - name: Upload release archive
+        if: steps.plan.outputs.pending == 'false'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: package
           path: artifacts/*
           if-no-files-found: error
+  version:
+    if: github.ref == 'refs/heads/main' && needs.validate.outputs.pending == 'true'
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js and pnpm
+        uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
+        with:
+          runtime: node@24.22.1
+          cache: true
+          require-lockfile: true
+      - name: Create or update version pull request
+        id: changesets
+        uses: changesets/action/version@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
+        with:
+          script: pnpm changeset version && pnpm install --lockfile-only --ignore-scripts
+          commit-message: 'ci: version package'
+          pr-title: 'ci: version package'
+          pr-base-branch: main
+      - name: Validate version pull request
+        if: steps.changesets.outputs.pr-number != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_PR: ${{ steps.changesets.outputs.pr-number }}
+        run: |
+          release_branch=$(gh pr view "$RELEASE_PR" --json headRefName --jq '.headRefName')
+          gh workflow run release.yml --ref "$release_branch"
   release:
-    if: startsWith(github.ref, 'refs/tags/')
-    needs: package
+    if: >-
+      github.ref == 'refs/heads/main' && needs.validate.outputs.pending == 'false' && (needs.validate.outputs.version-changed == 'true' || github.event_name == 'workflow_dispatch')
+    needs: validate
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+      - name: Checkout release sources
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+      - name: Download release archive
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: package
           path: artifacts
-      - name: Publish versioned archive
+      - name: Publish versioned GitHub archive
         env:
           GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-          RELEASE_TAG: ${{ github.ref_name }}
-        run: gh release create "$RELEASE_TAG" artifacts/*.tgz artifacts/*.sha256 --verify-tag --title "$RELEASE_TAG" --notes-file artifacts/RELEASE_NOTES.md
+          RELEASE_TAG: v${{ needs.validate.outputs.version }}
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Release $RELEASE_TAG already exists; leaving it unchanged."
+            exit 0
+          fi
+          if git show-ref --verify --quiet "refs/tags/$RELEASE_TAG"; then
+            test "$(git rev-list -n 1 "$RELEASE_TAG")" = "$GITHUB_SHA"
+          fi
+          gh release create "$RELEASE_TAG" artifacts/*.tgz artifacts/*.sha256 \
+            --target "$GITHUB_SHA" --title "$RELEASE_TAG" --notes-file artifacts/RELEASE_NOTES.md

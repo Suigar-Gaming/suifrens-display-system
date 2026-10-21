@@ -4,7 +4,7 @@ This repository owns the source, generated SVG assets and compiled releases of `
 
 ## Working tree and scope
 
-- Check the branch, working tree and existing version changes before editing. Preserve unrelated work. Use a `codex/` prefix when creating a feature branch.
+- Check the branch and working tree before editing. Preserve unrelated work. `main` is the default working and release branch; direct commits to `main` are allowed when committing is part of the user-authorized task. A feature branch is optional; use a `codex/` prefix when creating one. Do not switch or merge an existing working branch merely to enforce this default.
 - Follow the user's current release scope. Preparing a release does not authorize committing, pushing, creating a tag or publishing. A request to keep a release local remains in effect until the user changes it.
 - Do not modify a consumer repository unless the requested task includes it.
 
@@ -17,11 +17,19 @@ For each consumer-visible change, add or update a `.changeset/*.md` entry withou
 - Major: removed/renamed exports, incompatible props/types, peer support dropped or other breaking consumer behavior. Document the migration. If this exceeds the user's requested scope, preserve compatibility or clarify before proceeding.
 - Documentation-only, test-only and agent-instruction changes do not require a version bump unless they change the distributed package or its behavior. Development dependency updates alone do not require one; assess generated output, consumer requirements and compatibility before deciding.
 
-Determine the release baseline from existing tags and the pending release diff; do not infer publication merely from `package.json`. Use stable `X.Y.Z` versions, never prerelease versions by default. Bump once per pending release, considering all accumulated changes. Reuse an already prepared, unpublished version when it covers the required bump; do not increment for every edit, follow-up or rebuild. Never reuse a published version for changed contents. If publication history cannot be established, report the uncertainty instead of assuming a version is available. An explicit user version takes precedence.
+Create or update the changeset file as part of implementation, before handing off. Keep one changeset per task or feature branch by default, reusing that task's file for follow-up changes and selecting the highest required bump. On `main`, create a new file for a new task; do not modify pending changesets inherited from earlier work. Notes must describe this package's consumer-visible behavior, not unrelated workspace maintenance. Use a readable unique filename and this frontmatter:
 
-Use Changesets as the source of truth: `pnpm changeset` records intent and `pnpm changeset status` reviews the plan. At release preparation, run `pnpm changeset version` once to consume pending changesets and update `package.json` and `CHANGELOG.md` together. Do not manually increment versions or invent historical changelog entries. Multiple pending changesets are aggregated using the highest required bump. For follow-ups to an already prepared local release, update its unreleased changelog entry instead of applying another bump unnecessarily. Never edit an already published changelog entry.
+```md
+---
+'@suigar/suifrens-display-system': patch
+---
 
-The package is private to prevent npm publication; `.changeset/config.json` enables versioning private packages with `commit: false` and tagging disabled. Do not run `changeset publish` or `changeset git-tag` for local preparation. Keep any lockfile root version metadata in sync if present; avoid unrelated dependency resolution changes. Update applicable release documentation and archive references to the selected version, but preserve explicitly historical comparisons. Summarize the version decision and consumer-visible changes in the handoff.
+Describe the consumer-visible change.
+```
+
+Use the highest appropriate bump for the change. Do not manually edit the version or changelog, consume changesets with `changeset version`, or create release tags during routine feature work. The workflow on `main` creates a version PR, and merging that PR publishes the GitHub archive. Changesets aggregates pending entries into one version. Never invent historical release notes or edit a published release.
+
+The package is private to prevent npm publication. Do not run `changeset publish`. Keep changesets in the same change as the implementation; documentation-only or test-only changes need no entry unless they affect consumers. Include release tooling fixes that change the distributed archive or release behavior.
 
 ## Build, style and compatibility
 
@@ -42,19 +50,17 @@ For package/output changes, run the following with the pinned runtime:
 ```sh
 pnpm lint
 pnpm typecheck
-pnpm release:pack
+pnpm build
 pnpm test
 pnpm build:storybook
 ```
 
-`prepare` only installs Husky hooks; dependency installation must not compile the library. `pnpm test` runs Vitest without rebuilding. Run `pnpm build` first for the complete suite, since package tests exercise compiled exports; `pnpm test:unit` needs no build. `pnpm release:pack` builds and then packages, so run it before tests in release validation and CI to build only once. Add focused regression coverage when behavior or compatibility changes. Documentation-only changes need formatting and diff checks, not the full build/test suite. Validate workflow changes with actionlint and finish with `git diff --check`. Report failed or skipped checks accurately.
+`prepare` only installs Husky hooks; dependency installation must not compile the library. `pnpm test` runs Vitest without rebuilding. Run `pnpm build` first for the complete suite, since package tests exercise compiled exports; `pnpm test:unit` needs no build. `pnpm release:pack` builds and packages an already versioned release. Routine feature checks use `pnpm build` and tests while changesets are pending; CI packs only when no changesets remain. Add focused regression coverage when behavior or compatibility changes. Documentation-only changes need formatting and diff checks, not the full build/test suite. Validate workflow changes with actionlint and finish with `git diff --check`. Report failed or skipped checks accurately.
 
 Use the single `release:pack` script; do not distribute the raw source checkout or an ordinary source tarball as the compiled package. Keep archives and their checksums in ignored `artifacts/`. Check the release manifest has the expected exports/types/peers, and no development dependencies or lifecycle scripts. The latest changelog heading must match the package version and all changesets must be consumed before packaging. The archive includes `CHANGELOG.md`, and GitHub release notes come from that version's section. `BUILD_INFO.json` must accurately identify the source commit and dirty state. A dirty local review artifact is acceptable; do not describe it as a published release. After changing packaged contents, repack, verify and refresh any local consumer archive integrity before handing off.
 
 When consumer integration is in scope, install the archive and validate package mode explicitly with `SUIGAR_DISPLAY_SYSTEM_LOCAL=false`; a sibling-source dev server alone does not prove the archive works. Run the consumer's relevant rendering tests, typecheck and production build, following its own `AGENTS.md`. A relative `file:` archive is for local review only and needs the sibling archive. Use an exact versioned GitHub Release asset URL and its lockfile integrity for CI.
 
-## Publishing an authorized release
+## Automated releases
 
-Once publication is explicitly authorized and validations pass, commit the final sources and version, follow the repository's integration flow, then create/push `vX.Y.Z` matching `package.json`. The release workflow builds and publishes the compiled archive and checksum. Never replace an existing release asset or force move a release tag. Verify workflow success and asset availability before moving an authorized consumer to the release URL. Commit/push consumer changes only when that is also within the user's scope.
-
-`workflow_dispatch` validates and uploads a workflow artifact without publishing a GitHub Release. An `AGENTS.md` guides agent actions; it is not a background scheduler. Do not claim that versioning or publication runs without an agent or CI invocation.
+Changes merged into `main` with changeset entries produce a version PR automatically. Merging the version PR publishes a compiled GitHub Release archive after validation. No manual tag or npm publish is needed. GitHub Actions must be allowed to create PRs in the repository settings. A manual workflow run on `main` retries an unpublished release; branch runs only validate. Never replace an existing release asset or force-move a tag. Verify the resulting workflow and asset availability before updating an authorized consumer dependency.
