@@ -5,6 +5,7 @@ import { build } from "esbuild";
 const entryPoints = {
   index: "src/index.ts",
   image: "src/image.ts",
+  "image-inline": "src/image-inline.ts",
   "image-assets": "src/image-assets.ts",
   accessories: "src/accessories.ts",
   colors: "src/colors.ts",

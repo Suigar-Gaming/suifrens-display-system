@@ -25,6 +25,8 @@ type WaapiStartResult =
   | {
       handled: true;
       cleanup: () => void;
+      pause: () => void;
+      play: () => void;
     }
   | {
       handled: false;
@@ -42,9 +44,13 @@ function supportsSvgWaapi() {
   );
 }
 
-function getTargets(store: AnimationStore): WaapiTarget[] {
+function getTargets(
+  store: AnimationStore,
+  sequence: AnimationSequence
+): WaapiTarget[] {
+  const animatedParts = new Set(sequence.tracks.map((track) => track.part));
   return store
-    .getAnimationTargets()
+    .getAnimationTargetsForParts(animatedParts)
     .filter((target): target is WaapiTarget => Boolean(target.element));
 }
 
@@ -106,6 +112,34 @@ function buildTargetKeyframes(
   }));
 }
 
+const sequenceKeyframeCache = new WeakMap<
+  AnimationSequence,
+  Map<string, Keyframe[]>
+>();
+
+function getTargetKeyframes(
+  target: WaapiTarget,
+  sequence: AnimationSequence,
+  offsets: number[]
+) {
+  let cache = sequenceKeyframeCache.get(sequence);
+  if (!cache) {
+    cache = new Map();
+    sequenceKeyframeCache.set(sequence, cache);
+  }
+  const pivot = target.pivotOverride;
+  const key = `${target.part}|${target.baseTransform ?? ""}|${
+    pivot?.x ?? ""
+  }|${pivot?.y ?? ""}`;
+  const cached = cache.get(key);
+  if (cached) {
+    return cached;
+  }
+  const keyframes = buildTargetKeyframes(target, sequence, offsets);
+  cache.set(key, keyframes);
+  return keyframes;
+}
+
 function setBaseTransforms(targets: WaapiTarget[]) {
   for (const target of targets) {
     if (target.baseTransform) {
@@ -127,7 +161,12 @@ export function startWaapiAnimation(
 
   if (!config) {
     store.clear();
-    return { handled: true, cleanup: () => undefined };
+    return {
+      handled: true,
+      cleanup: () => undefined,
+      pause: () => undefined,
+      play: () => undefined,
+    };
   }
 
   if (!("sequence" in config)) {
@@ -136,18 +175,28 @@ export function startWaapiAnimation(
 
   if (!supportsSvgWaapi()) {
     return preference === "waapi"
-      ? { handled: true, cleanup: () => undefined }
+      ? {
+          handled: true,
+          cleanup: () => undefined,
+          pause: () => undefined,
+          play: () => undefined,
+        }
       : { handled: false };
   }
 
   const playState =
     config.playState ?? (config.autoPlay === false ? "idle" : "running");
-  const targets = getTargets(store);
+  const targets = getTargets(store, config.sequence);
 
   if (playState === "idle" || playState === "stopped") {
     store.clear();
     setBaseTransforms(targets);
-    return { handled: true, cleanup: () => undefined };
+    return {
+      handled: true,
+      cleanup: () => undefined,
+      pause: () => undefined,
+      play: () => undefined,
+    };
   }
 
   if (!targets.length) {
@@ -165,7 +214,7 @@ export function startWaapiAnimation(
   const offsets = buildOffsets(sequence);
   const animations = targets.map((target) => {
     const animation = target.element.animate(
-      buildTargetKeyframes(target, sequence, offsets),
+      getTargetKeyframes(target, sequence, offsets),
       {
         duration: playbackDuration(sequence, config.playback),
         iterations: playbackIterations(config.playback),
@@ -191,6 +240,21 @@ export function startWaapiAnimation(
 
   return {
     handled: true,
+    pause: () => {
+      for (const animation of animations) {
+        animation.pause();
+      }
+    },
+    play: () => {
+      if (playState !== "running") {
+        return;
+      }
+      for (const animation of animations) {
+        if (animation.currentTime !== null) {
+          animation.play();
+        }
+      }
+    },
     cleanup: () => {
       for (const animation of animations) {
         animation.cancel();
