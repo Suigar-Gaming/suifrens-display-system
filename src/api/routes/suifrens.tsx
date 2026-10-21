@@ -37,8 +37,9 @@ export const suifrens: FastifyPluginAsync = async (fastify) => {
 				reply.header('Content-Type', 'image/svg+xml');
 				return reply.send(renderedSvg);
 			} catch (e: unknown) {
-				if (e instanceof ObjectError && (e.reason === 'deleted' || e.reason === 'notFound'))
+				if (e instanceof ObjectError && (e.reason === 'deleted' || e.reason === 'notFound')) {
 					return reply.status(404).send(null);
+				}
 				request.log.error({ err: e, suifrenId }, 'Failed to render SuiFren');
 				return reply.status(500).send(null);
 			}

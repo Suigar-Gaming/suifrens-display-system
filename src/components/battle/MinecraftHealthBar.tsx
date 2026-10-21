@@ -139,8 +139,12 @@ export function MinecraftHealthBar({
 
 	const heartStates: Array<HeartFill> = Array.from({ length: resolvedHearts }, (_, index) => {
 		const remaining = clampedHealth - index * perHeart;
-		if (remaining >= perHeart) return 1;
-		if (remaining >= half) return 0.5;
+		if (remaining >= perHeart) {
+			return 1;
+		}
+		if (remaining >= half) {
+			return 0.5;
+		}
 		return 0;
 	});
 

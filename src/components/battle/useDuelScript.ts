@@ -96,9 +96,15 @@ export type UseDuelScriptOptions<TExpression extends string = string> = {
 };
 
 function resolveIterations(playback?: PlaybackOptions) {
-	if (playback?.iterations === 'infinite' || playback?.loop === true) return Infinity;
-	if (typeof playback?.iterations === 'number') return Math.max(1, playback.iterations);
-	if (typeof playback?.loop === 'number') return Math.max(1, playback.loop);
+	if (playback?.iterations === 'infinite' || playback?.loop === true) {
+		return Infinity;
+	}
+	if (typeof playback?.iterations === 'number') {
+		return Math.max(1, playback.iterations);
+	}
+	if (typeof playback?.loop === 'number') {
+		return Math.max(1, playback.loop);
+	}
 	return 1;
 }
 
@@ -108,9 +114,13 @@ function resolveSpeed(playback?: PlaybackOptions) {
 
 function presetDurationMs(preset: string, playback?: PlaybackOptions): number | null {
 	const sequence = getPresetSequence(preset);
-	if (!sequence) return null;
+	if (!sequence) {
+		return null;
+	}
 	const iterations = resolveIterations(playback);
-	if (!Number.isFinite(iterations)) return null;
+	if (!Number.isFinite(iterations)) {
+		return null;
+	}
 	return (sequence.duration / resolveSpeed(playback)) * iterations;
 }
 

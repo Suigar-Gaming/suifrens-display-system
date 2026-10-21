@@ -1,10 +1,11 @@
 import {
-	cloneElement,
 	isValidElement,
+	type ElementType,
 	type ReactElement,
 	type Ref,
 	type RefObject,
 	useEffect,
+	useImperativeHandle,
 	useRef,
 } from 'react';
 import { useAnimationStore } from './AnimationContext.js';
@@ -40,26 +41,26 @@ function canAttachRefToType(type: unknown): boolean {
 	return false;
 }
 
-function mergeRefs<T>(...refs: Array<Ref<T> | undefined>) {
-	return (value: T) => {
-		for (const ref of refs) {
-			if (!ref) continue;
-			if (typeof ref === 'function') {
-				ref(value);
-			} else {
-				try {
-					ref.current = value;
-				} catch {
-					// ignore
-				}
-			}
-		}
-	};
+function getElementRef(element: ReactElement): Ref<SVGElement> | undefined {
+	// React 19 stores refs in props; React 18 stores them on the element.
+	// Inspect data properties so neither version's deprecated getter is invoked.
+	const propsRef = Object.getOwnPropertyDescriptor(element.props, 'ref');
+	if (propsRef && 'value' in propsRef) {
+		return propsRef.value;
+	}
+	const elementRef = Object.getOwnPropertyDescriptor(element, 'ref');
+	return elementRef && 'value' in elementRef ? elementRef.value : undefined;
 }
 
 export function AnimatedAccessory({ children, fallbackPart }: AnimatedAccessoryProps) {
 	const store = useAnimationStore();
 	const localRef = useRef<SVGElement | null>(null);
+	const childRef =
+		isValidElement(children) && canAttachRefToType(children.type)
+			? getElementRef(children)
+			: undefined;
+	// Update external refs after every commit, including child key/type changes.
+	useImperativeHandle(childRef, () => localRef.current!);
 
 	useEffect(() => {
 		if (!store) {
@@ -104,12 +105,14 @@ export function AnimatedAccessory({ children, fallbackPart }: AnimatedAccessoryP
 	}
 
 	if (canAttachRefToType(children.type)) {
-		return cloneElement(
-			children as ReactElement<any>,
-			{
-				ref: mergeRefs((children as any).ref, localRef),
-				'data-suifren-animation-part': fallbackPart,
-			} as any,
+		const Child = children.type as ElementType;
+		return (
+			<Child
+				{...(children.props as Record<string, unknown>)}
+				key={children.key}
+				ref={localRef}
+				data-suifren-animation-part={fallbackPart}
+			/>
 		);
 	}
 

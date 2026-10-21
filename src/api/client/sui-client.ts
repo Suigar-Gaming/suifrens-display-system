@@ -41,14 +41,18 @@ export async function getSuiFrenAccessories(suiFrenId: string) {
 			cursor,
 		});
 		for (const field of page.dynamicFields) {
-			if (field.name.type !== ACCESSORIES_KEY_TYPE) continue;
+			if (field.name.type !== ACCESSORIES_KEY_TYPE) {
+				continue;
+			}
 			const { object } = await suiClient.getDynamicObjectField({
 				parentId: suiFrenId,
 				name: field.name,
 				include: { json: true },
 			});
 			const accessory = accessories.find((item) => item.name === object.json?.name);
-			if (accessory) equipped.push(accessory);
+			if (accessory) {
+				equipped.push(accessory);
+			}
 		}
 		cursor = page.hasNextPage ? page.cursor : null;
 	} while (cursor);

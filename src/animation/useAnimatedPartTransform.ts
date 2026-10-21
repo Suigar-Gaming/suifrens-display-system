@@ -18,9 +18,7 @@ export function useAnimatedPartTransform(
 
 	useEffect(() => {
 		baseRef.current = baseTransform;
-		if (!store || directDomTransforms) {
-			setTransform(baseTransform);
-		} else {
+		if (store && !directDomTransforms) {
 			store.refresh(part);
 		}
 	}, [baseTransform, directDomTransforms, part, store]);
@@ -38,5 +36,5 @@ export function useAnimatedPartTransform(
 		return unregister;
 	}, [directDomTransforms, store, part, options?.pivotOverride]);
 
-	return directDomTransforms ? baseTransform : transform;
+	return !store || directDomTransforms ? baseTransform : transform;
 }

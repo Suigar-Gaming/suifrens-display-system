@@ -33,13 +33,13 @@ type AnimationProviderProps = {
 function useResolvedAnimationConfig(animation: AnimationConfig | null) {
 	const presetName = animation && 'preset' in animation ? animation.preset : undefined;
 	const immediateSequence = presetName ? resolvePresetSequenceSync(presetName) : undefined;
-	const [deferredSequence, setDeferredSequence] = useState<ReturnType<
-		typeof resolvePresetSequenceSync
-	> | null>(null);
+	const [deferred, setDeferred] = useState<{
+		preset: string;
+		sequence: ReturnType<typeof resolvePresetSequenceSync> | null;
+	} | null>(null);
 
 	useEffect(() => {
 		if (!presetName || immediateSequence || !isDeferredPreset(presetName)) {
-			setDeferredSequence(null);
 			return;
 		}
 
@@ -48,12 +48,12 @@ function useResolvedAnimationConfig(animation: AnimationConfig | null) {
 		loadDeferredPresetSequence(presetName)
 			.then((sequence) => {
 				if (!cancelled) {
-					setDeferredSequence(sequence);
+					setDeferred({ preset: presetName, sequence });
 				}
 			})
 			.catch(() => {
 				if (!cancelled) {
-					setDeferredSequence(null);
+					setDeferred({ preset: presetName, sequence: null });
 				}
 			});
 
@@ -71,7 +71,8 @@ function useResolvedAnimationConfig(animation: AnimationConfig | null) {
 			return animation;
 		}
 
-		const resolvedSequence = immediateSequence ?? deferredSequence;
+		const resolvedSequence =
+			immediateSequence ?? (deferred && deferred.preset === presetName ? deferred.sequence : null);
 		if (!resolvedSequence) {
 			return null;
 		}
@@ -81,7 +82,7 @@ function useResolvedAnimationConfig(animation: AnimationConfig | null) {
 			...rest,
 			sequence: resolvedSequence,
 		};
-	}, [animation, deferredSequence, immediateSequence]);
+	}, [animation, deferred, immediateSequence, presetName]);
 }
 
 export function AnimationProvider({ animation = null, children }: AnimationProviderProps) {

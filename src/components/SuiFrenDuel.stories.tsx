@@ -77,13 +77,21 @@ const randomVelocity = () => {
 	return (Math.random() < 0.5 ? -1 : 1) * speed;
 };
 const pickWanderPreset = (speed: number): WanderPreset => {
-	if (speed >= SPRINT_SPEED_THRESHOLD) return 'sprint';
-	if (speed >= RUN_SPEED_THRESHOLD) return 'run';
+	if (speed >= SPRINT_SPEED_THRESHOLD) {
+		return 'sprint';
+	}
+	if (speed >= RUN_SPEED_THRESHOLD) {
+		return 'run';
+	}
 	return 'walk';
 };
 const pickWanderExpression = (preset: WanderPreset, base: BullsharkExpression) => {
-	if (preset === 'sprint') return 'angry';
-	if (preset === 'run') return 'annoyed';
+	if (preset === 'sprint') {
+		return 'angry';
+	}
+	if (preset === 'run') {
+		return 'annoyed';
+	}
 	return base;
 };
 const mirrorSide = (side: DuelSide): DuelSide => (side === 'left' ? 'right' : 'left');
@@ -204,18 +212,28 @@ const getHitFlashTrigger = (animation?: AnimationConfig | null) => {
 	return animation.trigger ?? animation.preset;
 };
 const resolveIterations = (playback?: PlaybackOptions) => {
-	if (playback?.iterations === 'infinite' || playback?.loop === true) return Infinity;
-	if (typeof playback?.iterations === 'number') return Math.max(1, playback.iterations);
-	if (typeof playback?.loop === 'number') return Math.max(1, playback.loop);
+	if (playback?.iterations === 'infinite' || playback?.loop === true) {
+		return Infinity;
+	}
+	if (typeof playback?.iterations === 'number') {
+		return Math.max(1, playback.iterations);
+	}
+	if (typeof playback?.loop === 'number') {
+		return Math.max(1, playback.loop);
+	}
 	return 1;
 };
 const resolveSpeed = (playback?: PlaybackOptions) =>
 	playback?.speed && playback.speed > 0 ? playback.speed : 1;
 const presetDurationMs = (preset: string, playback?: PlaybackOptions) => {
 	const sequence = getPresetSequence(preset);
-	if (!sequence) return null;
+	if (!sequence) {
+		return null;
+	}
 	const iterations = resolveIterations(playback);
-	if (!Number.isFinite(iterations)) return null;
+	if (!Number.isFinite(iterations)) {
+		return null;
+	}
 	return (sequence.duration / resolveSpeed(playback)) * iterations;
 };
 
@@ -1383,7 +1401,9 @@ export const Ring: Story = {
 			return fighter.status !== 'dead';
 		});
 		const predictedChampion = aliveFighters.reduce<FighterState | null>((best, fighter) => {
-			if (!best) return fighter;
+			if (!best) {
+				return fighter;
+			}
 			if (fighter.power === best.power) {
 				return fighter.id < best.id ? fighter : best;
 			}

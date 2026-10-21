@@ -48,7 +48,8 @@
 		],
 		"typescript/consistent-type-imports": "warn",
 		"typescript/no-deprecated": "warn",
-		"typescript/no-unnecessary-type-assertion": "warn"
+		"typescript/no-unnecessary-type-assertion": "warn",
+		"curly": ["error", "all"]
 	},
 	"ignorePatterns": ["dist/**", "storybook-static/**", "src/generated/**", "coverage/**"]
 }

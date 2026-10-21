@@ -27,7 +27,7 @@ test('built inline and asset renderers preserve custom kits for both species and
 	};
 	for (const entry of ['/image-inline', '/image', '/image-assets']) {
 		const { SuiFrenImage } = await import(manifest.name + entry);
-		for (const species of ['capy', 'bullshark'])
+		for (const species of ['capy', 'bullshark']) {
 			for (const side of ['home', 'away']) {
 				const gear = accessories
 					.filter((item: { name: string }) =>
@@ -52,10 +52,14 @@ test('built inline and asset renderers preserve custom kits for both species and
 				if (entry !== '/image-inline') {
 					const references = [...svg.matchAll(/(?:href|xlink:href)="(file:[^"]+\.svg)#[^"]+"/g)];
 					assert.ok(references.length > 0, 'asset renderer must reference emitted SVGs');
-					for (const [, url] of references)
+					for (const [, url] of references) {
 						assert.ok(existsSync(new URL(url)), `missing asset ${url}`);
-				} else assert.doesNotMatch(svg, /file:.*\.svg/);
+					}
+				} else {
+					assert.doesNotMatch(svg, /file:.*\.svg/);
+				}
 			}
+		}
 	}
 	assert.equal(resolveSoccerTeamKit('FR').code, 'FR');
 	assert.equal(resolveSoccerTeamKit({ code: 'BAD', primary: 'invalid' }).code, 'US');

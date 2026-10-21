@@ -42,7 +42,7 @@ Run `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build:storybook`, `pnpm pe
 
 Verified locally with Node 22.23.3 / pnpm 11.25.0:
 
-- Typecheck and all five regression tests pass; library and Storybook builds pass.
+- Typecheck and all 19 regression tests pass; library and Storybook builds pass.
 - The packed tarball installs in a clean React 18.3.1 consumer; SSR, strict declaration checking with React 18 types, and its Vite production build pass.
 - A live mainnet read returns attributes and the equipped cowboy hat for the README's `0xbe52f4fb87bcd73e0e900aff827480d93707185670ea292ee0b71f1939c4f31f`.
 - No peer dependency conflicts; `pnpm audit` reports zero vulnerabilities.
@@ -50,7 +50,7 @@ Verified locally with Node 22.23.3 / pnpm 11.25.0:
 
 ## Shared quality tooling
 
-- Vitest 5.0.5 runs the unit and package regression suites (`pnpm test`). `pnpm test:unit` runs API unit tests without rebuilding the package.
+- Vitest 5.0.5 runs the unit and package regression suites (`pnpm test`). `pnpm test:unit` runs API and React DOM unit tests without rebuilding the package.
 - Oxlint (including type-aware rules) and Oxfmt replace Prettier. Their configs follow `suigar-sdk`, with generated assets/build output excluded. Oxfmt owns import ordering; the overlapping lint sort rule is disabled to avoid conflicts.
 - `pnpm lint` checks lint and formatting. `pnpm lint:fix` applies fixes.
 - Husky runs lint-staged before commits, applying Oxlint/Oxfmt to staged authored files. Hook installation and the existing package build both run in `prepare`.
@@ -59,3 +59,7 @@ Verified locally with Node 22.23.3 / pnpm 11.25.0:
 - Storybook has an explicit TS project with `vite/client` asset declarations; typechecking includes that project and checks side-effect imports.
 
 References: [Vitest 5 migration](https://vitest.dev/guide/migration/), [Oxlint integrations](https://oxc.rs/docs/guide/usage/linter/ci.html), [Oxfmt integration](https://oxc.rs/docs/guide/usage/formatter/quickstart.html).
+
+### React warning regression coverage
+
+`pnpm lint:fix` and `pnpm lint` pass without warnings. Happy DOM exercises the actual React lifecycle under Vitest: deferred-preset switches and cancelled or failed loads, base-transform updates, callback/object/forwarded refs, child key replacement, React 19 ref props, the 160 ms hit flash and its timer cleanup, and Storybook docs/canvas frame and keyboard subscriptions. The packed library also passes a separate React 18.3.1 DOM check for ref mounting, key replacement and unmounting.

@@ -132,7 +132,7 @@ function SuiFrenStage({ state, poseRef, title, note, live = true }: StageProps) 
 		};
 		raf = requestAnimationFrame(updateTransform);
 		return () => cancelAnimationFrame(raf);
-	}, [poseRef]);
+	}, [poseRef, live]);
 
 	return (
 		<div>
@@ -286,7 +286,9 @@ export const ControlPadPlayground: Story = {
 			};
 
 			const handleKeyDown = (event: KeyboardEvent) => {
-				if (event.metaKey || event.ctrlKey || event.altKey) return;
+				if (event.metaKey || event.ctrlKey || event.altKey) {
+					return;
+				}
 				held.add(event.code);
 
 				if (event.code === 'Space') {
@@ -318,7 +320,7 @@ export const ControlPadPlayground: Story = {
 				window.removeEventListener('keydown', handleKeyDown);
 				window.removeEventListener('keyup', handleKeyUp);
 			};
-		}, [controls]);
+		}, [controls, isDocs]);
 
 		return (
 			<div className="flex flex-col gap-4 lg:flex-row">

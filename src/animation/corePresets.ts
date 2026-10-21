@@ -1729,7 +1729,9 @@ function combineSequences(name: string, items: Array<SequenceWithHold>): Animati
 		if (hold > 0) {
 			for (const track of sequence.tracks) {
 				const existing = trackMap.get(track.part);
-				if (!existing || !track.keyframes.length) continue;
+				if (!existing || !track.keyframes.length) {
+					continue;
+				}
 				const lastKeyframe = track.keyframes[track.keyframes.length - 1];
 				existing.push({
 					at: endOffset + hold,

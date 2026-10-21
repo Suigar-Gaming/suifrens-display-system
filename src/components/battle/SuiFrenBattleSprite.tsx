@@ -37,12 +37,22 @@ export function SuiFrenBattleSprite({
 }: SuiFrenBattleSpriteProps) {
 	const spriteSize = Math.max(120, size);
 	const healthBarOffset = spriteSize * 0.12;
-	const [flashActive, setFlashActive] = useState(false);
+	const [flash, setFlash] = useState({
+		trigger: hitFlashTrigger,
+		active: hitFlashTrigger !== undefined && hitFlashTrigger !== null,
+	});
+	// A new hit starts a fresh flash without remounting the animated SuiFren.
+	if (!Object.is(flash.trigger, hitFlashTrigger)) {
+		setFlash({
+			trigger: hitFlashTrigger,
+			active: hitFlashTrigger !== undefined && hitFlashTrigger !== null ? true : flash.active,
+		});
+	}
 	const flashTimeoutRef = useRef<number | null>(null);
 	const baseFilter =
 		typeof imageStyle?.filter === 'string' && imageStyle.filter !== 'none' ? imageStyle.filter : '';
 	const hitFlashFilter = `url(#${HIT_FLASH_FILTER_ID})`;
-	const combinedFilter = flashActive
+	const combinedFilter = flash.active
 		? [baseFilter, hitFlashFilter].filter(Boolean).join(' ')
 		: (imageStyle?.filter ?? '');
 	const resolvedImageStyle = {
@@ -54,12 +64,11 @@ export function SuiFrenBattleSprite({
 		if (hitFlashTrigger === undefined || hitFlashTrigger === null) {
 			return;
 		}
-		setFlashActive(true);
 		if (flashTimeoutRef.current) {
 			window.clearTimeout(flashTimeoutRef.current);
 		}
 		flashTimeoutRef.current = window.setTimeout(() => {
-			setFlashActive(false);
+			setFlash((current) => ({ ...current, active: false }));
 			flashTimeoutRef.current = null;
 		}, 160);
 	}, [hitFlashTrigger]);

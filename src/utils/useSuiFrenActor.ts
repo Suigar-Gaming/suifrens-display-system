@@ -87,8 +87,12 @@ function clamp(value: number, min: number, max: number) {
 }
 
 function playbackEquals(a?: PlaybackOptions, b?: PlaybackOptions) {
-	if (a === b) return true;
-	if (!a || !b) return false;
+	if (a === b) {
+		return true;
+	}
+	if (!a || !b) {
+		return false;
+	}
 	return (
 		a.iterations === b.iterations &&
 		a.alternate === b.alternate &&
@@ -98,10 +102,18 @@ function playbackEquals(a?: PlaybackOptions, b?: PlaybackOptions) {
 }
 
 function getPlaybackIterations(playback?: PlaybackOptions) {
-	if (!playback) return 1;
-	if (playback.iterations === 'infinite' || playback.loop === true) return Infinity;
-	if (typeof playback.iterations === 'number') return Math.max(1, playback.iterations);
-	if (typeof playback.loop === 'number') return Math.max(1, playback.loop);
+	if (!playback) {
+		return 1;
+	}
+	if (playback.iterations === 'infinite' || playback.loop === true) {
+		return Infinity;
+	}
+	if (typeof playback.iterations === 'number') {
+		return Math.max(1, playback.iterations);
+	}
+	if (typeof playback.loop === 'number') {
+		return Math.max(1, playback.loop);
+	}
 	return 1;
 }
 

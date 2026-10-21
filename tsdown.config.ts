@@ -34,7 +34,9 @@ export default defineConfig({
 		{
 			name: 'svg-assets',
 			async load(id) {
-				if (!id.endsWith('.svg')) return;
+				if (!id.endsWith('.svg')) {
+					return;
+				}
 				const source = (await readFile(id, 'utf8'))
 					.replace(/\s+/g, ' ')
 					.replace(/>\s+</g, '><')
