@@ -1,17 +1,16 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
-import { test } from 'node:test';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { test } from 'vitest';
 
 const root = new URL('../', import.meta.url);
 const manifest = JSON.parse(readFileSync(new URL('package.json', root), 'utf8'));
 
 test('all published entry points and declaration files resolve', async () => {
-	for (const [entry, paths] of Object.entries(manifest.exports) as [
-		string,
-		{ import: string; types: string },
-	][]) {
+	for (const [entry, paths] of Object.entries(manifest.exports) as Array<
+		[string, { import: string; types: string }]
+	>) {
 		assert.ok(existsSync(new URL(paths.types, root)), `${entry}: missing declarations`);
 		await import(`${manifest.name}${entry === '.' ? '' : entry.slice(1)}`);
 	}

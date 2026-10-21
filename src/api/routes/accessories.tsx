@@ -1,9 +1,7 @@
-import { FastifyPluginAsync } from 'fastify';
 import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
-import Type from 'typebox';
-
+import type { FastifyPluginAsync } from 'fastify';
 import { renderToStaticMarkup } from 'react-dom/server';
-
+import Type from 'typebox';
 import { SuiLogo } from '../../components/logos/SuiLogo.js';
 import { SuiFrenImage } from '../../components/SuiFrenImage.js';
 import { accessories as suiFrensAccessories } from '../../constants/accessories.js';

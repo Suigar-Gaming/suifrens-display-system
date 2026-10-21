@@ -1,11 +1,11 @@
 import type { SuiClientTypes } from '@mysten/sui/client';
 import { SuiGrpcClient } from '@mysten/sui/grpc';
-import { NETWORK, CAPY_TYPE, BULLSHARK_TYPE, ACCESSORIES_KEY_TYPE } from '../lib/config.js';
 import { SuiFrenType } from '../../components/types.js';
-import { parseSuiFrenAttributes } from '../../utils/attributeUtils.js';
-import { extractBaseFrenType } from '../../utils/objectTypeUtils.js';
 import { accessories } from '../../constants/accessories.js';
 import type { AccessoryMetadata } from '../../utils/accessoryUtils.js';
+import { parseSuiFrenAttributes } from '../../utils/attributeUtils.js';
+import { extractBaseFrenType } from '../../utils/objectTypeUtils.js';
+import { ACCESSORIES_KEY_TYPE, BULLSHARK_TYPE, CAPY_TYPE, NETWORK } from '../lib/config.js';
 
 export const suiClient = new SuiGrpcClient({
 	network: NETWORK,
@@ -33,7 +33,7 @@ export async function getSuiFrenAttributesAndAccessories(suiFrenId: string) {
 }
 
 export async function getSuiFrenAccessories(suiFrenId: string) {
-	const equipped: AccessoryMetadata[] = [];
+	const equipped: Array<AccessoryMetadata> = [];
 	let cursor: string | null = null;
 	do {
 		const page: SuiClientTypes.ListDynamicFieldsResponse = await suiClient.listDynamicFields({
@@ -56,10 +56,11 @@ export async function getSuiFrenAccessories(suiFrenId: string) {
 }
 
 /**
- * Helper function to map a SuiFren object type in the format of
- * SuiFren<Type> to a SuiFrenType enum member
+ * Helper function to map a SuiFren object type in the format of SuiFren<Type> to a SuiFrenType enum
+ * member
  *
- * @example getSuiFrenTypeFromObjectType('SuiFren<Capy>') -> SuiFrenType.CAPY
+ * @example
+ * 	getSuiFrenTypeFromObjectType('SuiFren<Capy>') -> SuiFrenType.CAPY
  */
 export function getSuiFrenTypeFromObjectType(suiFrenObjectType: string) {
 	const frenObjectType = extractBaseFrenType(suiFrenObjectType);

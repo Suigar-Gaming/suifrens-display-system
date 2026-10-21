@@ -1,7 +1,7 @@
 ## SuiFrens Display System
 
 Welcome to the documentation for the SuiFrens display system! This repository provides a collection of React components for rendering SuiFren characters, as well as a simple backend API to demonstrate how you can these construct and serve these characters based on dynamic on-chain data. We hope this repository serves as inspiration for new character types, accessories, and much more. Happy adventuring in the SuiFrens universe!
- 
+
 <p align="center">
 <img src="https://api-mainnet.suifrens.sui.io/suifrens/0xbe52f4fb87bcd73e0e900aff827480d93707185670ea292ee0b71f1939c4f31f/svg" width="180" height="180" alt="Cowboy Capy" />
 
@@ -47,27 +47,28 @@ Then install with your package manager (`npm install`, `pnpm install`, etc.). On
 For the smallest consumer bundles, prefer subpath imports for runtime values instead of the root entry:
 
 ```ts
-import { SuiFrenImage } from "@suigar/suifrens-display-system/image";
-import { accessories } from "@suigar/suifrens-display-system/accessories";
-import { colors } from "@suigar/suifrens-display-system/colors";
-import { earGeneToEarShape } from "@suigar/suifrens-display-system/attributes";
+import { accessories } from '@suigar/suifrens-display-system/accessories';
+import { earGeneToEarShape } from '@suigar/suifrens-display-system/attributes';
+import { colors } from '@suigar/suifrens-display-system/colors';
 import {
-  POSITIVE_CAPY_EXPRESSIONS,
-  NEGATIVE_BULLSHARK_EXPRESSIONS,
-} from "@suigar/suifrens-display-system/expressions";
+	POSITIVE_CAPY_EXPRESSIONS,
+	NEGATIVE_BULLSHARK_EXPRESSIONS,
+} from '@suigar/suifrens-display-system/expressions';
+import { SuiFrenImage } from '@suigar/suifrens-display-system/image';
 ```
 
-The `/image` entry uses cacheable external SVG assets for accessories. If you
-need fully self-contained SVG markup (for example, for server-side SVG export),
-use the compatibility entry:
+The `/image` entry uses cacheable external SVG assets for accessories. If you need fully self-contained SVG markup (for example, for server-side SVG export), use the compatibility entry:
 
 ```ts
-import { SuiFrenImage } from "@suigar/suifrens-display-system/image-inline";
+import { SuiFrenImage } from '@suigar/suifrens-display-system/image-inline';
 ```
 
 The root package entry still works, but it intentionally exposes the full public API and is heavier for bundlers to analyze.
 
 ### Dependency maintenance
 
-See [the dependency migration notes](docs/dependency-migration.md) for the version
-choices, compatibility decisions, official migration guides and verification commands.
+See [the dependency migration notes](docs/dependency-migration.md) for the version choices, compatibility decisions, official migration guides and verification commands.
+
+### Quality checks
+
+`pnpm lint` runs Oxlint and Oxfmt, `pnpm typecheck` checks the library and Storybook, and `pnpm test` builds the library and runs Vitest. Use `pnpm lint:fix` to apply lint/format fixes. Husky installs the pre-commit hook during `pnpm install`; lint-staged checks and formats staged authored files before each commit.

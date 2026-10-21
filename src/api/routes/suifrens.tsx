@@ -1,11 +1,10 @@
-import { ObjectError } from '@mysten/sui/client';
-import { FastifyPluginAsync } from 'fastify';
 import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
-import Type from 'typebox';
+import { ObjectError } from '@mysten/sui/client';
+import type { FastifyPluginAsync } from 'fastify';
 import { renderToStaticMarkup } from 'react-dom/server';
-
-import { getSuiFrenAttributesAndAccessories } from '../client/sui-client.js';
+import Type from 'typebox';
 import { SuiFrenImage } from '../../components/SuiFrenImage.js';
+import { getSuiFrenAttributesAndAccessories } from '../client/sui-client.js';
 
 export const suifrens: FastifyPluginAsync = async (fastify) => {
 	fastify.withTypeProvider<TypeBoxTypeProvider>().get(

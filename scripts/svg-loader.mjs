@@ -1,5 +1,5 @@
-import { registerHooks } from 'node:module';
 import { readFileSync } from 'node:fs';
+import { registerHooks } from 'node:module';
 
 // The API runs TSX directly in Node. Imported artwork must remain usable in the
 // standalone SVG response rather than referring to a file on the server's disk.

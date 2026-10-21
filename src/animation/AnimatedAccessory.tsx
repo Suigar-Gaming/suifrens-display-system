@@ -1,128 +1,121 @@
 import {
-  cloneElement,
-  isValidElement,
-  useEffect,
-  useRef,
-  type MutableRefObject,
-  type ReactElement,
-  type Ref,
-} from "react";
-import { useAnimationStore } from "./AnimationContext.js";
-import { matchPartByTransform, type AnimationPart } from "./parts.js";
+	cloneElement,
+	isValidElement,
+	type ReactElement,
+	type Ref,
+	type RefObject,
+	useEffect,
+	useRef,
+} from 'react';
+import { useAnimationStore } from './AnimationContext.js';
+import { type AnimationPart, matchPartByTransform } from './parts.js';
 
 type AnimatedAccessoryProps = {
-  children: ReactElement;
-  fallbackPart?: AnimationPart;
+	children: ReactElement;
+	fallbackPart?: AnimationPart;
 };
 
-const REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref");
-const REACT_MEMO_TYPE = Symbol.for("react.memo");
+const REACT_FORWARD_REF_TYPE = Symbol.for('react.forward_ref');
+const REACT_MEMO_TYPE = Symbol.for('react.memo');
 
 function canAttachRefToType(type: unknown): boolean {
-  if (!type) {
-    return false;
-  }
-  if (typeof type === "string") {
-    return true;
-  }
-  if (typeof type === "function") {
-    return Boolean((type as any).prototype?.isReactComponent);
-  }
-  if (typeof type === "object") {
-    const $$typeof = (type as { $$typeof?: symbol }).$$typeof;
-    if ($$typeof === REACT_FORWARD_REF_TYPE) {
-      return true;
-    }
-    if ($$typeof === REACT_MEMO_TYPE) {
-      return canAttachRefToType((type as { type?: unknown }).type);
-    }
-  }
-  return false;
+	if (!type) {
+		return false;
+	}
+	if (typeof type === 'string') {
+		return true;
+	}
+	if (typeof type === 'function') {
+		return Boolean((type as any).prototype?.isReactComponent);
+	}
+	if (typeof type === 'object') {
+		const $$typeof = (type as { $$typeof?: symbol }).$$typeof;
+		if ($$typeof === REACT_FORWARD_REF_TYPE) {
+			return true;
+		}
+		if ($$typeof === REACT_MEMO_TYPE) {
+			return canAttachRefToType((type as { type?: unknown }).type);
+		}
+	}
+	return false;
 }
 
-function mergeRefs<T>(...refs: (Ref<T> | undefined)[]) {
-  return (value: T) => {
-    for (const ref of refs) {
-      if (!ref) continue;
-      if (typeof ref === "function") {
-        ref(value);
-      } else {
-        try {
-          (ref as MutableRefObject<T | null>).current = value;
-        } catch {
-          // ignore
-        }
-      }
-    }
-  };
+function mergeRefs<T>(...refs: Array<Ref<T> | undefined>) {
+	return (value: T) => {
+		for (const ref of refs) {
+			if (!ref) continue;
+			if (typeof ref === 'function') {
+				ref(value);
+			} else {
+				try {
+					ref.current = value;
+				} catch {
+					// ignore
+				}
+			}
+		}
+	};
 }
 
-export function AnimatedAccessory({
-  children,
-  fallbackPart,
-}: AnimatedAccessoryProps) {
-  const store = useAnimationStore();
-  const localRef = useRef<SVGElement | null>(null);
+export function AnimatedAccessory({ children, fallbackPart }: AnimatedAccessoryProps) {
+	const store = useAnimationStore();
+	const localRef = useRef<SVGElement | null>(null);
 
-  useEffect(() => {
-    if (!store) {
-      return;
-    }
-    const svgElement = localRef.current;
-    if (!svgElement) {
-      return;
-    }
+	useEffect(() => {
+		if (!store) {
+			return;
+		}
+		const svgElement = localRef.current;
+		if (!svgElement) {
+			return;
+		}
 
-    const registrations: Array<() => void> = [];
-    const targets =
-      svgElement.querySelectorAll<SVGGraphicsElement>("g[transform]");
-    let matchedTarget = false;
+		const registrations: Array<() => void> = [];
+		const targets = svgElement.querySelectorAll<SVGGraphicsElement>('g[transform]');
+		let matchedTarget = false;
 
-    targets.forEach((target) => {
-      const part = matchPartByTransform(target.getAttribute("transform"));
-      if (!part) {
-        return;
-      }
-      matchedTarget = true;
-      registrations.push(store.registerElement(part, target));
-    });
+		targets.forEach((target) => {
+			const part = matchPartByTransform(target.getAttribute('transform'));
+			if (!part) {
+				return;
+			}
+			matchedTarget = true;
+			registrations.push(store.registerElement(part, target));
+		});
 
-    if (!matchedTarget && fallbackPart) {
-      const baseTransform = svgElement.getAttribute("transform") ?? "";
-      registrations.push(
-        store.register(fallbackPart, {
-          getBaseTransform: () => baseTransform,
-          setTransform: (value) => svgElement.setAttribute("transform", value),
-          element: svgElement as SVGGraphicsElement,
-        })
-      );
-    }
+		if (!matchedTarget && fallbackPart) {
+			const baseTransform = svgElement.getAttribute('transform') ?? '';
+			registrations.push(
+				store.register(fallbackPart, {
+					getBaseTransform: () => baseTransform,
+					setTransform: (value) => svgElement.setAttribute('transform', value),
+					element: svgElement as SVGGraphicsElement,
+				}),
+			);
+		}
 
-    return () => {
-      registrations.forEach((cleanup) => cleanup());
-    };
-  }, [store, fallbackPart]);
+		return () => {
+			registrations.forEach((cleanup) => cleanup());
+		};
+	}, [store, fallbackPart]);
 
-  if (!isValidElement(children)) {
-    return children;
-  }
+	if (!isValidElement(children)) {
+		return children;
+	}
 
-  if (canAttachRefToType((children as ReactElement).type)) {
-    return cloneElement(
-      children as ReactElement<any>,
-      {
-        ref: mergeRefs((children as any).ref, localRef),
-        "data-suifren-animation-part": fallbackPart,
-      } as any
-    );
-  }
+	if (canAttachRefToType(children.type)) {
+		return cloneElement(
+			children as ReactElement<any>,
+			{
+				ref: mergeRefs((children as any).ref, localRef),
+				'data-suifren-animation-part': fallbackPart,
+			} as any,
+		);
+	}
 
-  return (
-    <g
-      ref={localRef as MutableRefObject<SVGGElement | null>}
-      data-suifren-animation-part={fallbackPart}
-    >
-      {children}
-    </g>
-  );
+	return (
+		<g ref={localRef as RefObject<SVGGElement | null>} data-suifren-animation-part={fallbackPart}>
+			{children}
+		</g>
+	);
 }
