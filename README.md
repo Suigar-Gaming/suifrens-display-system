@@ -32,15 +32,15 @@ pnpm run dev
 
 We can now test out the `/suifrens/:suiFrenId/svg` API by visiting this [URL](http://localhost:3000/suifrens/0xbe79e1415bb4fd7d0d83b325110086d7604ffeaf526dabb30380fe7ae3c51e19/svg) which returns a Capy image based on a mainnet SuiFren object.
 
-### Installing directly from GitHub
+### Installing a compiled release
 
-GitHub installs build the package through its `prepare` script; development dependencies and the Node version above are required. The published package contains the compiled `dist` output. Add the dependency to your `package.json`:
+Install the exact versioned GitHub Release archive:
 
+```sh
+pnpm add https://github.com/Suigar-Gaming/suifrens-display-system/releases/download/v1.0.3/suigar-suifrens-display-system-1.0.3.tgz
 ```
-"@suigar/suifrens-display-system": "github:Suigar-Gaming/suifrens-display-system"
-```
 
-Then install with your package manager (`npm install`, `pnpm install`, etc.). Only the peer dependencies `react` and `react-dom` are required in the consuming app.
+The release contains compiled ESM, declarations and SVG assets. Only React and React DOM are peer dependencies; consumers do not install this repository's build tools, run Husky or compile sources. Commit the consuming lockfile to pin archive integrity. See [the release process](.changeset/README.md).
 
 ### Recommended imports
 
@@ -72,3 +72,5 @@ See [the dependency migration notes](docs/dependency-migration.md) for the versi
 ### Quality checks
 
 `pnpm lint` runs Oxlint and Oxfmt, `pnpm typecheck` checks the library and Storybook, and `pnpm test` builds the library and runs Vitest. Use `pnpm lint:fix` to apply lint/format fixes. Husky installs the pre-commit hook during `pnpm install`; lint-staged checks and formats staged authored files before each commit.
+
+Versioning and release notes use [Changesets](.changeset/README.md). See [CHANGELOG.md](CHANGELOG.md) for prepared release notes and [.changeset/README.md](.changeset/README.md) for the GitHub archive workflow.

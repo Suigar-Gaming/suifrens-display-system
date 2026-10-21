@@ -10,6 +10,10 @@ minimumReleaseAge: 2880
 minimumReleaseAgeExclude:
   - '@mysten/*'
 
+update:
+  changeset: false
+  githubActions: true
+
 # Keep any resolved Rollup/YAML dependencies and AJV's URI parser on patched releases.
 overrides:
   'rollup@>=4.0.0 <4.59.0': '^4.64.12'

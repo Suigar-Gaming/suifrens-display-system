@@ -64,3 +64,9 @@ test('built inline and asset renderers preserve custom kits for both species and
 	assert.equal(resolveSoccerTeamKit('FR').code, 'FR');
 	assert.equal(resolveSoccerTeamKit({ code: 'BAD', primary: 'invalid' }).code, 'US');
 });
+
+test('historical root species renderers remain exported', async () => {
+	const library = await import(manifest.name);
+	assert.equal(typeof library.CapyImage, 'function');
+	assert.equal(typeof library.BullsharkImage, 'function');
+});

@@ -1,8 +1,12 @@
 {
 	"name": "@suigar/suifrens-display-system",
-	"version": "1.0.2",
-	"private": false,
+	"version": "1.0.3",
+	"private": true,
 	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Suigar-Gaming/suifrens-display-system.git"
+	},
 	"files": [
 		"dist"
 	],
@@ -74,22 +78,28 @@
 		}
 	},
 	"scripts": {
+		"prepare": "husky && npm run build",
 		"dev": "node --import ./scripts/svg-loader.mjs --import tsx --watch ./src/api/index.ts",
 		"storybook": "storybook dev -p 6006",
 		"build": "tsx scripts/generate-accessory-assets.tsx && tsdown && tsc -p tsconfig.build.json",
-		"prepare": "husky && npm run build",
 		"typecheck": "tsc --noEmit -p tsconfig.check.json && tsc -p .storybook/tsconfig.json",
 		"build:storybook": "storybook build",
-		"test": "pnpm build && vitest run",
+		"test": "pnpm run build && vitest run",
 		"test:unit": "vitest run tests --exclude tests/package.test.ts",
 		"oxlint": "oxlint .",
 		"oxlint:fix": "oxlint . --fix",
 		"oxfmt": "oxfmt . --check",
 		"oxfmt:fix": "oxfmt .",
 		"lint": "pnpm run oxlint && pnpm run oxfmt",
-		"lint:fix": "pnpm run oxlint:fix && pnpm run oxfmt:fix"
+		"lint:fix": "pnpm run oxlint:fix && pnpm run oxfmt:fix",
+		"release:pack": "pnpm run build && node scripts/pack-release.mjs",
+		"changeset": "changeset",
+		"release:status": "changeset status",
+		"release:version": "changeset version"
 	},
 	"devDependencies": {
+		"@changesets/cli": "^3.0.3",
+		"@changesets/config": "^4.0.1",
 		"@chromatic-com/storybook": "^5.5.1",
 		"@fastify/compress": "^9.2.2",
 		"@fastify/cors": "^11.3.1",
