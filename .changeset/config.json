@@ -2,7 +2,7 @@
 	"$schema": "../node_modules/@changesets/config/schema.json",
 	"changelog": "@changesets/cli/changelog",
 	"commit": false,
-	"baseBranch": "main",
+	"baseBranch": "origin/main",
 	"format": "oxfmt",
 	"privatePackages": {
 		"version": true,
