@@ -87,9 +87,9 @@ export function AssetAccessory(props: AccessoryRendererProps) {
   if (SOCCER_TEAM_ACCESSORY_NAMES.has(props.accessory.name)) {
     const fallbackPart =
       props.accessory.renderOptions.animationPart ?? resolveFallbackPart(props);
-    const country = resolveSoccerCountryCode(
-      props.accessory.renderOptions.country
-    );
+    const country =
+      props.accessory.renderOptions.teamKit ??
+      resolveSoccerCountryCode(props.accessory.renderOptions.country);
     const side = resolveSoccerTeamSide(props.accessory.renderOptions.side);
     const renderedAccessory =
       props.accessory.name === "soccer team shirt" ? (

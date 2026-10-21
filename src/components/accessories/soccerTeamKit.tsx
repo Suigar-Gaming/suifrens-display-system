@@ -65,7 +65,7 @@ export type SoccerTeamPattern =
   | "chevron";
 
 export type SoccerTeamKit = {
-  code: SoccerTeamCountryCode;
+  code: string;
   primary: string;
   secondary: string;
   accent: string;
@@ -149,7 +149,20 @@ export function resolveSoccerTeamKit(
   country?: unknown,
   side?: unknown
 ): SoccerTeamKit {
-  const kit = SOCCER_TEAM_KITS[resolveSoccerCountryCode(country)];
+  const candidate = country as Partial<SoccerTeamKit> | null;
+  const patterns: readonly string[] = [
+    "vertical", "horizontal", "cross", "diagonal", "sash", "quarters",
+    "hoops", "canton", "sun", "chevron",
+  ];
+  const custom =
+    candidate && typeof candidate === "object" &&
+    typeof candidate.code === "string" && /^[A-Z0-9]{1,4}$/.test(candidate.code) &&
+    [candidate.primary, candidate.secondary, candidate.accent].every(
+      (value) => typeof value === "string" && /^#[0-9a-f]{6}$/i.test(value)
+    ) && patterns.includes(candidate.pattern ?? "");
+  const kit: SoccerTeamKit = custom
+    ? candidate as SoccerTeamKit
+    : SOCCER_TEAM_KITS[resolveSoccerCountryCode(country)];
   if (resolveSoccerTeamSide(side) === "away") {
     return {
       code: kit.code,
@@ -383,7 +396,7 @@ export function SoccerKitMotif({
 }
 
 export type SoccerTeamAccessoryProps = BodyAccessoryProps & {
-  country?: SoccerTeamCountryCode | string;
+  country?: SoccerTeamCountryCode | string | SoccerTeamKit;
   side?: SoccerTeamSide;
 };
 

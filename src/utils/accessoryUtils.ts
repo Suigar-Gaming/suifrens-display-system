@@ -1,3 +1,4 @@
+import type { SoccerTeamKit } from "../components/accessories/soccerTeamKit.js";
 import type { AnimationPart } from "../animation/parts.js";
 
 export type SuiFrenSpecies = "capy" | "bullshark";
@@ -15,6 +16,7 @@ export type AccessoryRenderOptions = Record<string, unknown> & {
   showEars?: boolean;
   showFin?: boolean;
   country?: string;
+  teamKit?: SoccerTeamKit;
   side?: "home" | "away";
   assetSrc?: string;
   placement?: Partial<Record<SuiFrenSpecies, AccessoryPlacement>>;

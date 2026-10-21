@@ -166,14 +166,20 @@ export const ACCESSORY_RENDERERS: Record<string, AccessoryRenderer> = {
     <SoccerTeamShirt
       lor={props.lor}
       body={props.body}
-      country={resolveSoccerCountryCode(props.accessory.renderOptions.country)}
+      country={
+        props.accessory.renderOptions.teamKit ??
+        resolveSoccerCountryCode(props.accessory.renderOptions.country)
+      }
       side={resolveSoccerTeamSide(props.accessory.renderOptions.side)}
     />
   ),
   "soccer team swim trunks": (props) => (
     <SoccerTeamSwimTrunks
       body={props.body}
-      country={resolveSoccerCountryCode(props.accessory.renderOptions.country)}
+      country={
+        props.accessory.renderOptions.teamKit ??
+        resolveSoccerCountryCode(props.accessory.renderOptions.country)
+      }
       side={resolveSoccerTeamSide(props.accessory.renderOptions.side)}
     />
   ),
