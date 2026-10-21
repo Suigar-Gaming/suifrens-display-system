@@ -12,8 +12,8 @@ Welcome to the documentation for the SuiFrens display system! This repository pr
 
 ### Prerequisites
 
-- Node v20.x.x
-- pnpm
+- Node 22.23.3 (see `.node-version`)
+- pnpm 11.25.0 (see `packageManager` in `package.json`)
 
 ### Overview
 
@@ -34,7 +34,7 @@ We can now test out the `/suifrens/:suiFrenId/svg` API by visiting this [URL](ht
 
 ### Installing directly from GitHub
 
-The package is ready to consume without any build step when installed from GitHub (the compiled `dist` output is checked in). Add the dependency to your `package.json`:
+GitHub installs build the package through its `prepare` script; development dependencies and the Node version above are required. The published package contains the compiled `dist` output. Add the dependency to your `package.json`:
 
 ```
 "@suigar/suifrens-display-system": "github:Suigar-Gaming/suifrens-display-system"
@@ -66,3 +66,8 @@ import { SuiFrenImage } from "@suigar/suifrens-display-system/image-inline";
 ```
 
 The root package entry still works, but it intentionally exposes the full public API and is heavier for bundlers to analyze.
+
+### Dependency maintenance
+
+See [the dependency migration notes](docs/dependency-migration.md) for the version
+choices, compatibility decisions, official migration guides and verification commands.

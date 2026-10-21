@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { AnimatedAccessory } from "../../../animation/AnimatedAccessory.js";
 import { assertUnreachable } from "../../../utils/assertUnreachable.js";
 import {

@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from "@storybook/react";
+import { type Meta, type StoryObj } from "@storybook/react-vite";
 import { SuiFrenImage } from "./SuiFrenImage.js";
 import { useEffect, useState, type ComponentProps } from "react";
 import { CapyAttributes, CapyExpression } from "./capy-image/types.js";

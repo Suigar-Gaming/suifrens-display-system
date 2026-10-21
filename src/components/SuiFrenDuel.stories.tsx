@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from "@storybook/react";
+import { type Meta, type StoryObj } from "@storybook/react-vite";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { AnimationConfig, PlaybackOptions } from "../animation/types.js";
 import { getPresetSequence } from "../animation/presets.js";
@@ -719,10 +719,10 @@ export const Duel: Story = {
     return (
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-3">
-          <button className="px-3 py-1 rounded border bg-white" type="button" onClick={handleRestart}>
+          <button className="px-3 py-1 rounded-sm border bg-white" type="button" onClick={handleRestart}>
             Restart
           </button>
-          <button className="px-3 py-1 rounded border bg-white" type="button" onClick={stop}>
+          <button className="px-3 py-1 rounded-sm border bg-white" type="button" onClick={stop}>
             Stop
           </button>
           <div className="text-sm text-slate-700">
@@ -730,8 +730,8 @@ export const Duel: Story = {
           </div>
         </div>
 
-        <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-b from-sky-50 to-blue-100 shadow-inner">
-          <div className="absolute inset-4 rounded-2xl bg-gradient-to-b from-white/70 to-sky-50" />
+        <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-linear-to-b from-sky-50 to-blue-100 inset-shadow-sm">
+          <div className="absolute inset-4 rounded-2xl bg-linear-to-b from-white/70 to-sky-50" />
           <div className="absolute inset-x-10 bottom-10 h-6 rounded-full bg-slate-400/10 blur-md" />
 
           <div className="relative px-10 py-16">
@@ -1389,7 +1389,7 @@ export const Ring: Story = {
     return (
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-3">
-          <button className="px-3 py-1 rounded border bg-white" type="button" onClick={handleReset}>
+          <button className="px-3 py-1 rounded-sm border bg-white" type="button" onClick={handleReset}>
             Reset Ring
           </button>
           <div className="text-sm text-slate-700">
@@ -1397,7 +1397,7 @@ export const Ring: Story = {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 text-xs text-slate-700 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 text-xs text-slate-700 shadow-xs">
           <div className="flex flex-wrap gap-4">
             <div>
               <span className="font-semibold text-slate-900">Phase:</span> {ringPhase}
@@ -1531,7 +1531,7 @@ export const Ring: Story = {
           </div>
         </div>
 
-        <div className="relative overflow-hidden rounded-[28px] border-4 border-slate-800 bg-gradient-to-br from-amber-50 via-amber-100 to-amber-200 shadow-inner">
+        <div className="relative overflow-hidden rounded-[28px] border-4 border-slate-800 bg-linear-to-br from-amber-50 via-amber-100 to-amber-200 inset-shadow-sm">
           <div className="absolute inset-3 rounded-[24px] border border-slate-400/60" />
           <div className="absolute inset-6 rounded-[20px] border border-slate-400/45" />
           <div className="absolute inset-9 rounded-[16px] border border-slate-400/30" />

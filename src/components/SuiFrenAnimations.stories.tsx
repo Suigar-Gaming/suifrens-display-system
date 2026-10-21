@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from "@storybook/react";
+import { type Meta, type StoryObj } from "@storybook/react-vite";
 import { SuiFrenImage } from "./SuiFrenImage.js";
 import { PRESET_CATALOG } from "../animation/presetCatalog.js";
 import { accessories } from "../constants/accessories.js";
@@ -49,7 +49,7 @@ export const Presets: Story = {
             {group.presets.map((preset) => (
               <div
                 key={preset.name}
-                className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+                className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs"
               >
                 <div className="flex items-baseline justify-between gap-2">
                   <span className="text-sm font-semibold text-slate-800">{preset.label}</span>

@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from "@storybook/react";
+import { type Meta, type StoryObj } from "@storybook/react-vite";
 import { accessories } from "../constants/accessories.js";
 import { SuiFrenImage } from "./SuiFrenImage.js";
 
@@ -34,7 +34,7 @@ export const AllAccessories: Story = {
       {accessories.map((accessory) => (
         <div
           key={accessory.name}
-          className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+          className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs"
         >
           <div className="flex items-baseline justify-between gap-2">
             <span className="text-sm font-semibold text-slate-800">{accessory.name}</span>

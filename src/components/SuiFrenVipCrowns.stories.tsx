@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from "@storybook/react";
+import { type Meta, type StoryObj } from "@storybook/react-vite";
 import { vipCrownAccessories } from "../constants/vip-crowns.js";
 import { SuiFrenImage } from "./SuiFrenImage.js";
 
@@ -88,7 +88,7 @@ export const Gallery: Story = {
       {vipCrownAccessories.map((accessory) => (
         <section
           key={accessory.name}
-          className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
+          className="rounded-3xl border border-slate-200 bg-white p-5 shadow-xs"
         >
           <div className="flex flex-wrap items-baseline justify-between gap-3">
             <div>
@@ -133,7 +133,7 @@ export const MotionCheck: Story = {
       {vipCrownAccessories.map((accessory) => (
         <section
           key={accessory.name}
-          className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
+          className="rounded-3xl border border-slate-200 bg-white p-5 shadow-xs"
         >
           <div className="flex flex-wrap items-baseline justify-between gap-3">
             <div>

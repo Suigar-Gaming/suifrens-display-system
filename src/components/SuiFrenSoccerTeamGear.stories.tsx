@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from "@storybook/react";
+import { type Meta, type StoryObj } from "@storybook/react-vite";
 import { accessories } from "../constants/accessories.js";
 import {
   SOCCER_TEAM_KITS,
@@ -40,7 +40,7 @@ const countries = Object.keys(SOCCER_TEAM_KITS).filter(
   (code) => code !== "GLOBAL"
 ) as SoccerTeamCountryCode[];
 
-function buildTeamGear(country: SoccerTeamCountryCode, side = "home" as const) {
+function buildTeamGear(country: SoccerTeamCountryCode, side: "home" | "away" = "home") {
   return [
     {
       ...teamShirt,
@@ -71,7 +71,7 @@ export const AllCountries: Story = {
       {countries.map((country) => (
         <div
           key={country}
-          className="rounded-xl border border-slate-300 bg-white p-2 shadow-sm"
+          className="rounded-xl border border-slate-300 bg-white p-2 shadow-xs"
         >
           <div className="mb-1 flex items-center justify-between">
             <span className="text-sm font-black text-slate-900">{country}</span>

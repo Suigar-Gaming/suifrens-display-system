@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from "@storybook/react";
+import { type Meta, type StoryObj } from "@storybook/react-vite";
 import {
   type MutableRefObject,
   type PointerEvent,
@@ -71,7 +71,7 @@ function ControlButton({ label, ariaLabel, active, onPress, onRelease, className
       onPointerLeave={handleLeave}
       onPointerCancel={handleLeave}
       className={[
-        "flex h-12 items-center justify-center rounded-xl border text-sm font-semibold shadow-sm transition",
+        "flex h-12 items-center justify-center rounded-xl border text-sm font-semibold shadow-xs transition",
         active
           ? "border-blue-500 bg-blue-500 text-white shadow-blue-200"
           : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 active:bg-slate-100",
@@ -137,10 +137,10 @@ function SuiFrenStage({ state, poseRef, title, note, live = true }: StageProps) 
     <div>
       {title ? <h3 className="mb-2 text-sm font-semibold text-slate-800">{title}</h3> : null}
       <div
-        className="relative overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-b from-sky-50 to-blue-100 shadow-inner"
+        className="relative overflow-hidden rounded-2xl border border-slate-200 bg-linear-to-b from-sky-50 to-blue-100 inset-shadow-sm"
         style={{ width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT }}
       >
-        <div className="absolute inset-4 rounded-2xl bg-gradient-to-b from-white/70 to-sky-50" />
+        <div className="absolute inset-4 rounded-2xl bg-linear-to-b from-white/70 to-sky-50" />
         <div className="absolute inset-x-6 bottom-12 h-6 rounded-full bg-slate-400/10 blur-md" />
 
         <div
@@ -155,7 +155,7 @@ function SuiFrenStage({ state, poseRef, title, note, live = true }: StageProps) 
         >
           <div className="relative h-full w-full">
             {isEmoting ? (
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-700 shadow">
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">
                 {state.expression}
               </div>
             ) : null}
@@ -171,7 +171,7 @@ function SuiFrenStage({ state, poseRef, title, note, live = true }: StageProps) 
           </div>
         </div>
 
-        <div className="absolute left-4 top-4 flex flex-col gap-1 rounded-lg bg-white/85 px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm">
+        <div className="absolute left-4 top-4 flex flex-col gap-1 rounded-lg bg-white/85 px-3 py-2 text-xs font-semibold text-slate-700 shadow-xs">
           <span>Locomotion: {state.locomotion}</span>
           <span>Facing: {state.facing}</span>
           <span>
@@ -329,7 +329,7 @@ export const ControlPadPlayground: Story = {
           />
         </div>
 
-        <div className="flex w-full max-w-sm flex-col gap-4 rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm backdrop-blur">
+        <div className="flex w-full max-w-sm flex-col gap-4 rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-xs backdrop-blur-sm">
           <div>
             <h3 className="text-sm font-semibold text-slate-800">Movement Pad</h3>
             <div className="mt-3 grid grid-cols-3 gap-2">
