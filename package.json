@@ -78,13 +78,13 @@
 		}
 	},
 	"scripts": {
-		"prepare": "husky && npm run build",
+		"prepare": "husky",
 		"dev": "node --import ./scripts/svg-loader.mjs --import tsx --watch ./src/api/index.ts",
 		"storybook": "storybook dev -p 6006",
 		"build": "tsx scripts/generate-accessory-assets.tsx && tsdown && tsc -p tsconfig.build.json",
 		"typecheck": "tsc --noEmit -p tsconfig.check.json && tsc -p .storybook/tsconfig.json",
 		"build:storybook": "storybook build",
-		"test": "pnpm run build && vitest run",
+		"test": "vitest run",
 		"test:unit": "vitest run tests --exclude tests/package.test.ts",
 		"oxlint": "oxlint .",
 		"oxlint:fix": "oxlint . --fix",

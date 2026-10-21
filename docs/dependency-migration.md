@@ -38,7 +38,7 @@ All direct development dependencies were updated to the latest stable registry r
 
 ## Validation
 
-Run `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build:storybook`, `pnpm peers check`, and `pnpm audit`. Tests cover public exports and declarations, both renderer families, custom kits on both species and sides, emitted SVG files, HTTP status codes, CORS, gRPC JSON attributes and accessory pagination. The live read-only mainnet smoke check uses a SuiFren already referenced in the README.
+Run `pnpm lint`, `pnpm typecheck`, `pnpm build`, `pnpm test`, `pnpm build:storybook`, `pnpm peers check`, and `pnpm audit`. Tests cover public exports and declarations, both renderer families, custom kits on both species and sides, emitted SVG files, HTTP status codes, CORS, gRPC JSON attributes and accessory pagination. The live read-only mainnet smoke check uses a SuiFren already referenced in the README.
 
 Verified locally with Node 22.23.3 / pnpm 11.25.0:
 
@@ -50,10 +50,10 @@ Verified locally with Node 22.23.3 / pnpm 11.25.0:
 
 ## Shared quality tooling
 
-- Vitest 5.0.5 runs the unit and package regression suites (`pnpm test`). `pnpm test:unit` runs API and React DOM unit tests without rebuilding the package.
+- Vitest 5.0.5 runs the unit and package regression suites (`pnpm test`). `pnpm test:unit` runs API and React DOM unit tests without a prior build. The full `pnpm test` suite uses compiled exports, so run `pnpm build` or `pnpm release:pack` first; the tests never rebuild implicitly.
 - Oxlint (including type-aware rules) and Oxfmt replace Prettier. Their configs follow `suigar-sdk`, with generated assets/build output excluded. Oxfmt owns import ordering; the overlapping lint sort rule is disabled to avoid conflicts.
 - `pnpm lint` checks lint and formatting. `pnpm lint:fix` applies fixes.
-- Husky runs lint-staged before commits, applying Oxlint/Oxfmt to staged authored files. Hook installation and the existing package build both run in `prepare`.
+- Husky runs lint-staged before commits, applying Oxlint/Oxfmt to staged authored files. `prepare` only installs hooks; builds run explicitly through `pnpm build` or `pnpm release:pack`.
 - Destructured props intentionally omitted from a rest object are ignored by the unused-variable rule. Unreferenced duplicate animation sequences were removed; the public preset lookup still uses the canonical core and battle registries.
 - React peers allow stable 18/19 releases (`^18.2.0 || ^19.0.0`). The Node minimum is 22.22.1 for lint-staged; the pinned local Node remains 22.23.3.
 - Storybook has an explicit TS project with `vite/client` asset declarations; typechecking includes that project and checks side-effect imports.

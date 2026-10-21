@@ -71,6 +71,6 @@ See [the dependency migration notes](docs/dependency-migration.md) for the versi
 
 ### Quality checks
 
-`pnpm lint` runs Oxlint and Oxfmt, `pnpm typecheck` checks the library and Storybook, and `pnpm test` builds the library and runs Vitest. Use `pnpm lint:fix` to apply lint/format fixes. Husky installs the pre-commit hook during `pnpm install`; lint-staged checks and formats staged authored files before each commit.
+`pnpm lint` runs Oxlint and Oxfmt, `pnpm typecheck` checks the library and Storybook, and `pnpm test` runs Vitest. Run `pnpm build` before the complete test suite because package tests use compiled exports; `pnpm test:unit` runs source tests without a build. `pnpm release:pack` builds and creates the release archive. Use `pnpm lint:fix` to apply lint/format fixes. `prepare` only installs the Husky pre-commit hook during `pnpm install`; lint-staged checks and formats staged authored files before each commit.
 
 Versioning and release notes use [Changesets](.changeset/README.md). See [CHANGELOG.md](CHANGELOG.md) for prepared release notes and [.changeset/README.md](.changeset/README.md) for the GitHub archive workflow.

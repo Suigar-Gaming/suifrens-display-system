@@ -21,10 +21,16 @@ jobs:
         run: pnpm doctor
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Validate lint, types, tests and Storybook
-        run: pnpm lint && pnpm typecheck && pnpm test && pnpm build:storybook
-      - name: Pack compiled release archive
-        run: node scripts/pack-release.mjs
+      - name: Check lint and formatting
+        run: pnpm lint
+      - name: Check TypeScript types
+        run: pnpm typecheck
+      - name: Build and pack compiled release archive
+        run: pnpm release:pack
+      - name: Run unit and package tests
+        run: pnpm test
+      - name: Build Storybook
+        run: pnpm build:storybook
       - name: Check tag and build provenance
         if: startsWith(github.ref, 'refs/tags/')
         env:

@@ -41,12 +41,12 @@ For package/output changes, run the following with the pinned runtime:
 ```sh
 pnpm lint
 pnpm typecheck
+pnpm release:pack
 pnpm test
 pnpm build:storybook
-pnpm release:pack
 ```
 
-`pnpm test` builds the package before running Vitest. Add focused regression coverage when behavior or compatibility changes. Documentation-only changes need formatting and diff checks, not the full build/test suite. Validate workflow changes with actionlint and finish with `git diff --check`. Report failed or skipped checks accurately.
+`prepare` only installs Husky hooks; dependency installation must not compile the library. `pnpm test` runs Vitest without rebuilding. Run `pnpm build` first for the complete suite, since package tests exercise compiled exports; `pnpm test:unit` needs no build. `pnpm release:pack` builds and then packages, so run it before tests in release validation and CI to build only once. Add focused regression coverage when behavior or compatibility changes. Documentation-only changes need formatting and diff checks, not the full build/test suite. Validate workflow changes with actionlint and finish with `git diff --check`. Report failed or skipped checks accurately.
 
 Use the single `release:pack` script; do not distribute the raw source checkout or an ordinary source tarball as the compiled package. Keep archives and their checksums in ignored `artifacts/`. Check the release manifest has the expected exports/types/peers, and no development dependencies or lifecycle scripts. The latest changelog heading must match the package version and all changesets must be consumed before packaging. The archive includes `CHANGELOG.md`, and GitHub release notes come from that version's section. `BUILD_INFO.json` must accurately identify the source commit and dirty state. A dirty local review artifact is acceptable; do not describe it as a published release. After changing packaged contents, repack, verify and refresh any local consumer archive integrity before handing off.
 
