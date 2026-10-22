@@ -1,0 +1,55 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"options": {
+		"typeAware": true
+	},
+	"plugins": [
+		"eslint",
+		"typescript",
+		"unicorn",
+		"react",
+		"react-perf",
+		"oxc",
+		"import",
+		"jsx-a11y",
+		"vitest",
+		"node",
+		"promise"
+	],
+	"rules": {
+		"import/extensions": [
+			"error",
+			"always",
+			{
+				"ignorePackages": true
+			}
+		],
+		"import/consistent-type-specifier-style": ["warn", "prefer-top-level-if-only-type-imports"],
+		"import/no-duplicates": [
+			"warn",
+			{
+				"preferInline": true
+			}
+		],
+		"no-unused-vars": [
+			"error",
+			{
+				"reportUsedIgnorePattern": true,
+				"caughtErrorsIgnorePattern": "^_",
+				"ignoreRestSiblings": true
+			}
+		],
+		"sort-imports": "off",
+		"typescript/array-type": [
+			"warn",
+			{
+				"default": "generic"
+			}
+		],
+		"typescript/consistent-type-imports": "warn",
+		"typescript/no-deprecated": "warn",
+		"typescript/no-unnecessary-type-assertion": "warn",
+		"curly": ["error", "all"]
+	},
+	"ignorePatterns": ["dist/**", "storybook-static/**", "src/generated/**", "coverage/**"]
+}

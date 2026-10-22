@@ -1,0 +1,39 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"useTabs": true,
+	"singleQuote": true,
+	"trailingComma": "all",
+	"semi": true,
+	"proseWrap": "never",
+	"sortPackageJson": true,
+	"jsdoc": true,
+	"ignorePatterns": [
+		"dist/**",
+		"storybook-static/**",
+		"src/generated/**",
+		"coverage/**",
+		"**/pnpm-lock.yaml"
+	],
+	"sortImports": {
+		"newlinesBetween": false,
+		"customGroups": [
+			{
+				"groupName": "suigar",
+				"elementNamePattern": ["@suigar/**"]
+			},
+			{
+				"groupName": "app",
+				"elementNamePattern": ["@/**"]
+			}
+		],
+		"groups": [
+			["type-builtin", "value-builtin"],
+			["type-external", "value-external"],
+			"suigar",
+			"app",
+			["type-parent", "type-sibling", "type-index", "value-parent", "value-sibling", "value-index"],
+			"unknown"
+		]
+	},
+	"sortTailwindcss": true
+}
