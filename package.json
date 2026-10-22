@@ -102,6 +102,7 @@
 		"@fastify/compress": "^9.2.2",
 		"@fastify/cors": "^11.3.1",
 		"@fastify/type-provider-typebox": "^6.3.0",
+		"@manypkg/cli": "^0.25.1",
 		"@mysten/sui": "^2.37.0",
 		"@storybook/addon-docs": "^10.6.2",
 		"@storybook/addon-links": "^10.6.2",
