@@ -1,7 +1,7 @@
 ## SuiFrens Display System
 
 Welcome to the documentation for the SuiFrens display system! This repository provides a collection of React components for rendering SuiFren characters, as well as a simple backend API to demonstrate how you can these construct and serve these characters based on dynamic on-chain data. We hope this repository serves as inspiration for new character types, accessories, and much more. Happy adventuring in the SuiFrens universe!
- 
+
 <p align="center">
 <img src="https://api-mainnet.suifrens.sui.io/suifrens/0xbe52f4fb87bcd73e0e900aff827480d93707185670ea292ee0b71f1939c4f31f/svg" width="180" height="180" alt="Cowboy Capy" />
 
@@ -12,8 +12,8 @@ Welcome to the documentation for the SuiFrens display system! This repository pr
 
 ### Prerequisites
 
-- Node v20.x.x
-- pnpm
+- Node 24.22.1 LTS (see `.node-version`)
+- pnpm 12.14.0 (see `packageManager` in `package.json`)
 
 ### Overview
 
@@ -32,37 +32,41 @@ pnpm run dev
 
 We can now test out the `/suifrens/:suiFrenId/svg` API by visiting this [URL](http://localhost:3000/suifrens/0xbe79e1415bb4fd7d0d83b325110086d7604ffeaf526dabb30380fe7ae3c51e19/svg) which returns a Capy image based on a mainnet SuiFren object.
 
-### Installing directly from GitHub
+### Installing a compiled release
 
-The package is ready to consume without any build step when installed from GitHub (the compiled `dist` output is checked in). Add the dependency to your `package.json`:
+Install the exact versioned GitHub Release archive:
 
+```sh
+pnpm add https://github.com/Suigar-Gaming/suifrens-display-system/releases/download/v1.0.3/suigar-suifrens-display-system-1.0.3.tgz
 ```
-"@suigar/suifrens-display-system": "github:Suigar-Gaming/suifrens-display-system"
-```
 
-Then install with your package manager (`npm install`, `pnpm install`, etc.). Only the peer dependencies `react` and `react-dom` are required in the consuming app.
+The release contains compiled ESM, declarations and SVG assets. Only React and React DOM are peer dependencies; consumers do not install this repository's build tools, run Husky or compile sources. Commit the consuming lockfile to pin archive integrity. See [the release process](.changeset/README.md).
 
 ### Recommended imports
 
 For the smallest consumer bundles, prefer subpath imports for runtime values instead of the root entry:
 
 ```ts
-import { SuiFrenImage } from "@suigar/suifrens-display-system/image";
-import { accessories } from "@suigar/suifrens-display-system/accessories";
-import { colors } from "@suigar/suifrens-display-system/colors";
-import { earGeneToEarShape } from "@suigar/suifrens-display-system/attributes";
+import { accessories } from '@suigar/suifrens-display-system/accessories';
+import { earGeneToEarShape } from '@suigar/suifrens-display-system/attributes';
+import { colors } from '@suigar/suifrens-display-system/colors';
 import {
-  POSITIVE_CAPY_EXPRESSIONS,
-  NEGATIVE_BULLSHARK_EXPRESSIONS,
-} from "@suigar/suifrens-display-system/expressions";
+	POSITIVE_CAPY_EXPRESSIONS,
+	NEGATIVE_BULLSHARK_EXPRESSIONS,
+} from '@suigar/suifrens-display-system/expressions';
+import { SuiFrenImage } from '@suigar/suifrens-display-system/image';
 ```
 
-The `/image` entry uses cacheable external SVG assets for accessories. If you
-need fully self-contained SVG markup (for example, for server-side SVG export),
-use the compatibility entry:
+The `/image` entry uses cacheable external SVG assets for accessories. If you need fully self-contained SVG markup (for example, for server-side SVG export), use the compatibility entry:
 
 ```ts
-import { SuiFrenImage } from "@suigar/suifrens-display-system/image-inline";
+import { SuiFrenImage } from '@suigar/suifrens-display-system/image-inline';
 ```
 
 The root package entry still works, but it intentionally exposes the full public API and is heavier for bundlers to analyze.
+
+### Quality checks
+
+`pnpm lint` runs Oxlint and Oxfmt, `pnpm typecheck` checks the library and Storybook, and `pnpm test` runs Vitest. Run `pnpm build` before the complete test suite because package tests use compiled exports; `pnpm test:unit` runs source tests without a build. `pnpm release:pack` builds and creates the release archive. Use `pnpm lint:fix` to apply lint/format fixes. `prepare` only installs the Husky pre-commit hook during `pnpm install`; lint-staged checks and formats staged authored files before each commit.
+
+Versioning and release notes use [Changesets](.changeset/README.md). See [CHANGELOG.md](CHANGELOG.md) for prepared release notes and [.changeset/README.md](.changeset/README.md) for the GitHub archive workflow.

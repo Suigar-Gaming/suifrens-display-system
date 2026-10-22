@@ -1,1 +1,1 @@
-export { colors } from "./constants/colors.js";
+export { colors } from './constants/colors.js';
