@@ -1,5 +1,12 @@
 # @suigar/suifrens-display-system
 
+## 1.0.4
+
+### Patch Changes
+
+- ebd68e1: Prepare release versions and changelogs through automated Changesets pull requests, and publish the compiled GitHub archive after the version pull request is merged. Validate feature changes with pending changesets without requiring release packing.
+- 5033892: Fix automated GitHub release preparation by invoking Changesets versioning without shell operators being forwarded as command arguments.
+
 ## 1.0.3
 
 ### Patch Changes
