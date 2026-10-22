@@ -1,43 +1,43 @@
-import { colors } from "../../constants/colors.js";
+import type { colors } from '../../constants/colors.js';
 
 export type CapySkin =
-  | "basic"
-  | "cheetah"
-  | "fox"
-  | "panda"
-  | "stripes"
-  | "snake"
-  | "lizard"
-  | "dalmation";
+	| 'basic'
+	| 'cheetah'
+	| 'fox'
+	| 'panda'
+	| 'stripes'
+	| 'snake'
+	| 'lizard'
+	| 'dalmation';
 
-export type CapyEarShape = "default" | "quiet" | "wild" | "mischievous";
+export type CapyEarShape = 'default' | 'quiet' | 'wild' | 'mischievous';
 
 export type CapyExpression =
-  | "angry"
-  | "annoyed"
-  | "bigSmile"
-  | "blush"
-  | "cool"
-  | "crying"
-  | "happy"
-  | "heartEyes"
-  | "kiss"
-  | "laughing"
-  | "mischievous"
-  | "relaxed"
-  | "sad"
-  | "shocked"
-  | "sleepy"
-  | "tongueOut"
-  | "wink"
-  | "dizzyFace"
-  | "goofy"
-  | "grimace";
+	| 'angry'
+	| 'annoyed'
+	| 'bigSmile'
+	| 'blush'
+	| 'cool'
+	| 'crying'
+	| 'happy'
+	| 'heartEyes'
+	| 'kiss'
+	| 'laughing'
+	| 'mischievous'
+	| 'relaxed'
+	| 'sad'
+	| 'shocked'
+	| 'sleepy'
+	| 'tongueOut'
+	| 'wink'
+	| 'dizzyFace'
+	| 'goofy'
+	| 'grimace';
 
 export type CapyAttributes = {
-  mainColor: keyof typeof colors;
-  secondaryColor: keyof typeof colors;
-  earShape: CapyEarShape;
-  skin: CapySkin;
-  expression: CapyExpression;
+	mainColor: keyof typeof colors;
+	secondaryColor: keyof typeof colors;
+	earShape: CapyEarShape;
+	skin: CapySkin;
+	expression: CapyExpression;
 };

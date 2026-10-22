@@ -1,18 +1,24 @@
-node_modules
-.DS_Store
-.env
-dist/
-build/
-coverage/
-storybook-static/
-dist-esbuild-test
-meta.json
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build and release outputs
+/dist/
+/build/
+/storybook-static/
+/artifacts/
 *.tgz
 
-*storybook.log
-*tsconfig.tsbuildinfo
+# Test output and tool caches
+/coverage/
 .cache/
-.turbo/
 .vite/
-.tsup/
-.eslintcache
+*.tsbuildinfo
+
+# Local configuration and logs
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.log
+.DS_Store
