@@ -70,3 +70,34 @@ test('historical root species renderers remain exported', async () => {
 	assert.equal(typeof library.CapyImage, 'function');
 	assert.equal(typeof library.BullsharkImage, 'function');
 });
+
+test('built goth boot assets contain only the selected boot without clipping', async () => {
+	const { accessories } = await import(manifest.name + '/accessories');
+	for (const side of ['left', 'right']) {
+		for (const entry of ['/image', '/image-assets']) {
+			const { SuiFrenImage } = await import(manifest.name + entry);
+			const svg = renderToStaticMarkup(
+				createElement(SuiFrenImage, {
+					attributes: {
+						mainColor: '6FBBEE',
+						secondaryColor: 'E6FBFF',
+						skin: 'basic',
+						expression: 'happy',
+						earShape: 'default',
+					},
+					accessories: accessories.filter(
+						(item: { name: string }) => item.name === `${side} goth boot`,
+					),
+				}),
+			);
+			const references = [...svg.matchAll(/(?:href|xlink:href)="(file:[^"]+\.svg)#[^"]+"/g)];
+			assert.ok(references.length > 0);
+			for (const [, url] of references) {
+				const asset = readFileSync(new URL(url), 'utf8');
+				assert.doesNotMatch(asset, /clipPath|clip-path/);
+				assert.equal((asset.match(/<path\b/g) ?? []).length, 20);
+				assert.equal((asset.match(new RegExp(`data-boot-side="${side}"`, 'g')) ?? []).length, 4);
+			}
+		}
+	}
+});

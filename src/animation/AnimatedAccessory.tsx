@@ -72,7 +72,10 @@ export function AnimatedAccessory({ children, fallbackPart }: AnimatedAccessoryP
 		}
 
 		const registrations: Array<() => void> = [];
-		const targets = svgElement.querySelectorAll<SVGGraphicsElement>('g[transform]');
+		const targets = [
+			...(svgElement.matches('g[transform]') ? [svgElement as SVGGraphicsElement] : []),
+			...svgElement.querySelectorAll<SVGGraphicsElement>('g[transform]'),
+		];
 		let matchedTarget = false;
 
 		targets.forEach((target) => {
@@ -85,14 +88,7 @@ export function AnimatedAccessory({ children, fallbackPart }: AnimatedAccessoryP
 		});
 
 		if (!matchedTarget && fallbackPart) {
-			const baseTransform = svgElement.getAttribute('transform') ?? '';
-			registrations.push(
-				store.register(fallbackPart, {
-					getBaseTransform: () => baseTransform,
-					setTransform: (value) => svgElement.setAttribute('transform', value),
-					element: svgElement as SVGGraphicsElement,
-				}),
-			);
+			registrations.push(store.registerElement(fallbackPart, svgElement as SVGGraphicsElement));
 		}
 
 		return () => {

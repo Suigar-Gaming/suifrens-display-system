@@ -7,7 +7,7 @@ export function Fin(props: FinProps) {
 	const baseTransform = 'matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1181.8,460.1)';
 	const transform = useAnimatedPartTransform('fin', baseTransform);
 	return (
-		<AnimatedAccessory fallbackPart="head">
+		<AnimatedAccessory fallbackPart="fin">
 			<g transform={transform}>
 				<g transform="matrix(1, 0, 0, 1, 0, 0)">
 					<path
