@@ -115,7 +115,7 @@
 		"@types/react-dom": "^19.3.0",
 		"ajv-formats": "^3.0.1",
 		"fastify": "^5.12.7",
-		"happy-dom": "^21.0.3",
+		"happy-dom": "^21.0.4",
 		"husky": "^9.1.7",
 		"lint-staged": "^17.6.0",
 		"oxfmt": "^0.74.0",
@@ -129,9 +129,9 @@
 		"tailwindcss": "^4.3.3",
 		"tsdown": "^0.23.1",
 		"tsx": "^4.23.15",
-		"typebox": "^1.4.2",
+		"typebox": "^1.4.3",
 		"typescript": "^6.0.3",
-		"vite": "^8.3.4",
+		"vite": "^8.3.5",
 		"vitest": "^5.0.5"
 	},
 	"peerDependencies": {
@@ -140,7 +140,7 @@
 	},
 	"engines": {
 		"node": "^24.22.1",
-		"pnpm": "^12.14.0"
+		"pnpm": "^12.15.0"
 	},
-	"packageManager": "pnpm@12.14.0+sha512.c18ba6d87993d3d164cb5e8948f32b2c06ee854487e06cd8d86781342fb3e5bb4634367034711e86802baa9c37bea906ce1929ad08d70884c97d801df13389a6"
+	"packageManager": "pnpm@12.15.0+sha512.b3951d6d6ff4a9f13dc7cf56cd28d2b8eb37dbcc9c68e52e1e1191873ea9f82a017287ab50baadc5ccc494f036c67c0e47eb13608c2fa36f47711b61ea128e61"
 }

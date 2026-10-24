@@ -181,3 +181,46 @@ test('a function component receiving a React 19 ref prop keeps its own ref targe
 	await view.render(null);
 	expect(ref.current).toBeNull();
 });
+
+test('a transformed accessory root is detected without falling back to the wrong part', async () => {
+	const store = new AnimationStore();
+	context.store = store;
+	await view.render(
+		<svg>
+			<AnimatedAccessory fallbackPart="head">
+				<g
+					data-fin
+					transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1181.8,460.1)"
+				/>
+			</AnimatedAccessory>
+		</svg>,
+	);
+	const targets = store.getAnimationTargets();
+	expect(targets).toHaveLength(1);
+	expect(targets[0].part).toBe('fin');
+	expect(targets[0].element).toBe(view.container.querySelector('[data-fin]'));
+	await view.render(null);
+	expect(store.getAnimationTargets()).toHaveLength(0);
+});
+
+test('fallback accessory registrations share the original base transform and clean up independently', async () => {
+	const store = new AnimationStore();
+	context.store = store;
+	await view.render(
+		<svg>
+			<AnimatedAccessory fallbackPart="head">
+				<g data-fallback transform="matrix(1, 0, 0, 1, 10, 20)" />
+			</AnimatedAccessory>
+		</svg>,
+	);
+	const element = view.container.querySelector<SVGGraphicsElement>('[data-fallback]')!;
+	store.setPose('head', { translate: { x: 5, y: 0 } });
+	const cleanup = store.registerElement('head', element);
+	expect(store.getAnimationTargets()).toHaveLength(1);
+	store.clear();
+	expect(element.getAttribute('transform')).toBe('matrix(1, 0, 0, 1, 10, 20)');
+	cleanup();
+	expect(store.getAnimationTargets()).toHaveLength(1);
+	await view.render(null);
+	expect(store.getAnimationTargets()).toHaveLength(0);
+});

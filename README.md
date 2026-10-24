@@ -13,7 +13,7 @@ Welcome to the documentation for the SuiFrens display system! This repository pr
 ### Prerequisites
 
 - Node 24.22.1 LTS (see `.node-version`)
-- pnpm 12.14.0 (see `packageManager` in `package.json`)
+- pnpm 12.15.0 (see `packageManager` in `package.json`)
 
 ### Overview
 
