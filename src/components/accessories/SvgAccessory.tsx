@@ -38,9 +38,16 @@ export type SvgAccessoryProps = {
 	symbolId?: string;
 	species: SuiFrenSpecies;
 	placement?: Partial<Record<SuiFrenSpecies, AccessoryPlacement>>;
+	viewport?: { x: number; y: number; width: number; height: number };
 };
 
-export function SvgAccessory({ assetSrc, symbolId, species, placement }: SvgAccessoryProps) {
+export function SvgAccessory({
+	assetSrc,
+	symbolId,
+	species,
+	placement,
+	viewport,
+}: SvgAccessoryProps) {
 	const resolvedPlacement = placement?.[species];
 	const transform = buildPlacementTransform(resolvedPlacement);
 	const embeddedSymbolSrc = useMemo(
@@ -56,10 +63,10 @@ export function SvgAccessory({ assetSrc, symbolId, species, placement }: SvgAcce
 			{imageSrc ? (
 				<image
 					href={imageSrc}
-					x="0"
-					y="0"
-					width="3000"
-					height="3000"
+					x={viewport?.x ?? 0}
+					y={viewport?.y ?? 0}
+					width={viewport?.width ?? 3000}
+					height={viewport?.height ?? 3000}
 					preserveAspectRatio="xMidYMid meet"
 				/>
 			) : fragmentSrc ? (
