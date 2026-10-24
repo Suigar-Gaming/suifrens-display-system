@@ -1,5 +1,11 @@
 # @suigar/suifrens-display-system
 
+## 1.0.6
+
+### Patch Changes
+
+- 02a8bea: Display complete VIP crowns, including tall tips and side ornaments, on Capy and Bullshark. Remove export masks that cut through crown artwork, preserve crown size and placement with matching padded image bounds, and give crowned portraits room for head-bound motion in both renderers.
+
 ## 1.0.5
 
 ### Patch Changes
