@@ -1,5 +1,11 @@
 # @suigar/suifrens-display-system
 
+## 1.0.5
+
+### Patch Changes
+
+- 3018e9f: Fix individual goth boots to render only the selected boot without clipping. Correct bullshark fin animation registration and its attachment pivot, detect transformed accessory roots, and deduplicate fallback registrations. Rebuild animation registrations when switching between capy and bullshark in both inline and asset renderers.
+
 ## 1.0.4
 
 ### Patch Changes
