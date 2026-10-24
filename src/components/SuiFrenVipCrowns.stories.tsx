@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { vipCrownAccessories } from '../constants/vip-crowns.js';
 import { SuiFrenImage } from './SuiFrenImage.js';
+import { SuiFrenImageAssets } from './SuiFrenImageAssets.js';
 
 const LOOP = { iterations: 'infinite' as const };
 
@@ -81,6 +82,60 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof SuiFrenImage>;
+
+export const ClippingCheck: Story = {
+	render: () => (
+		<div
+			style={{
+				display: 'grid',
+				gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+				gap: 24,
+			}}
+		>
+			{vipCrownAccessories.map((accessory) => (
+				<section key={accessory.name}>
+					<h2>{accessory.name}</h2>
+					{[SuiFrenImage, SuiFrenImageAssets].map((Renderer, index) => (
+						<div key={index} style={{ display: 'flex', gap: 12, alignItems: 'end' }}>
+							{[STATIC_VARIANTS[0], STATIC_VARIANTS[2]].map((variant) => (
+								<div key={variant.label}>
+									<div
+										style={{
+											width: 128,
+											height: 128,
+											overflow: 'hidden',
+											outline: '1px solid #cbd5e1',
+										}}
+									>
+										<Renderer
+											attributes={variant.attributes}
+											accessories={[accessory]}
+											renderSize={128}
+											shadow
+										/>
+									</div>
+									<div
+										style={{ width: 64, height: 64, overflow: 'hidden', transform: 'scaleX(-1)' }}
+									>
+										<Renderer
+											attributes={variant.attributes}
+											accessories={[accessory]}
+											renderSize={64}
+											shadow
+										/>
+									</div>
+									<small>
+										{index === 0 ? 'Inline' : 'Assets'} · {variant.label}
+									</small>
+								</div>
+							))}
+						</div>
+					))}
+				</section>
+			))}
+		</div>
+	),
+};
 
 export const Gallery: Story = {
 	render: () => (

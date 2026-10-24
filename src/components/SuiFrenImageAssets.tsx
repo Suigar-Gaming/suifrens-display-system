@@ -11,6 +11,7 @@ import { type AccessoryMetadata, getAccessoriesByType } from '../utils/accessory
 import { assertUnreachable } from '../utils/assertUnreachable.js';
 import { AccessoryRendererProvider } from './accessories/AccessorySlot.js';
 import { AssetAccessory } from './accessories/AssetAccessory.js';
+import { getSuiFrenViewBox } from './accessories/crownViewport.js';
 import { BullsharkImage } from './bullshark-image/BullsharkImage.js';
 import { CapyImage } from './capy-image/CapyImage.js';
 import { shouldRenderMicrophoneArmInForeground } from './foregroundLayering.js';
@@ -164,7 +165,7 @@ export function SuiFrenImageAssets({
 			y="0px"
 			width={resolvedSize?.width}
 			height={resolvedSize?.height}
-			viewBox="0 -200 3000 3000"
+			viewBox={getSuiFrenViewBox(accessoriesByType?.head)}
 			className={['suifren-image', className].filter(Boolean).join(' ')}
 			style={style}
 		>

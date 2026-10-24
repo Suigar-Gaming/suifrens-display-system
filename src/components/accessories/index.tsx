@@ -9,7 +9,7 @@ import { Cardigan } from './body/Cardigan.js';
 import { LeatherJacket } from './body/LeatherJacket.js';
 import { Vest } from './body/Vest.js';
 import { WizardRobe } from './body/WizardRobe.js';
-import { getVipCrownAssetSrc } from './crownAssets.js';
+import { getVipCrownAssetSrc, getVipCrownAssetViewport } from './crownAssets.js';
 import { Glasses8Bit } from './eyes/Glasses8Bit.js';
 import { GlassesY2K } from './eyes/GlassesY2k.js';
 import { SuperHeroMask } from './eyes/SuperHeroMask.js';
@@ -202,6 +202,7 @@ export function InlineAccessory(props: AccessoryProps) {
 	) : assetSrc ? (
 		<SvgAccessory
 			assetSrc={assetSrc}
+			viewport={getVipCrownAssetViewport(assetSrc)}
 			species={props.species}
 			placement={props.accessory.renderOptions.placement}
 		/>
