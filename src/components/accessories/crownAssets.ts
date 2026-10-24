@@ -1,3 +1,4 @@
+import { VIP_CROWN_IMAGE_VIEWPORT } from './crownViewport.js';
 import bronzeI from './head/bronze-i.svg';
 import bronzeIi from './head/bronze-ii.svg';
 import bronzeIii from './head/bronze-iii.svg';
@@ -40,4 +41,10 @@ const VIP_CROWN_ASSET_BY_NAME: Record<string, string> = {
 
 export function getVipCrownAssetSrc(name: string) {
 	return VIP_CROWN_ASSET_BY_NAME[name];
+}
+
+const VIP_CROWN_ASSET_SOURCES = new Set(Object.values(VIP_CROWN_ASSET_BY_NAME));
+
+export function getVipCrownAssetViewport(assetSrc: string) {
+	return VIP_CROWN_ASSET_SOURCES.has(assetSrc) ? VIP_CROWN_IMAGE_VIEWPORT : undefined;
 }

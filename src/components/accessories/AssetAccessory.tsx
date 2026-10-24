@@ -6,7 +6,7 @@ import {
 	SPLIT_LIMB_ASSET_NAMES,
 } from '../../generated/accessoryAssetManifest.js';
 import type { AccessoryRendererProps, BodyAccessoryProps } from './AccessorySlot.js';
-import { getVipCrownAssetSrc } from './crownAssets.js';
+import { getVipCrownAssetSrc, getVipCrownAssetViewport } from './crownAssets.js';
 import { SoccerTeamSwimTrunks } from './legs/SoccerTeamSwimTrunks.js';
 import {
 	resolveSoccerCountryCode,
@@ -132,6 +132,7 @@ export function AssetAccessory(props: AccessoryRendererProps) {
 			<SvgAccessory
 				assetSrc={asset.assetSrc}
 				symbolId={asset.symbolId}
+				viewport={getVipCrownAssetViewport(asset.assetSrc)}
 				species={props.species}
 				placement={props.accessory.renderOptions.placement}
 			/>
