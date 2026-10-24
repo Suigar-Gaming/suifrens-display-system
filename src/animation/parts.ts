@@ -66,7 +66,7 @@ const PART_DEFINITIONS: Record<AnimationPart, PartDefinition> = {
 		autoDetectTransforms: ['matrix(2.9166107177734375,0,0,2.9166107177734375,468.15,1761.65)'],
 	},
 	fin: {
-		pivot: { x: 1181.8, y: 460.1 },
+		pivot: { x: 1008, y: 1486 },
 		parent: 'head',
 		autoDetectTransforms: ['matrix(2.9166107177734375,0,0,2.9166107177734375,1181.8,460.1)'],
 	},
