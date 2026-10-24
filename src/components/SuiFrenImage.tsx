@@ -176,7 +176,12 @@ export function SuiFrenImage({
 		>
 			{shadow ? <ellipse opacity={0.3} cx="1400.4" cy="2615.2" rx="472.8" ry="130.6" /> : null}
 			{resolvedAnimation ? (
-				<AnimationProvider animation={resolvedAnimation}>{renderedContent}</AnimationProvider>
+				<AnimationProvider
+					key={'finStyle' in attributes ? 'bullshark' : 'capy'}
+					animation={resolvedAnimation}
+				>
+					{renderedContent}
+				</AnimationProvider>
 			) : (
 				renderedContent
 			)}
