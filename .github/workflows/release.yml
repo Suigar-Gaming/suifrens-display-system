@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node.js and pnpm
         uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
         with:
-          runtime: node@24.22.1
+          node-version-file: .node-version
           cache: true
           require-lockfile: true
       - name: Check pnpm installation
@@ -91,7 +91,7 @@ jobs:
       - name: Setup Node.js and pnpm
         uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
         with:
-          runtime: node@24.22.1
+          node-version-file: .node-version
           cache: true
           require-lockfile: true
       - name: Create or update version pull request
