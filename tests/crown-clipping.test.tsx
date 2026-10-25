@@ -33,7 +33,7 @@ test.each([
 	['inline', SuiFrenImage],
 	['assets', SuiFrenImageAssets],
 ] as const)(
-	'%s fits every crown and preserves its original coordinate scale',
+	'%s preserves avatar framing and crown scale while letting unframed crowns overflow',
 	(_name, Renderer) => {
 		for (const attributes of species) {
 			for (const accessory of vipCrownAccessories) {
@@ -42,7 +42,8 @@ test.each([
 					<Renderer attributes={attributes} accessories={[accessory]} renderSize={64} />,
 				);
 				const svg = container.querySelector('svg')!;
-				expect(svg.getAttribute('viewBox')).toBe('-300 -800 3600 3600');
+				expect(svg.getAttribute('viewBox')).toBe('0 -200 3000 3000');
+				expect(svg.getAttribute('overflow')).toBe('visible');
 				expect(svg.getAttribute('width')).toBe('64');
 				const image = svg.querySelector('image')!;
 				const viewport = getVipCrownAssetViewport(getVipCrownAssetSrc(accessory.name))!;
@@ -65,9 +66,37 @@ test.each([SuiFrenImage, SuiFrenImageAssets])(
 		const container = document.createElement('div');
 		container.innerHTML = renderToStaticMarkup(<Renderer attributes={species[0]} />);
 		expect(container.querySelector('svg')?.getAttribute('viewBox')).toBe('0 -200 3000 3000');
+		expect(container.querySelector('svg')?.hasAttribute('overflow')).toBe(false);
 	},
 );
 
 test('custom asset URLs do not inherit the built-in crown viewport', () => {
 	expect(getVipCrownAssetViewport('https://example.com/custom-crown.svg')).toBeUndefined();
 });
+
+test.each([SuiFrenImage, SuiFrenImageAssets])(
+	'adding a crown preserves the native body, head and facial coordinate systems',
+	(Renderer) => {
+		for (const attributes of species) {
+			const bare = document.createElement('div');
+			const crowned = document.createElement('div');
+			bare.innerHTML = renderToStaticMarkup(<Renderer attributes={attributes} renderSize={64} />);
+			crowned.innerHTML = renderToStaticMarkup(
+				<Renderer
+					attributes={attributes}
+					accessories={[vipCrownAccessories.at(-1)!]}
+					renderSize={64}
+				/>,
+			);
+			for (const selector of ['svg', 'svg svg', 'path']) {
+				const geometry = (container: HTMLElement) =>
+					Array.from(container.querySelectorAll(selector), (element) => ({
+						viewBox: element.getAttribute('viewBox'),
+						d: element.getAttribute('d'),
+						transform: element.getAttribute('transform'),
+					}));
+				expect(geometry(crowned)).toEqual(geometry(bare));
+			}
+		}
+	},
+);
