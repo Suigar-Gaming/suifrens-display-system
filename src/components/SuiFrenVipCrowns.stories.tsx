@@ -103,7 +103,7 @@ export const ClippingCheck: Story = {
 										style={{
 											width: 128,
 											height: 128,
-											overflow: 'hidden',
+											paddingTop: 32,
 											outline: '1px solid #cbd5e1',
 										}}
 									>
@@ -115,7 +115,14 @@ export const ClippingCheck: Story = {
 										/>
 									</div>
 									<div
-										style={{ width: 64, height: 64, overflow: 'hidden', transform: 'scaleX(-1)' }}
+										style={{
+											width: 64,
+											height: 64,
+											overflow: 'hidden',
+											borderRadius: '50%',
+											transform: 'scaleX(-1)',
+											marginTop: 12,
+										}}
 									>
 										<Renderer
 											attributes={variant.attributes}

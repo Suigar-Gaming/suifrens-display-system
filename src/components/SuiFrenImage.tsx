@@ -10,7 +10,6 @@ import type {
 import { type AccessoryMetadata, getAccessoriesByType } from '../utils/accessoryUtils.js';
 import { assertUnreachable } from '../utils/assertUnreachable.js';
 import { AccessoryRendererProvider } from './accessories/AccessorySlot.js';
-import { getSuiFrenViewBox } from './accessories/crownViewport.js';
 import { InlineAccessory } from './accessories/index.js';
 import { BullsharkImage } from './bullshark-image/BullsharkImage.js';
 import { CapyImage } from './capy-image/CapyImage.js';
@@ -171,7 +170,8 @@ export function SuiFrenImage({
 			y="0px"
 			width={resolvedSize?.width}
 			height={resolvedSize?.height}
-			viewBox={getSuiFrenViewBox(accessoriesByType?.head)}
+			viewBox="0 -200 3000 3000"
+			overflow="visible"
 			className={['suifren-image', className].filter(Boolean).join(' ')}
 			style={style}
 		>
