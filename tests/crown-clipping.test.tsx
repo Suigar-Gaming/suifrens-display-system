@@ -66,6 +66,7 @@ test.each([SuiFrenImage, SuiFrenImageAssets])(
 		const container = document.createElement('div');
 		container.innerHTML = renderToStaticMarkup(<Renderer attributes={species[0]} />);
 		expect(container.querySelector('svg')?.getAttribute('viewBox')).toBe('0 -200 3000 3000');
+		expect(container.querySelector('svg')?.hasAttribute('overflow')).toBe(false);
 	},
 );
 
