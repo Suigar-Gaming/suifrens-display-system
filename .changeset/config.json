@@ -3,6 +3,7 @@
 	"changelog": "@changesets/cli/changelog",
 	"commit": false,
 	"baseBranch": "origin/main",
+	"changedFilePatterns": [],
 	"format": "oxfmt",
 	"privatePackages": {
 		"version": true,

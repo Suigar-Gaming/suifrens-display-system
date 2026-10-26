@@ -15,9 +15,9 @@ For each consumer-visible change, add or update a `.changeset/*.md` entry withou
 - Patch: compatible bug fixes, rendering corrections, asset corrections or packaging fixes.
 - Minor: new compatible public exports, accessories, team assets or features.
 - Major: removed/renamed exports, incompatible props/types, peer support dropped or other breaking consumer behavior. Document the migration. If this exceeds the user's requested scope, preserve compatibility or clarify before proceeding.
-- Documentation-only, test-only and agent-instruction changes do not require a version bump unless they change the distributed package or its behavior. Development dependency updates alone do not require one; assess generated output, consumer requirements and compatibility before deciding.
+- Documentation-only, test-only, agent-instruction and internal CI/workflow refactoring changes do not require a version bump unless they change the distributed package or its consumer-visible behavior. Development dependency updates alone do not require one; assess generated output, consumer requirements and compatibility before deciding.
 
-Create or update the changeset file as part of implementation, before handing off. Keep one changeset per task or feature branch by default, reusing that task's file for follow-up changes and selecting the highest required bump. On `main`, create a new file for a new task; do not modify pending changesets inherited from earlier work. Notes must describe this package's consumer-visible behavior, not unrelated workspace maintenance. Use a readable unique filename and this frontmatter:
+For changes that require a version bump, create or update the changeset file as part of implementation, before handing off. Keep one changeset per task or feature branch by default, reusing that task's file for follow-up changes and selecting the highest required bump. On `main`, create a new file for a new task; do not modify pending changesets inherited from earlier work. Notes must describe this package's consumer-visible behavior, not unrelated workspace maintenance. Use a readable unique filename and this frontmatter:
 
 ```md
 ---
@@ -29,7 +29,7 @@ Describe the consumer-visible change.
 
 Use the highest appropriate bump for the change. Do not manually edit the version or changelog, consume changesets with `changeset version`, or create release tags during routine feature work. The workflow on `main` creates a version PR, and merging that PR publishes the GitHub archive. Changesets aggregates pending entries into one version. Never invent historical release notes or edit a published release.
 
-The package is private to prevent npm publication. Do not run `changeset publish`. Keep changesets in the same change as the implementation; documentation-only or test-only changes need no entry unless they affect consumers. Include release tooling fixes that change the distributed archive or release behavior.
+The package is private to prevent npm publication. Do not run `changeset publish`. Keep required changesets in the same change as the implementation. Release tooling fixes require a changeset only when they correct a consumer-visible distribution issue, such as incorrect archive contents, broken installation or missing release assets. Renaming workflows, merging jobs, extracting YAML anchors and refactoring release-plan detection with equivalent publication conditions do not require a changeset. Before adding an entry, identify the concrete consumer-visible effect; touching release tooling alone is not sufficient. If the final scope has no such effect, remove any changeset created for this task, preserving entries from other tasks.
 
 ## Build, style and compatibility
 

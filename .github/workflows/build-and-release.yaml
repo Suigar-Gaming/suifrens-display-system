@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: &runner ubuntu-latest
     outputs:
       pending: ${{ steps.plan.outputs.pending }}
       version: ${{ steps.plan.outputs.version }}
@@ -36,13 +36,15 @@ jobs:
         env:
           PREVIOUS_SHA: ${{ github.event.before }}
         run: |
+          pnpm changeset status --output "$RUNNER_TEMP/release-plan.json"
           node --input-type=module <<'JS'
           import assert from 'node:assert/strict';
           import { execFileSync } from 'node:child_process';
-          import { appendFileSync, readFileSync, readdirSync } from 'node:fs';
+          import { appendFileSync, readFileSync } from 'node:fs';
           const { version } = JSON.parse(readFileSync('package.json', 'utf8'));
           assert.match(version, /^\d+\.\d+\.\d+$/);
-          const pending = readdirSync('.changeset').some(name => name.endsWith('.md') && name !== 'README.md');
+          const { changesets } = JSON.parse(readFileSync(`${process.env.RUNNER_TEMP}/release-plan.json`, 'utf8'));
+          const pending = changesets.length > 0;
           let changed = false;
           if (process.env.PREVIOUS_SHA && !/^0+$/.test(process.env.PREVIOUS_SHA)) {
             const previous = JSON.parse(execFileSync('git', ['show', `${process.env.PREVIOUS_SHA}:package.json`], { encoding: 'utf8' }));
@@ -50,9 +52,6 @@ jobs:
           }
           appendFileSync(process.env.GITHUB_OUTPUT, `pending=${pending}\nversion=${version}\nversion-changed=${changed}\n`);
           JS
-      - name: Validate pending changesets
-        if: steps.plan.outputs.pending == 'true'
-        run: pnpm changeset status
       - name: Check lint and formatting
         run: pnpm lint
       - name: Check TypeScript types
@@ -75,10 +74,11 @@ jobs:
           name: package
           path: artifacts/*
           if-no-files-found: error
-  version:
-    if: github.ref == 'refs/heads/main' && needs.validate.outputs.pending == 'true'
+  release:
+    if: >-
+      github.ref == 'refs/heads/main' && (needs.validate.outputs.pending == 'true' || needs.validate.outputs.version-changed == 'true' || github.event_name == 'workflow_dispatch')
     needs: validate
-    runs-on: ubuntu-latest
+    runs-on: *runner
     permissions:
       contents: write
       pull-requests: write
@@ -89,12 +89,14 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup Node.js and pnpm
+        if: needs.validate.outputs.pending == 'true'
         uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
         with:
           node-version-file: .node-version
           cache: true
           require-lockfile: true
       - name: Create or update version pull request
+        if: needs.validate.outputs.pending == 'true'
         id: changesets
         uses: changesets/action/version@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
@@ -103,31 +105,21 @@ jobs:
           pr-title: 'ci: version package'
           pr-base-branch: main
       - name: Validate version pull request
-        if: steps.changesets.outputs.pr-number != ''
+        if: needs.validate.outputs.pending == 'true' && steps.changesets.outputs.pr-number != ''
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_PR: ${{ steps.changesets.outputs.pr-number }}
         run: |
           release_branch=$(gh pr view "$RELEASE_PR" --json headRefName --jq '.headRefName')
-          gh workflow run release.yml --ref "$release_branch"
-  release:
-    if: >-
-      github.ref == 'refs/heads/main' && needs.validate.outputs.pending == 'false' && (needs.validate.outputs.version-changed == 'true' || github.event_name == 'workflow_dispatch')
-    needs: validate
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout release sources
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
+          gh workflow run build-and-release.yaml --ref "$release_branch"
       - name: Download release archive
+        if: needs.validate.outputs.pending == 'false'
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: package
           path: artifacts
       - name: Publish versioned GitHub archive
+        if: needs.validate.outputs.pending == 'false'
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: v${{ needs.validate.outputs.version }}
