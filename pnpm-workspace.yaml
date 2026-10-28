@@ -11,7 +11,7 @@ minimumReleaseAgeExclude:
   - '@mysten/*'
 
 update:
-  changeset: false
+  changeset: true
   githubActions: true
 
 # Keep any resolved Rollup/YAML dependencies and AJV's URI parser on patched releases.
