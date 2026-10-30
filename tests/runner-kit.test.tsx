@@ -62,3 +62,31 @@ test.each(['runner shorts', 'runner shoes'])(
 		expect(back.getAttribute('transform')).not.toBe(backBefore);
 	},
 );
+
+// Each extracted limb must retain its own clipping definition: animated wrappers
+// and generated external SVG symbols can move or render a leg independently.
+test('shoe details keep local, distinct clip targets for every racer and limb', async () => {
+	view = createTestRoot();
+	const accessory = buildRunnerAccessories().find((item) => item.name === 'runner shoes')!;
+	await view.render(
+		<svg>
+			{['capy', 'bullshark'].map((species) => (
+				<RunnerAccessory
+					key={species}
+					accessory={accessory}
+					species={species as 'capy' | 'bullshark'}
+				/>
+			))}
+		</svg>,
+	);
+	const legs = view.container.querySelectorAll('[id^="runner-shoes-"]');
+	expect(legs).toHaveLength(4);
+	const ids = new Set<string>();
+	for (const leg of legs) {
+		const definition = leg.querySelector('clipPath')!;
+		const id = definition.getAttribute('id')!;
+		expect(ids.has(id)).toBe(false);
+		ids.add(id);
+		expect(leg.querySelector('[clip-path]')?.getAttribute('clip-path')).toBe(`url(#${id})`);
+	}
+});
