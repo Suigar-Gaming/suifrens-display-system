@@ -69,15 +69,18 @@ function Headband({ species, color }: { species: SuiFrenSpecies; color: string }
 			strokeLinejoin="round"
 			strokeLinecap="round"
 		>
-			<path d="M30 78Q-2 79-23 98L7 101L40 88Z" />
-			<path d="M30 82Q7 102 8 123L31 115L45 83Z" />
+			{/* The ribbon wraps the entire forehead and meets the native contour at both ends. */}
 			<path
 				d={
 					species === 'bullshark'
-						? 'M39 51Q157 19 279 49L309 72Q166 43 26 78Z'
-						: 'M28 66Q263 32 535 83L546 107Q268 60 17 93Z'
+						? 'M29.5 68.5C128 37 259 34 355.5 62.7C368 72 379 78 390 83.5C266 58 126 61 15 97.5C19 87 24 77 29.5 68.5Z'
+						: 'M29.6 68.6C173 37 390 39 540.4 89C546 99 551 109 555 120C391 68 172 64 15.8 94C20 85 24.5 76.5 29.6 68.6Z'
 				}
 			/>
+			{/* Compact tied ends share one anchor at the back of the skull. */}
+			<path d="M24 84C6 77-10 79-24 89L-8 94L-15 107C2 108 16 101 29 92Z" />
+			<path d="M26 86C12 96 6 111 7 130L21 124L32 99Z" />
+			<path d="M19 80Q29 76 35 87L30 101Q19 103 15 93Z" />
 		</g>
 	);
 }
