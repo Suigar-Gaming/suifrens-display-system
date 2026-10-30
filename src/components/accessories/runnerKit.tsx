@@ -69,12 +69,12 @@ function Headband({ species, color }: { species: SuiFrenSpecies; color: string }
 			strokeLinejoin="round"
 			strokeLinecap="round"
 		>
-			{/* Capys wear the ribbon around the cranial crown between the ears, never along the long muzzle. */}
+			{/* Capys wear the ribbon along the upper skull contour, passing below the ears and ending at the forehead outline. */}
 			<path
 				d={
 					species === 'bullshark'
 						? 'M29.5 68.5C128 37 259 34 355.5 62.7C368 72 379 78 390 83.5C266 58 126 61 15 97.5C19 87 24 77 29.5 68.5Z'
-						: 'M23 78C52 42 106 15 175 0L184 17C113 29 58 56 16 102Z'
+						: 'M23 78C52 42 95 11 141 3C250 -3 340 -1 416 6C435 7 451 12 465 19L486 31C382 17 254 15 144 23C96 26 55 55 16 102Z'
 				}
 			/>
 			{/* Compact tied ends share one anchor at the back of the skull. */}
