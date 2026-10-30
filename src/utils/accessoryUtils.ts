@@ -23,6 +23,8 @@ export type AccessoryRenderOptions = Record<string, unknown> & {
 	assetSrc?: string;
 	placement?: Partial<Record<SuiFrenSpecies, AccessoryPlacement>>;
 	animationPart?: AnimationPart;
+	/** Draw a left-hand object and its gripping arm above the head/body. */
+	foreground?: boolean;
 };
 
 export type AccessoryMetadata = {
