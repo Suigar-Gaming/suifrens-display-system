@@ -56,10 +56,6 @@ export function CapyImage({
 				<HeadPattern skin={skin} fill={colorTheme.patterns} noseProps={{ fill: colorTheme.nose }} />
 				{!incognito && <Nostrils />}
 
-				{runnerHeadband && headAccessory && (
-					<AccessorySlot accessory={headAccessory} species="capy" />
-				)}
-
 				{runnerHeadband && showEars && (
 					<RightEar
 						earShape={earShape}
@@ -76,6 +72,10 @@ export function CapyImage({
 						innerEarProps={{ fill: colorTheme.innerEars }}
 						fill={colorTheme.outerEars}
 					/>
+				)}
+
+				{runnerHeadband && headAccessory && (
+					<AccessorySlot accessory={headAccessory} species="capy" />
 				)}
 
 				{!incognito && <Expression expression={expression} />}
@@ -172,11 +172,6 @@ export function CapyImage({
 			<HeadPattern skin={skin} fill={colorTheme.patterns} noseProps={{ fill: colorTheme.nose }} />
 			{!incognito && <Nostrils />}
 
-			{/* The running ribbon sits underneath the near ear rather than painting over it. */}
-			{runnerHeadband && headAccessory && (
-				<AccessorySlot accessory={accessoriesByType.head} species="capy" />
-			)}
-
 			{runnerHeadband && showEars && (
 				<RightEar
 					earShape={earShape}
@@ -193,6 +188,10 @@ export function CapyImage({
 					innerEarProps={{ fill: colorTheme.innerEars }}
 					fill={colorTheme.outerEars}
 				/>
+			)}
+
+			{runnerHeadband && headAccessory && (
+				<AccessorySlot accessory={accessoriesByType.head} species="capy" />
 			)}
 
 			{!incognito && <Expression expression={expression} />}

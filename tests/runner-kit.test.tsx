@@ -94,7 +94,7 @@ test('shoe details keep local, distinct clip targets for every racer and limb', 
 });
 
 test.each(['full', 'head'] as const)(
-	'capy %s ribbon stays at the ears and is occluded by the native near ear',
+	'capy %s ribbon crosses both ear roots in the foreground without reaching the muzzle',
 	async (detail) => {
 		view = createTestRoot();
 		const headband = buildRunnerAccessories().find((item) => item.name === 'runner headband')!;
@@ -124,17 +124,17 @@ test.each(['full', 'head'] as const)(
 				.getAttribute('d')!
 				.match(/-?\d+(?:\.\d+)?/g) ?? []
 		).map(Number);
-		// The short ribbon ends beneath the far ear, before the long forehead/muzzle.
-		expect(Math.max(...coordinates)).toBeLessThan(200);
+		// The short wrap rises just beyond the far ear; the muzzle starts much farther right.
+		expect(Math.max(...coordinates)).toBeLessThan(250);
 		const ear = view.container.querySelector(
 			'g[transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 746.1,619.15)"]',
 		)!;
 		expect(ear).not.toBeNull();
-		expect(band.compareDocumentPosition(ear) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+		expect(ear.compareDocumentPosition(band) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
 		const farEar = view.container.querySelector(
 			'g[transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 1097.75,348.85)"]',
 		)!;
 		expect(farEar).not.toBeNull();
-		expect(band.compareDocumentPosition(farEar) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+		expect(farEar.compareDocumentPosition(band) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
 	},
 );
