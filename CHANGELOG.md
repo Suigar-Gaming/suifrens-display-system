@@ -1,5 +1,11 @@
 # @suigar/suifrens-display-system
 
+## 1.1.1
+
+### Patch Changes
+
+- d009895: Fit runner uniforms to the native body and foot silhouettes, close shirt/short seams, remove doubled outlines and detached trim, and simplify the headband joins. Preserve both species, readable bibs and independent native limb animation.
+
 ## 1.1.0
 
 ### Minor Changes
