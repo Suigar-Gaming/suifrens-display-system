@@ -35,7 +35,8 @@ const PART_DEFINITIONS: Record<AnimationPart, PartDefinition> = {
 		],
 	},
 	leftArm: {
-		pivot: { x: 1002.9, y: 1719.3 },
+		// Midpoint of the native shoulder seam (local 76.45, 13.65), not the SVG origin.
+		pivot: { x: 1225.87489, y: 1759.11174 },
 		parent: 'body',
 		autoDetectTransforms: [
 			'matrix(2.9166107177734375,0,0,2.9166107177734375,1002.9,1719.3)',
@@ -43,7 +44,8 @@ const PART_DEFINITIONS: Record<AnimationPart, PartDefinition> = {
 		],
 	},
 	rightArm: {
-		pivot: { x: 1880.95, y: 1719.3 },
+		// Mirrored native shoulder seam; keep raised arms attached to the torso.
+		pivot: { x: 1657.97511, y: 1759.11174 },
 		parent: 'body',
 		autoDetectTransforms: [
 			'matrix(-2.9166107177734375,0,0,2.9166107177734375,1880.95,1719.3)',
