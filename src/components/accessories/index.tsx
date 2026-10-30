@@ -53,6 +53,7 @@ import { MagicWand } from './objects/MagicWand.js';
 import { Microphone } from './objects/Microphone.js';
 import { Palette } from './objects/Palette.js';
 import { Pencil } from './objects/Pencil.js';
+import { RunnerAccessory } from './runnerKit.js';
 import { resolveSoccerCountryCode, resolveSoccerTeamSide } from './soccerTeamKit.js';
 import { SvgAccessory } from './SvgAccessory.js';
 import { BussinessShirt } from './torso/BusinessShirt.js';
@@ -106,6 +107,10 @@ type AccessoryProps = BodyAccessoryProps & {
 };
 
 export const ACCESSORY_RENDERERS: Record<string, AccessoryRenderer> = {
+	'runner singlet': (props) => <RunnerAccessory {...props} />,
+	'runner shorts': (props) => <RunnerAccessory {...props} />,
+	'runner headband': (props) => <RunnerAccessory {...props} />,
+	'runner shoes': (props) => <RunnerAccessory {...props} />,
 	'8 bit glasses': () => <Glasses8Bit />,
 	apron: (props) => <Apron body={props.body} />,
 	'baseball cap': () => <BaseballCap />,

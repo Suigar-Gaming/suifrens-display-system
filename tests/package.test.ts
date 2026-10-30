@@ -101,3 +101,30 @@ test('built goth boot assets contain only the selected boot without clipping', a
 		}
 	}
 });
+
+test('built runner kits preserve configurable bibs and native limbs in every renderer and species', async () => {
+	const { buildRunnerAccessories } = await import(manifest.name + '/accessories');
+	for (const entry of ['/image-inline', '/image', '/image-assets']) {
+		const { SuiFrenImage } = await import(manifest.name + entry);
+		for (const species of ['capy', 'bullshark']) {
+			const svg = renderToStaticMarkup(
+				createElement(SuiFrenImage, {
+					attributes: {
+						mainColor: '6FBBEE',
+						secondaryColor: 'E6FBFF',
+						skin: 'basic',
+						expression: 'happy',
+						...(species === 'capy' ? { earShape: 'default' } : { finStyle: 'classic' }),
+					},
+					accessories: buildRunnerAccessories({ color: '#123456', number: 9, mirrorBib: true }),
+				}),
+			);
+			assert.ok(svg.includes('#123456'));
+			assert.match(svg, />9<\/text>/);
+			assert.ok(svg.includes('runner-shorts-frontleg'));
+			assert.ok(svg.includes('runner-shoes-backleg'));
+			assert.ok(svg.includes('runner-headband-head'));
+			assert.ok(svg.includes('translate(393 0) scale(-1 1)'));
+		}
+	}
+});

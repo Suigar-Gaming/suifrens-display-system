@@ -1,4 +1,5 @@
 import type { AnimationPart } from '../animation/parts.js';
+import type { RunnerKitOptions } from '../components/accessories/runnerKit.js';
 import type { SoccerTeamKit } from '../components/accessories/soccerTeamKit.js';
 
 export type SuiFrenSpecies = 'capy' | 'bullshark';
@@ -13,6 +14,7 @@ export type AccessoryPlacement = {
 };
 
 export type AccessoryRenderOptions = Record<string, unknown> & {
+	runnerKit?: RunnerKitOptions;
 	showEars?: boolean;
 	showFin?: boolean;
 	country?: string;
