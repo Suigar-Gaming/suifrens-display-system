@@ -1,3 +1,4 @@
+import { AnimatedAccessory } from '../../animation/AnimatedAccessory.js';
 import type { AccessoryMetadata } from '../../utils/accessoryUtils.js';
 import { AccessorySlot } from '../accessories/AccessorySlot.js';
 import { LeftArm } from './arms/left/LeftArm.js';
@@ -207,8 +208,12 @@ export function CapyImage({
 					{accessoriesByType?.object && (
 						<AccessorySlot accessory={accessoriesByType.object} species="capy" />
 					)}
-					<LeftArm fill={colorTheme.arms} handProps={{ fill: colorTheme.appendages }} />
-					{!incognito && <LeftArmPattern skin={skin} fill={colorTheme.patterns} />}
+					<AnimatedAccessory fallbackPart="leftArm">
+						<g>
+							<LeftArm fill={colorTheme.arms} handProps={{ fill: colorTheme.appendages }} />
+							{!incognito && <LeftArmPattern skin={skin} fill={colorTheme.patterns} />}
+						</g>
+					</AnimatedAccessory>
 				</>
 			)}
 		</>
