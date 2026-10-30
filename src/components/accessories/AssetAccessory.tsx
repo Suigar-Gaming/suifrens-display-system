@@ -8,6 +8,7 @@ import {
 import type { AccessoryRendererProps, BodyAccessoryProps } from './AccessorySlot.js';
 import { getVipCrownAssetSrc, getVipCrownAssetViewport } from './crownAssets.js';
 import { SoccerTeamSwimTrunks } from './legs/SoccerTeamSwimTrunks.js';
+import { RUNNER_ACCESSORY_NAMES, RunnerAccessory } from './runnerKit.js';
 import {
 	resolveSoccerCountryCode,
 	resolveSoccerTeamSide,
@@ -77,6 +78,14 @@ function resolveAssetSrc(
 }
 
 export function AssetAccessory(props: AccessoryRendererProps) {
+	if (RUNNER_ACCESSORY_NAMES.has(props.accessory.name)) {
+		return (
+			<AnimatedAccessory fallbackPart={resolveFallbackPart(props)}>
+				<RunnerAccessory {...props} />
+			</AnimatedAccessory>
+		);
+	}
+
 	if (SOCCER_TEAM_ACCESSORY_NAMES.has(props.accessory.name)) {
 		const fallbackPart = props.accessory.renderOptions.animationPart ?? resolveFallbackPart(props);
 		const country =
