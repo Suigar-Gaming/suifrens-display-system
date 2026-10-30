@@ -1,5 +1,7 @@
+import { useId } from 'react';
 import type { AccessoryMetadata, SuiFrenSpecies } from '../../utils/accessoryUtils.js';
 import type { AccessoryRendererProps } from './AccessorySlot.js';
+import { RUNNER_BODY_CONTOUR, RUNNER_FOOT_CONTOUR } from './runnerKitGeometry.js';
 
 export type RunnerKitOptions = { color?: string; number?: number; mirrorBib?: boolean };
 export const RUNNER_ACCESSORY_NAMES = new Set([
@@ -8,7 +10,8 @@ export const RUNNER_ACCESSORY_NAMES = new Set([
 	'runner headband',
 	'runner shoes',
 ]);
-const INK = '#273748';
+const INK = '#000000';
+const SHORTS = '#30465d';
 const BODY = 'matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 956.65,1516.1)';
 const HEAD = 'matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 848.15,585.65)';
 const LEGS = [
@@ -57,136 +60,170 @@ export function buildRunnerAccessories(options: RunnerKitOptions = {}): Array<Ac
 }
 function Headband({ species, color }: { species: SuiFrenSpecies; color: string }) {
 	return (
-		<g id="runner-headband-head" transform={HEAD}>
+		<g
+			id="runner-headband-head"
+			transform={HEAD}
+			fill={color}
+			stroke={INK}
+			strokeWidth="8"
+			strokeLinejoin="round"
+			strokeLinecap="round"
+		>
+			<path d="M30 78Q-2 79-23 98L7 101L40 88Z" />
+			<path d="M30 82Q7 102 8 123L31 115L45 83Z" />
 			<path
 				d={
 					species === 'bullshark'
-						? 'M35 55Q158 13 286 49L328 86Q170 48 20 91Z'
-						: 'M28 62Q261 25 534 80L548 117Q261 64 14 101Z'
+						? 'M39 51Q157 19 279 49L309 72Q166 43 26 78Z'
+						: 'M28 66Q263 32 535 83L546 107Q268 60 17 93Z'
 				}
-				fill={color}
-				stroke={INK}
-				strokeWidth="10"
-				strokeLinejoin="round"
-			/>
-			<path
-				d="M30 72L-35 99L-2 116L28 93L-10 142L26 133L48 92"
-				fill={color}
-				stroke={INK}
-				strokeWidth="8"
-				strokeLinejoin="round"
 			/>
 		</g>
 	);
 }
-/** Shared native canvas and transform registration for capys and bullsharks. */
+/** Clothing shares the native silhouette; accents are clipped within the fabric. */
 export function RunnerAccessory({ accessory, species, body }: AccessoryRendererProps) {
 	const kit = resolveRunnerKit(accessory.renderOptions.runnerKit);
 	const name = accessory.name;
+	const id = `runner-${useId().replace(/:/g, '')}`;
+	const bodyClip = `${id}-body`,
+		footClip = `${id}-foot`;
 	return (
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 3000" data-runner-kit={name}>
 			{name === 'runner headband' && <Headband species={species} color={kit.color} />}
+			{(name === 'runner singlet' || name === 'runner shorts') && body && (
+				<defs>
+					<clipPath id={bodyClip}>
+						<path d={RUNNER_BODY_CONTOUR} />
+					</clipPath>
+				</defs>
+			)}
 			{name === 'runner singlet' && body && (
 				<g id="runner-singlet-body" transform={BODY}>
-					<path
-						d="M86 19L114 7Q145 40 181 8L210 22Q193 91 270 110L286 188Q153 220 7 185L21 105Q86 95 86 19Z"
-						fill={kit.color}
-						stroke={INK}
-						strokeWidth="10"
-						strokeLinejoin="round"
-					/>
-					<path
-						d="M86 22Q98 102 22 110M209 25Q195 95 269 113M114 7Q148 46 181 8"
-						fill="none"
-						stroke="#fff6df"
-						strokeWidth="12"
-					/>
-					<path
-						d="M35 124L44 181M252 127L262 182"
-						stroke="#fff6df"
-						strokeWidth="10"
-						strokeLinecap="round"
-					/>
-					<rect
-						x="153"
-						y="93"
-						width="87"
-						height="67"
-						rx="8"
-						fill="#fff6df"
-						stroke={INK}
-						strokeWidth="5"
-					/>
-					<g transform={kit.mirrorBib ? 'translate(393 0) scale(-1 1)' : undefined}>
-						<text
-							x="196.5"
-							y="143"
-							textAnchor="middle"
-							fill={INK}
-							fontFamily="sans-serif"
-							fontSize="48"
-							fontWeight="800"
-						>
-							{kit.number}
-						</text>
+					<g clipPath={`url(#${bodyClip})`}>
+						<path d="M-10-10H305V194Q147 215-10 192Z" fill={kit.color} />
+						<path
+							d="M85 20Q96 85 26 109M208 20Q197 85 269 110M113 7Q147 41 181 7"
+							fill="none"
+							stroke="#fff6df"
+							strokeWidth="8"
+							strokeLinecap="round"
+						/>
+						<path
+							d="M30 118L38 177M260 118L254 177"
+							fill="none"
+							stroke="#fff6df"
+							strokeWidth="7"
+							strokeLinecap="round"
+						/>
+						<path
+							d="M-8 194Q146 215 301 194"
+							fill="none"
+							stroke={INK}
+							strokeWidth="7"
+							strokeLinecap="round"
+						/>
+						<rect
+							x="153"
+							y="93"
+							width="87"
+							height="67"
+							rx="8"
+							fill="#fff6df"
+							stroke={INK}
+							strokeWidth="6"
+						/>
+						<g transform={kit.mirrorBib ? 'translate(393 0) scale(-1 1)' : undefined}>
+							<text
+								x="196.5"
+								y="143"
+								textAnchor="middle"
+								fill={INK}
+								fontFamily="sans-serif"
+								fontSize="48"
+								fontWeight="800"
+							>
+								{kit.number}
+							</text>
+						</g>
 					</g>
 				</g>
 			)}
 			{name === 'runner shorts' && body && (
 				<g id="runner-shorts-body" transform={BODY}>
-					<path
-						d="M4 186Q148 213 288 189L280 244Q224 283 147 282Q55 279 14 242Z"
-						fill={INK}
-						stroke={INK}
-						strokeWidth="10"
-						strokeLinejoin="round"
-					/>
-					<path d="M10 190Q150 217 284 192" fill="none" stroke={kit.color} strokeWidth="15" />
-					<path
-						d="M147 211L147 279M26 211L42 251M263 212L249 251"
-						stroke="#fff6df"
-						strokeWidth="7"
-					/>
+					<g clipPath={`url(#${bodyClip})`}>
+						<path d="M-10 184H305V310H-10Z" fill={SHORTS} />
+						<path
+							d="M147 219Q142 253 147 291"
+							fill="none"
+							stroke={INK}
+							strokeWidth="5"
+							strokeLinecap="round"
+						/>
+					</g>
 				</g>
 			)}
 			{name === 'runner shorts' &&
 				!body &&
 				LEGS.map((leg) => (
 					<g key={leg.id} id={`runner-shorts-${leg.id}`} transform={leg.transform}>
+						<path d="M8 104Q47 93 94 103L91 144Q46 152 5 140Z" fill={SHORTS} />
 						<path
-							d="M-4 103Q48 88 96 103L94 137L65 148L7 139Z"
-							fill={INK}
+							d="M8 104L5 140Q46 152 91 144L94 103"
+							fill="none"
 							stroke={INK}
-							strokeWidth="9"
+							strokeWidth="8"
+							strokeLinecap="round"
 							strokeLinejoin="round"
 						/>
-						<path d="M9 133L66 142L93 132" fill="none" stroke={kit.color} strokeWidth="8" />
+						<path
+							d="M13 135Q47 146 84 139"
+							fill="none"
+							stroke={kit.color}
+							strokeWidth="5"
+							strokeLinecap="round"
+						/>
 					</g>
 				))}
 			{name === 'runner shoes' &&
 				LEGS.map((leg) => (
 					<g key={leg.id} id={`runner-shoes-${leg.id}`} transform={leg.transform}>
+						<defs>
+							<clipPath id={`${footClip}-${leg.id}`}>
+								<path d={RUNNER_FOOT_CONTOUR} />
+							</clipPath>
+						</defs>
 						<path
-							d="M-6 209L72 208L83 223L107 234Q121 257 101 262L-8 262Q-22 247-6 209Z"
+							d={RUNNER_FOOT_CONTOUR}
 							fill="#fff6df"
 							stroke={INK}
-							strokeWidth="9"
+							strokeWidth="10"
 							strokeLinejoin="round"
 						/>
-						<path
-							d="M-11 250L108 250M53 218L75 231M39 218L62 231"
-							fill="none"
-							stroke={INK}
-							strokeWidth="7"
-							strokeLinecap="round"
-						/>
-						<path
-							d="M-3 229L31 240L51 232"
-							fill="none"
-							stroke={kit.color}
-							strokeWidth="10"
-							strokeLinecap="round"
-						/>
+						<g clipPath={`url(#${footClip}-${leg.id})`}>
+							<path
+								d="M1 210Q14 232 40 231H88Q104 229 115 216"
+								fill="none"
+								stroke={INK}
+								strokeWidth="5"
+								strokeLinecap="round"
+							/>
+							<path
+								d="M11 182L30 201L49 190"
+								fill="none"
+								stroke={kit.color}
+								strokeWidth="8"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							/>
+							<path
+								d="M59 178L74 193M72 178L86 191"
+								fill="none"
+								stroke={INK}
+								strokeWidth="5"
+								strokeLinecap="round"
+							/>
+						</g>
 					</g>
 				))}
 		</svg>
