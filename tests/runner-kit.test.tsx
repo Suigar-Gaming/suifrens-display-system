@@ -3,11 +3,13 @@ import { act } from 'react';
 import { afterEach, expect, test, vi } from 'vitest';
 import { AnimatedAccessory } from '../src/animation/AnimatedAccessory.js';
 import { AnimationStore } from '../src/animation/AnimationStore.js';
+import { AccessoryRendererProvider } from '../src/components/accessories/AccessorySlot.js';
 import {
 	buildRunnerAccessories,
 	resolveRunnerKit,
 	RunnerAccessory,
 } from '../src/components/accessories/runnerKit.js';
+import { CapyImage } from '../src/components/capy-image/CapyImage.js';
 import { createTestRoot } from './helpers/react-dom.js';
 const context = vi.hoisted(() => ({ store: null as AnimationStore | null }));
 vi.mock('../src/animation/AnimationContext.js', () => ({ useAnimationStore: () => context.store }));
@@ -90,3 +92,44 @@ test('shoe details keep local, distinct clip targets for every racer and limb', 
 		expect(leg.querySelector('[clip-path]')?.getAttribute('clip-path')).toBe(`url(#${id})`);
 	}
 });
+
+test.each(['full', 'head'] as const)(
+	'capy %s ribbon stays at the ears and is occluded by the native near ear',
+	async (detail) => {
+		view = createTestRoot();
+		const headband = buildRunnerAccessories().find((item) => item.name === 'runner headband')!;
+		await view.render(
+			<svg>
+				<AccessoryRendererProvider renderer={RunnerAccessory}>
+					<CapyImage
+						detail={detail}
+						attributes={{
+							mainColor: 'A87C4C',
+							secondaryColor: 'D5CBB1',
+							skin: 'basic',
+							expression: 'happy',
+							earShape: 'default',
+						}}
+						accessoriesByType={{ head: headband }}
+					/>
+				</AccessoryRendererProvider>
+			</svg>,
+		);
+		const bands = view.container.querySelectorAll('#runner-headband-head');
+		expect(bands).toHaveLength(1);
+		const band = bands[0];
+		const coordinates = (
+			band
+				.querySelector('path')!
+				.getAttribute('d')!
+				.match(/-?\d+(?:\.\d+)?/g) ?? []
+		).map(Number);
+		// Cranial crown ends at x≈184; the muzzle occupies x≈400–566 in this artboard.
+		expect(Math.max(...coordinates)).toBeLessThan(200);
+		const ear = view.container.querySelector(
+			'g[transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 746.1,619.15)"]',
+		)!;
+		expect(ear).not.toBeNull();
+		expect(band.compareDocumentPosition(ear) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+	},
+);
