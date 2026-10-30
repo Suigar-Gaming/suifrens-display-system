@@ -1,5 +1,11 @@
 # @suigar/suifrens-display-system
 
+## 1.1.0
+
+### Minor Changes
+
+- ffcfed5: Add configurable runner singlets with numbered bibs, shorts, headbands and running shoes for capys and bullsharks. Export buildRunnerAccessories with validated kit colors, bib numbers and optional mirrored bib compensation. Both inline and asset renderers preserve native animated joint registration.
+
 ## 1.0.7
 
 ### Patch Changes
