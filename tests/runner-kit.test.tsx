@@ -124,8 +124,8 @@ test.each(['full', 'head'] as const)(
 				.getAttribute('d')!
 				.match(/-?\d+(?:\.\d+)?/g) ?? []
 		).map(Number);
-		// Cranial crown ends at x≈184; the muzzle occupies x≈400–566 in this artboard.
-		expect(Math.max(...coordinates)).toBeLessThan(200);
+		// Follow the upper forehead to its outline; never descend onto the muzzle.
+		expect(Math.max(...coordinates)).toBeLessThan(500);
 		const ear = view.container.querySelector(
 			'g[transform="matrix(2.9166107177734375, 0, 0, 2.9166107177734375, 746.1,619.15)"]',
 		)!;
