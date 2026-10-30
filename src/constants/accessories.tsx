@@ -1,7 +1,9 @@
+import { buildRunnerAccessories } from '../components/accessories/runnerKit.js';
 import type { AccessoryMetadata } from '../utils/accessoryUtils.js';
 import { vipCrownAccessories } from './vip-crowns.js';
 
 export const accessories: Array<AccessoryMetadata> = [
+	...buildRunnerAccessories(),
 	{
 		type: 'head',
 		category: 'hats',

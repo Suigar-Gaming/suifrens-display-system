@@ -70,3 +70,7 @@ The root package entry still works, but it intentionally exposes the full public
 `pnpm lint` runs Oxlint and Oxfmt, `pnpm typecheck` checks the library and Storybook, and `pnpm test` runs Vitest. Run `pnpm build` before the complete test suite because package tests use compiled exports; `pnpm test:unit` runs source tests without a build. `pnpm release:pack` builds and creates the release archive. Use `pnpm lint:fix` to apply lint/format fixes. `prepare` only installs the Husky pre-commit hook during `pnpm install`; lint-staged checks and formats staged authored files before each commit.
 
 Versioning and release notes use [Changesets](.changeset/README.md). See [CHANGELOG.md](CHANGELOG.md) for prepared release notes and [.changeset/README.md](.changeset/README.md) for the GitHub archive workflow.
+
+### Athletics outfits
+
+`buildRunnerAccessories({ color: '#ec7da6', number: 3 })` from the root or `/accessories` export supplies a native singlet, shorts, headband and running shoes for capys and bullsharks. Colors accept six-digit hex values and bibs accept integers 1–99; invalid inputs use safe defaults. Set `mirrorBib: true` when the consumer mirrors the whole character so the printed number stays readable. Shoes and shorts register each leg separately; ears and fins remain visible. Inline and asset rendering preserve the same configurable SVG geometry.

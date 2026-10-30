@@ -38,6 +38,10 @@ import punkSkirt from "./accessory-assets/punk-skirt.svg";
 import rightGothBoot from "./accessory-assets/right-goth-boot.svg";
 import rockStarBoots from "./accessory-assets/rock-star-boots.svg";
 import rockStarRuffle from "./accessory-assets/rock-star-ruffle.svg";
+import runnerHeadband from "./accessory-assets/runner-headband.svg";
+import runnerShoes from "./accessory-assets/runner-shoes.svg";
+import runnerShorts from "./accessory-assets/runner-shorts.svg";
+import runnerSinglet from "./accessory-assets/runner-singlet.svg";
 import saddleShoes from "./accessory-assets/saddle-shoes.svg";
 import santaHat from "./accessory-assets/santa-hat.svg";
 import skullShirt from "./accessory-assets/skull-shirt.svg";
@@ -61,7 +65,7 @@ import xrGoggles from "./accessory-assets/xr-goggles.svg";
 
 export type AccessoryAssetVariant = "default" | "body" | "left" | "right" | "leftLeg" | "rightLeg";
 
-export const SPLIT_LIMB_ASSET_NAMES = new Set<string>(["bell bottoms","blue jeans","blue slip ons","boots","business slacks","casual shoes","cutoffs","dress shoes","pink slip ons","sneakers","soccer team swim trunks","swim trunks"] as const);
+export const SPLIT_LIMB_ASSET_NAMES = new Set<string>(["bell bottoms","blue jeans","blue slip ons","boots","business slacks","casual shoes","cutoffs","dress shoes","pink slip ons","runner shoes","runner shorts","sneakers","soccer team swim trunks","swim trunks"] as const);
 
 export const ACCESSORY_ASSET_MANIFEST = {
   "8 bit glasses": new URL(asset8BitGlasses, import.meta.url).href,
@@ -104,6 +108,10 @@ export const ACCESSORY_ASSET_MANIFEST = {
   "right goth boot": new URL(rightGothBoot, import.meta.url).href,
   "rock star boots": new URL(rockStarBoots, import.meta.url).href,
   "rock star ruffle": new URL(rockStarRuffle, import.meta.url).href,
+  "runner headband": new URL(runnerHeadband, import.meta.url).href,
+  "runner shoes": new URL(runnerShoes, import.meta.url).href,
+  "runner shorts": new URL(runnerShorts, import.meta.url).href,
+  "runner singlet": new URL(runnerSinglet, import.meta.url).href,
   "saddle shoes": new URL(saddleShoes, import.meta.url).href,
   "santa hat": new URL(santaHat, import.meta.url).href,
   "skull shirt": new URL(skullShirt, import.meta.url).href,
