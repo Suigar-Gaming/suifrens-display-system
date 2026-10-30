@@ -6,6 +6,12 @@ export function shouldRenderMicrophoneArmInForeground(
 	accessoriesByType?: Record<string, AccessoryMetadata>,
 ) {
 	const objectAccessory = accessoriesByType?.object;
+	if (
+		objectAccessory?.renderOptions.foreground === true &&
+		objectAccessory.renderOptions.animationPart === 'leftArm'
+	) {
+		return true;
+	}
 	if (objectAccessory?.name !== 'microphone' || !animation) {
 		return false;
 	}
