@@ -74,13 +74,15 @@ function Headband({ species, color }: { species: SuiFrenSpecies; color: string }
 				d={
 					species === 'bullshark'
 						? 'M29.5 68.5C128 37 259 34 355.5 62.7C368 72 379 78 390 83.5C266 58 126 61 15 97.5C19 87 24 77 29.5 68.5Z'
-						: 'M29.6 68.6C173 37 390 39 540.4 89C546 99 551 109 555 120C391 68 172 64 15.8 94C20 85 24.5 76.5 29.6 68.6Z'
+						: 'M56 38.8C174 15 383 17 507.5 47.5C521 60 532 73 540.4 89C384 48 173 45 29.6 68.6C37 57.5 46 47.5 56 38.8Z'
 				}
 			/>
 			{/* Compact tied ends share one anchor at the back of the skull. */}
-			<path d="M24 84C6 77-10 79-24 89L-8 94L-15 107C2 108 16 101 29 92Z" />
-			<path d="M26 86C12 96 6 111 7 130L21 124L32 99Z" />
-			<path d="M19 80Q29 76 35 87L30 101Q19 103 15 93Z" />
+			<g transform={species === 'capy' ? 'translate(21 -29)' : undefined}>
+				<path d="M24 84C6 77-10 79-24 89L-8 94L-15 107C2 108 16 101 29 92Z" />
+				<path d="M26 86C12 96 6 111 7 130L21 124L32 99Z" />
+				<path d="M19 80Q29 76 35 87L30 101Q19 103 15 93Z" />
+			</g>
 		</g>
 	);
 }
