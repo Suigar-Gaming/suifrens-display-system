@@ -1,3 +1,4 @@
+import { AnimatedAccessory } from '../../animation/AnimatedAccessory.js';
 import type { AccessoryMetadata } from '../../utils/accessoryUtils.js';
 import { AccessorySlot } from '../accessories/AccessorySlot.js';
 import { LeftArm } from './arms/left/LeftArm.js';
@@ -141,8 +142,12 @@ export function BullsharkImage({
 					{accessoriesByType?.object && (
 						<AccessorySlot accessory={accessoriesByType.object} species="bullshark" />
 					)}
-					<LeftArm fill={colorTheme.hands} />
-					{!incognito && <LeftArmPattern skin={skin} fill={colorTheme.patterns} />}
+					<AnimatedAccessory fallbackPart="leftArm">
+						<g>
+							<LeftArm fill={colorTheme.hands} />
+							{!incognito && <LeftArmPattern skin={skin} fill={colorTheme.patterns} />}
+						</g>
+					</AnimatedAccessory>
 				</>
 			)}
 		</>
