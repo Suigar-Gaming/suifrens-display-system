@@ -18,3 +18,6 @@ export {
 	type AccessoryRenderOptions,
 	type SuiFrenSpecies,
 } from './utils/accessoryUtils.js';
+
+export { buildRunnerAccessories, resolveRunnerKit } from './components/accessories/runnerKit.js';
+export type { RunnerKitOptions } from './components/accessories/runnerKit.js';
