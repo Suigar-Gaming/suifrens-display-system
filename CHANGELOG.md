@@ -1,5 +1,16 @@
 # @suigar/suifrens-display-system
 
+## 1.1.2
+
+### Patch Changes
+
+- 0ace5d9: Fit running headbands to each species. Keep the capy ribbon short and curved across the front of both ear roots, lower at the near ear and rising just beyond the far ear, in full-body and head-only renders. Preserve a clear forehead, eyes and muzzle, and compact tied ends behind the near ear.
+- 019ebb1: Anchor native capy and bullshark arm rotations at their shoulder seams instead of SVG origins. Raised arms, patterns and held accessories remain attached to the torso during celebrations and other arm animations.
+- f474fb4: Fit cream runner-singlet binding to the native garment contour: retain the neckline and add continuous inset side/hem piping beneath the animated arms. Replace detached side stripes and shoulder marks with registered fabric edges on capys and bullsharks, preserving bibs, colors and limb registration.
+- da5bb39: Allow left-hand objects to opt into foreground rendering together with the gripping arm, keeping raised trophies visible in front of the head on both species. Preserve the microphone animation's existing automatic layering.
+
+  Register foreground native arms and their patterns when they mount during a pose change, so held objects and the gripping hand continue to animate together.
+
 ## 1.1.1
 
 ### Patch Changes
