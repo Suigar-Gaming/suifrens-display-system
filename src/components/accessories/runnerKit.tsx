@@ -107,20 +107,8 @@ export function RunnerAccessory({ accessory, species, body }: AccessoryRendererP
 				<g id="runner-singlet-body" transform={BODY}>
 					<g clipPath={`url(#${bodyClip})`}>
 						<path d="M-10-10H305V194Q147 215-10 192Z" fill={kit.color} />
-						<path
-							d="M85 20Q96 85 26 109M208 20Q197 85 269 110M113 7Q147 41 181 7"
-							fill="none"
-							stroke="#fff6df"
-							strokeWidth="8"
-							strokeLinecap="round"
-						/>
-						<path
-							d="M30 118L38 177M260 118L254 177"
-							fill="none"
-							stroke="#fff6df"
-							strokeWidth="7"
-							strokeLinecap="round"
-						/>
+						{/* Only the neckline carries piping; native arm/waist ink owns the silhouette. */}
+						<path d="M113 7Q147 41 181 7" fill="none" stroke="#fff6df" strokeWidth="6" />
 						<path
 							d="M-8 194Q146 215 301 194"
 							fill="none"
