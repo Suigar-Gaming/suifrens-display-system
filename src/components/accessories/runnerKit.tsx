@@ -107,8 +107,16 @@ export function RunnerAccessory({ accessory, species, body }: AccessoryRendererP
 				<g id="runner-singlet-body" transform={BODY}>
 					<g clipPath={`url(#${bodyClip})`}>
 						<path d="M-10-10H305V194Q147 215-10 192Z" fill={kit.color} />
-						{/* Only the neckline carries piping; native arm/waist ink owns the silhouette. */}
+						{/* Continuous inset binding follows the fabric edge beneath the native arms. */}
 						<path d="M113 7Q147 41 181 7" fill="none" stroke="#fff6df" strokeWidth="6" />
+						<path
+							d="M101 13C59 35 32 72 22 119Q17 153 16 188Q147 207 280 188Q279 153 274 119C263 72 235 34 193 13"
+							fill="none"
+							stroke="#fff6df"
+							strokeWidth="6"
+							strokeLinejoin="round"
+						/>
+
 						<path
 							d="M-8 194Q146 215 301 194"
 							fill="none"
