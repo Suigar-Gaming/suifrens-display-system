@@ -1,5 +1,11 @@
 # @suigar/suifrens-display-system
 
+## 1.2.0
+
+### Minor Changes
+
+- 6f283d6: Add an optional native capy thumbs-up gesture to inline and asset renderers. Keep the original head, body, colors and shoulder registration; head portraits and held-object grips remain unchanged.
+
 ## 1.1.2
 
 ### Patch Changes
