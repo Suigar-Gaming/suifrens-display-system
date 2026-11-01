@@ -3,6 +3,7 @@ import type { AccessoryMetadata } from '../../utils/accessoryUtils.js';
 import { AccessorySlot } from '../accessories/AccessorySlot.js';
 import { LeftArm } from './arms/left/LeftArm.js';
 import { LeftArmPattern } from './arms/left/LeftArmPattern.js';
+import { ThumbsUpArm } from './arms/left/ThumbsUpArm.js';
 import { RightArm } from './arms/right/RightArm.js';
 import { RightArmPattern } from './arms/right/RightArmPattern.js';
 import { Body } from './body/Body.js';
@@ -22,6 +23,7 @@ import type { CapyAttributes } from './types.js';
 
 export type CapyImageProps = {
 	attributes: CapyAttributes;
+	gesture?: 'thumbsUp';
 	accessoriesByType?: Record<string, AccessoryMetadata>;
 	detail?: 'full' | 'head';
 	incognito?: boolean;
@@ -30,6 +32,7 @@ export type CapyImageProps = {
 
 export function CapyImage({
 	attributes,
+	gesture,
 	accessoriesByType,
 	detail = 'full',
 	incognito = false,
@@ -38,6 +41,8 @@ export function CapyImage({
 	const { mainColor, secondaryColor, skin, earShape, expression } = attributes;
 	const colorTheme = getThemeFromSkin(skin, `#${mainColor}`, `#${secondaryColor}`, incognito);
 	const headAccessory = accessoriesByType?.head;
+	// Held objects retain their native grip and take precedence over a free-hand gesture.
+	const thumbsUp = gesture === 'thumbsUp' && !accessoriesByType?.object;
 	const runnerHeadband = headAccessory?.name === 'runner headband';
 	const showEars = !headAccessory || headAccessory.renderOptions.showEars;
 
@@ -145,7 +150,7 @@ export function CapyImage({
 				<AccessorySlot accessory={accessoriesByType.object} species="capy" />
 			)}
 
-			{!renderMicrophoneArmInForeground && (
+			{!renderMicrophoneArmInForeground && !thumbsUp && (
 				<>
 					<LeftArm fill={colorTheme.arms} handProps={{ fill: colorTheme.appendages }} />
 					{!incognito && <LeftArmPattern skin={skin} fill={colorTheme.patterns} />}
@@ -202,6 +207,8 @@ export function CapyImage({
 			{accessoriesByType?.eyes && (
 				<AccessorySlot accessory={accessoriesByType.eyes} species="capy" />
 			)}
+
+			{thumbsUp && <ThumbsUpArm armColor={colorTheme.arms} handColor={colorTheme.appendages} />}
 
 			{renderMicrophoneArmInForeground && (
 				<>

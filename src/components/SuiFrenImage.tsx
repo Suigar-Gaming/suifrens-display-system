@@ -25,6 +25,8 @@ export type SuiFrenRenderSize =
 
 export type SuiFrenImageProps = {
 	attributes: SuiFrenAttributes;
+	/** Optional native capy gesture; bullsharks and head portraits are unchanged. */
+	capyGesture?: 'thumbsUp';
 	accessories?: Array<AccessoryMetadata>;
 	detail?: 'full' | 'head';
 	renderSize?: SuiFrenRenderSize;
@@ -47,6 +49,7 @@ export type SuiFrenImageProps = {
 
 export function SuiFrenImage({
 	attributes,
+	capyGesture,
 	accessories,
 	detail = 'full',
 	renderSize,
@@ -142,6 +145,7 @@ export function SuiFrenImage({
 	} else if ('earShape' in attributes) {
 		suiFrenImageContent = (
 			<CapyImage
+				gesture={capyGesture}
 				accessoriesByType={accessoriesByType}
 				attributes={attributes}
 				detail={detail}

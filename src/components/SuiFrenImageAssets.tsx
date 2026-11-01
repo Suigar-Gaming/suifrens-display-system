@@ -19,6 +19,8 @@ import type { SuiFrenAttributes } from './types.js';
 
 export type SuiFrenImageAssetsProps = {
 	attributes: SuiFrenAttributes;
+	/** Optional native capy gesture; bullsharks and head portraits are unchanged. */
+	capyGesture?: 'thumbsUp';
 	accessories?: Array<AccessoryMetadata>;
 	detail?: 'full' | 'head';
 	renderSize?: SuiFrenRenderSize;
@@ -41,6 +43,7 @@ export type SuiFrenImageAssetsProps = {
 
 export function SuiFrenImageAssets({
 	attributes,
+	capyGesture,
 	accessories,
 	detail = 'full',
 	renderSize,
@@ -136,6 +139,7 @@ export function SuiFrenImageAssets({
 	} else if ('earShape' in attributes) {
 		suiFrenImageContent = (
 			<CapyImage
+				gesture={capyGesture}
 				accessoriesByType={accessoriesByType}
 				attributes={attributes}
 				detail={detail}
