@@ -74,3 +74,7 @@ Versioning and release notes use [Changesets](.changeset/README.md). See [CHANGE
 ### Athletics outfits
 
 `buildRunnerAccessories({ color: '#ec7da6', number: 3 })` from the root or `/accessories` export supplies a native singlet, shorts, headband and running shoes for capys and bullsharks. Colors accept six-digit hex values and bibs accept integers 1–99; invalid inputs use safe defaults. Set `mirrorBib: true` when the consumer mirrors the whole character so the printed number stays readable. Shoes and shorts register each leg separately; ears and fins remain visible. Inline and asset rendering preserve the same configurable SVG geometry.
+
+### Capy thumbs-up gesture
+
+Pass `capyGesture="thumbsUp"` to `SuiFrenImage` (inline or asset entry) to raise the capy's near arm with an upright thumb. The native head/body, palette and canvas stay unchanged. Head-only portraits and bullsharks ignore this option; a held object takes precedence so its original grip is preserved. Direct `CapyImage` consumers use `gesture="thumbsUp"`.
