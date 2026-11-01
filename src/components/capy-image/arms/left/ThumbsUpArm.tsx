@@ -1,34 +1,59 @@
 import { AnimatedAccessory } from '../../../../animation/AnimatedAccessory.js';
+import {
+	matrixToString,
+	multiplyMatrix,
+	rotateMatrix,
+	scaleMatrix,
+	translateMatrix,
+} from '../../../../animation/matrix.js';
+import { getPartDefinition } from '../../../../animation/parts.js';
 
 type ThumbsUpArmProps = {
 	armColor: string;
 	handColor: string;
 };
 
-/** A raised native mitten with a clear upright thumb, attached at the left shoulder. */
+const shoulder = getPartDefinition('leftArm').pivot;
+const pose = matrixToString(
+	multiplyMatrix(
+		multiplyMatrix(translateMatrix(-35, 35), rotateMatrix(105, shoulder.x, shoulder.y)),
+		multiplyMatrix(
+			scaleMatrix(-1, 1, shoulder.x, shoulder.y),
+			[2.9166107177734375, 0, 0, 2.9166107177734375, 1002.9, 1719.3],
+		),
+	),
+);
+
+// Native arm length and palm volume; the thumb belongs to the same outer contour.
+const outline = `M 49.7 0 C 33.7 10.8 22.4 25.3 15.6 43.5
+ C 9.6 59.5 5.6 75.8 3.5 92.6 L 1.6 108.7 L 0.1 133.8
+ C 0.4 143.1 3.9 150.9 10.6 157.2 C 17.4 163.6 25.5 166.6 34.8 166.3
+ C 44.1 166 52 162.5 58.3 155.6 C 61.9 151.9 64.5 147.6 66.2 142.8
+ C 80 143 94 135 97 124 C 100 116 95 109 87 109
+ C 80 109 75 113 70.8 110 C 72 98 74 86 77.3 74.1
+ C 81.2 59.9 89.8 44.3 103.2 27.3`;
+const hand = `M 1.6 108.7 C 24.4 106.5 47 109 70.8 110
+ C 75 113 80 109 87 109 C 95 109 100 116 97 124
+ C 94 135 80 143 66.2 142.8 C 64.5 147.6 61.9 151.9 58.3 155.6
+ C 52 162.5 44.1 166 34.8 166.3 C 25.5 166.6 17.4 163.6 10.6 157.2
+ C 3.9 150.9 0.4 143.1 0.1 133.8 Z`;
+
 export function ThumbsUpArm({ armColor, handColor }: ThumbsUpArmProps) {
 	return (
 		<AnimatedAccessory fallbackPart="leftArm">
-			<g
-				data-suifren-gesture="thumbs-up"
-				stroke="#000"
-				strokeWidth={29}
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			>
-				<path
-					fill={armColor}
-					d="M 1218 1745 C 1135 1828 1010 1795 930 1724 C 871 1671 830 1609 803 1540 L 937 1484 C 969 1552 1013 1610 1076 1637 C 1112 1652 1151 1658 1181 1649"
-				/>
-				<path
-					fill={handColor}
-					d="M 783 1546 C 739 1533 710 1505 701 1468 L 683 1387 C 677 1357 690 1336 716 1330 L 740 1324 L 730 1240 C 721 1205 736 1188 763 1190 C 790 1190 804 1215 808 1240 L 837 1310 L 882 1303 C 911 1299 933 1316 940 1342 L 966 1441 C 977 1486 953 1528 911 1540 L 853 1555 C 828 1561 803 1558 783 1546 Z"
-				/>
-				<path
-					fill="none"
-					d="M 744 1369 L 848 1344 M 754 1420 L 861 1394 M 767 1470 L 871 1446"
-					strokeWidth={19}
-				/>
+			<g data-suifren-gesture="thumbs-up">
+				<g transform={pose}>
+					<path fill={armColor} d={`${outline} Z`} />
+					<path fill={handColor} d={hand} />
+					<path
+						fill="none"
+						stroke="#000"
+						strokeWidth={10}
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						d={outline}
+					/>
+				</g>
 			</g>
 		</AnimatedAccessory>
 	);
