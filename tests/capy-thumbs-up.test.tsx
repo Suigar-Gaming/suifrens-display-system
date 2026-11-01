@@ -1,5 +1,7 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, test } from 'vitest';
+import { parseMatrix } from '../src/animation/matrix.js';
+import { getPartDefinition } from '../src/animation/parts.js';
 import { SuiFrenImage } from '../src/components/SuiFrenImage.js';
 import { SuiFrenImageAssets } from '../src/components/SuiFrenImageAssets.js';
 import { accessories } from '../src/constants/accessories.js';
@@ -17,7 +19,7 @@ describe.each([
 	['inline', SuiFrenImage],
 	['asset', SuiFrenImageAssets],
 ] as const)('%s capy thumbs up', (_name, Image) => {
-	test('uses one foreground hand and leaves the resting pose unchanged by default', () => {
+	test('uses one foreground posed hand and leaves the resting pose unchanged by default', () => {
 		const resting = renderToStaticMarkup(<Image attributes={capy} />);
 		const raised = renderToStaticMarkup(<Image attributes={capy} capyGesture="thumbsUp" />);
 		expect(resting).not.toContain('data-suifren-gesture');
@@ -28,6 +30,35 @@ describe.each([
 		expect(raised.indexOf('data-suifren-gesture')).toBeGreaterThan(
 			raised.indexOf('data-suifren-animation-part="head"'),
 		);
+	});
+	test('keeps the thumb up and the wrist toward the belly with the small down-left offset', () => {
+		const raised = renderToStaticMarkup(<Image attributes={capy} capyGesture="thumbsUp" />);
+		const transform = raised.match(
+			/data-suifren-gesture="thumbs-up"[\s\S]*?<g transform="([^"]+)"/,
+		);
+		expect(transform).not.toBeNull();
+		const matrix = parseMatrix(transform![1])!;
+		const point = (x: number, y: number) => ({
+			x: matrix[0] * x + matrix[2] * y + matrix[4],
+			y: matrix[1] * x + matrix[3] * y + matrix[5],
+		});
+		const palm = point(35, 140);
+		const wrist = point(35, 108);
+		const thumbTip = point(97, 124);
+		expect(thumbTip.y).toBeLessThan(palm.y);
+		expect(wrist.x).toBeGreaterThan(palm.x);
+		expect(wrist.y).toBeGreaterThan(palm.y);
+		const shoulder = point(76.45, 13.65);
+		const nativeShoulder = getPartDefinition('leftArm').pivot;
+		expect(shoulder.x).toBeCloseTo(nativeShoulder.x - 35, 2);
+		expect(shoulder.y).toBeCloseTo(nativeShoulder.y + 35, 2);
+	});
+	test('uses one continuous outline without an added thumb ellipse or a clipped wrist splice', () => {
+		const raised = renderToStaticMarkup(<Image attributes={capy} capyGesture="thumbsUp" />);
+		const gesture = raised.slice(raised.indexOf('data-suifren-gesture="thumbs-up"'));
+		expect(gesture).not.toContain('<ellipse');
+		expect(gesture).not.toContain('<clipPath');
+		expect(gesture.match(/stroke="#000"/g)).toHaveLength(1);
 	});
 	test('does not change a head portrait or bullshark', () => {
 		expect(

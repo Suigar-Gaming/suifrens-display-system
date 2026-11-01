@@ -4,9 +4,16 @@ This repository owns the source, generated SVG assets and compiled releases of `
 
 ## Working tree and scope
 
-- Check the branch and working tree before editing. Preserve unrelated work. `main` is the default working and release branch; direct commits to `main` are allowed when committing is part of the user-authorized task. A feature branch is optional; use a `codex/` prefix when creating one. Do not switch or merge an existing working branch merely to enforce this default.
+- Check the branch and working tree before editing. Preserve unrelated work. `main` is the default working and release branch; committing also requires the explicit user validation described below. A feature branch is optional; use a `codex/` prefix when creating one. Do not switch or merge an existing working branch merely to enforce this default.
 - Follow the user's current release scope. Preparing a release does not authorize committing, pushing, creating a tag or publishing. A request to keep a release local remains in effect until the user changes it.
 - Do not modify a consumer repository unless the requested task includes it.
+
+## Mandatory user validation before commit, push or PR
+
+- Implement and validate changes locally, including their changeset, before asking the user to approve the concrete result. For visual changes, show a rendered preview both enlarged and at the intended consumer display size.
+- **Do not commit, push, open a PR (including a draft), merge or trigger a release until the user explicitly approves the current result and the commit/push/PR or release scope.** Implementation requests, feedback, successful tests, or approval of a different visual revision are not approval to publish this revision.
+- Material visual revisions require a new preview and renewed approval before those actions. Keep local edits, branches, builds, tests, changesets and preview artifacts available while waiting; do not make a local commit as a shortcut.
+- Once approval is granted, continue only within its stated scope and still respect required checks and reviews. Do not infer release authorization from a request to prepare or review a release.
 
 ## Automatic version and changelog preparation
 
