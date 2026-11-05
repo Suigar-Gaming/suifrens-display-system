@@ -1,5 +1,11 @@
 # @suigar/suifrens-display-system
 
+## 1.2.2
+
+### Patch Changes
+
+- 2526ff5: Prevent mirrored arms, hands and sleeves from briefly collapsing at quarter-turn animation endpoints.
+
 ## 1.2.1
 
 ### Patch Changes
