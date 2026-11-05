@@ -33,6 +33,23 @@ export function matrixToString(matrix: Matrix): string {
 	return `matrix(${formatNumber(matrix[0])}, ${formatNumber(matrix[1])}, ${formatNumber(matrix[2])}, ${formatNumber(matrix[3])}, ${formatNumber(matrix[4])}, ${formatNumber(matrix[5])})`;
 }
 
+// CSS decomposes reflected matrices onto different scale axes around a quarter
+// turn. Keep reflection as a separate, stable transform so interpolation cannot
+// collapse a limb when a rounded endpoint becomes exactly vertical.
+export function matrixToAnimationTransform(matrix: Matrix): string {
+	const reflected = matrix[0] * matrix[3] - matrix[1] * matrix[2] < 0;
+	const sign = reflected ? -1 : 1;
+	const rotation: Matrix = [
+		matrix[0] * sign,
+		matrix[1] * sign,
+		matrix[2],
+		matrix[3],
+		matrix[4],
+		matrix[5],
+	];
+	return `${matrixToString(rotation)} scale(${sign}, 1)`;
+}
+
 export function translateMatrix(x: number, y: number): Matrix {
 	return [1, 0, 0, 1, x, y];
 }

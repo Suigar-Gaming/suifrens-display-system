@@ -1,4 +1,5 @@
 import { type AnimationStore, composePartTransform } from './AnimationStore.js';
+import { matrixToAnimationTransform, parseMatrix } from './matrix.js';
 import { interpolateSequencePoses, normalizePlayback } from './SequencePlayer.js';
 import type { AnimationConfig, AnimationSequence, PlaybackOptions } from './types.js';
 
@@ -85,11 +86,15 @@ function buildTargetKeyframes(
 	const duration = Math.max(sequence.duration, 1);
 	return offsets.map((time) => ({
 		offset: time / duration,
-		transform: composePartTransform(
-			target.part,
-			target.baseTransform,
-			interpolateSequencePoses(sequence, time),
-			target.pivotOverride,
+		transform: matrixToAnimationTransform(
+			parseMatrix(
+				composePartTransform(
+					target.part,
+					target.baseTransform,
+					interpolateSequencePoses(sequence, time),
+					target.pivotOverride,
+				),
+			)!,
 		),
 		easing: 'linear',
 	}));
