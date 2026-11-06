@@ -1,0 +1,38 @@
+{
+	"identities": [
+		{
+			"name": "FakieSui",
+			"email": "4931583+FakieSui@users.noreply.github.com"
+		},
+		{
+			"name": "GitHub",
+			"email": "noreply@github.com"
+		},
+		{
+			"name": "github-actions[bot]",
+			"email": "41898282+github-actions[bot]@users.noreply.github.com"
+		},
+		{
+			"name": "dependabot[bot]",
+			"email": "49699333+dependabot[bot]@users.noreply.github.com"
+		},
+		{
+			"name": "Furbor",
+			"email": "355990620+Furbor@users.noreply.github.com"
+		}
+	],
+	"attributionOnly": [
+		{
+			"pairSha256": "3d0acb6e0b28313da1ae43e4ed70b04648aedfe969fe3eef9906929377f8760b",
+			"reason": "Preserve an existing public attribution; not an author, committer or tagger identity."
+		},
+		{
+			"pairSha256": "bec0087942a03f2326bf4e55a64e458067c2dd32a8f5ca767d65be214749cba2",
+			"reason": "Preserve an existing public attribution; not an author, committer or tagger identity."
+		},
+		{
+			"pairSha256": "45d02bbcf57242ab1b0b740aa765f20509d880324748b98d5150e35f3cd4047f",
+			"reason": "Preserve an existing public attribution; not an author, committer or tagger identity."
+		}
+	]
+}
