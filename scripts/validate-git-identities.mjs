@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
@@ -20,22 +21,48 @@ export function inspectIdentityLine(line, identities = policy.identities) {
 	return Boolean(match && allowedIdentity(match[1], match[2], identities));
 }
 
-export function inspectMessage(message, identities = policy.identities) {
+export function inspectMessage(
+	message,
+	identities = policy.identities,
+	attributionOnly = policy.attributionOnly ?? [],
+) {
 	const problems = [];
+	const prose = [];
+	const attributionOnlyEmails = new Set();
 	for (const line of message.split('\n')) {
 		const trailer =
 			/^\s*(?:>\s*|[-*]\s+)*(co-authored-by|signed-off-by|reviewed-by|acked-by):\s*(.*)$/i.exec(
 				line,
 			);
-		if (trailer && !inspectIdentityLine(trailer[2], identities)) {
+		const pair = trailer && /^(.*?) <([^<>\r\n]+)>$/.exec(trailer[2]);
+		const attributionApproved =
+			pair &&
+			(allowedIdentity(pair[1], pair[2], identities) ||
+				attributionOnly.some(
+					(entry) =>
+						entry.pairSha256 ===
+						createHash('sha256').update(`${pair[1]} <${pair[2].toLowerCase()}>`).digest('hex'),
+				));
+		if (trailer && !attributionApproved) {
 			problems.push('unapproved identity trailer');
+		}
+		if (attributionApproved && !allowedIdentity(pair[1], pair[2], identities)) {
+			attributionOnlyEmails.add(pair[2].toLowerCase());
+		}
+		// A preserved public credit authorizes only this exact complete trailer.
+		// The same address anywhere else remains subject to the ordinary email rule.
+		if (!attributionApproved) {
+			prose.push(line);
 		}
 	}
 	// Squash messages may quote author information in prose rather than a trailer.
-	for (const email of message.match(
-		/[a-z0-9][a-z0-9.!#$%&'*+/=?^_{|}~[\]-]*@[a-z0-9.-]+\.[a-z]{2,}/gi,
-	) ?? []) {
-		if (!identities.some((entry) => entry.email.toLowerCase() === email.toLowerCase())) {
+	for (const email of prose
+		.join('\n')
+		.match(/[a-z0-9][a-z0-9.!#$%&'*+/=?^_{|}~[\]-]*@[a-z0-9.-]+\.[a-z]{2,}/gi) ?? []) {
+		if (
+			attributionOnlyEmails.has(email.toLowerCase()) ||
+			!identities.some((entry) => entry.email.toLowerCase() === email.toLowerCase())
+		) {
 			problems.push('unapproved email in message');
 		}
 	}
