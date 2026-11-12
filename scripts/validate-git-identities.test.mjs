@@ -1,6 +1,16 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import {
+	existsSync,
+	mkdtempSync,
+	rmSync,
+	writeFileSync,
+	readFileSync,
+	mkdirSync,
+	copyFileSync,
+	realpathSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -10,6 +20,93 @@ import { allowedIdentity, inspectMessage } from './validate-git-identities.mjs';
 const scanner = fileURLToPath(new URL('./validate-git-identities.mjs', import.meta.url));
 const safe = { name: 'FakieSui', email: '4931583+FakieSui@users.noreply.github.com' };
 const personal = { name: 'Synthetic Private Name', email: 'synthetic@example.invalid' };
+
+const syntheticCredits = [
+	{ name: 'Public Credit Alpha', email: '101+credit-alpha@users.noreply.github.com' },
+	{ name: 'Public Credit Beta', email: 'credit-beta@users.noreply.github.com' },
+	{ name: 'Public Credit Gamma', email: safe.email },
+];
+const attributionFingerprints = syntheticCredits.map((entry) => ({
+	pairSha256: createHash('sha256')
+		.update(`${entry.name} <${entry.email.toLowerCase()}>`)
+		.digest('hex'),
+}));
+
+void test('preserves exact public attribution credits without publishing their values in policy', () => {
+	for (const entry of syntheticCredits) {
+		for (const field of ['Co-authored-by', 'Signed-off-by', 'Reviewed-by', 'Acked-by']) {
+			assert.deepEqual(
+				inspectMessage(`${field}: ${entry.name} <${entry.email}>`, [safe], attributionFingerprints),
+				[],
+			);
+		}
+		assert.ok(
+			inspectMessage(`Co-authored-by: Other <${entry.email}>`, [safe], attributionFingerprints)
+				.length,
+		);
+		assert.equal(allowedIdentity(entry.name, entry.email), false);
+	}
+});
+
+void test('attribution-only emails remain forbidden in prose, malformed trailers and private bodies', () => {
+	for (const entry of syntheticCredits) {
+		const trailer = `Co-authored-by: ${entry.name} <${entry.email}>`;
+		for (const message of [
+			`${trailer}\nContact: ${entry.email}`,
+			`${trailer} and ${personal.email}`,
+			`${trailer}\nText ${trailer}`,
+			`${trailer}\n${personal.name} <${personal.email}>`,
+		]) {
+			assert.ok(inspectMessage(message, [safe], attributionFingerprints).length);
+		}
+	}
+});
+
+void test('attribution fingerprints never authorize author, committer or annotated tagger fields', () => {
+	const f = fixture();
+	try {
+		mkdirSync(path.join(f.cwd, 'scripts'), { recursive: true });
+		mkdirSync(path.join(f.cwd, '.github'), { recursive: true });
+		const localScanner = path.join(f.cwd, 'scripts/validate-git-identities.mjs');
+		copyFileSync(scanner, localScanner);
+		writeFileSync(
+			path.join(f.cwd, '.github/publication-identities.json'),
+			JSON.stringify({ identities: [safe], attributionOnly: attributionFingerprints }),
+		);
+		function scan(args) {
+			return spawnSync(process.execPath, [realpathSync(localScanner), ...args], {
+				cwd: f.cwd,
+				encoding: 'utf8',
+				timeout: 15_000,
+			});
+		}
+		const base = f.commit();
+		for (const [index, entry] of syntheticCredits.entries()) {
+			f.git(['reset', '--hard', base]);
+			let head = f.commit('test', {
+				GIT_AUTHOR_NAME: entry.name,
+				GIT_AUTHOR_EMAIL: entry.email,
+			});
+			assert.match(scan(['--range', base, head]).stderr, /unapproved author identity/);
+			f.git(['reset', '--hard', base]);
+			head = f.commit('test', {
+				GIT_COMMITTER_NAME: entry.name,
+				GIT_COMMITTER_EMAIL: entry.email,
+			});
+			assert.match(scan(['--range', base, head]).stderr, /unapproved committer identity/);
+			f.git(['tag', '-a', `credit-${index}`, '-m', 'test'], {
+				GIT_COMMITTER_NAME: entry.name,
+				GIT_COMMITTER_EMAIL: entry.email,
+			});
+			assert.match(
+				scan(['--range', head, f.git(['rev-parse', `credit-${index}`])]).stderr,
+				/unapproved tagger identity/,
+			);
+		}
+	} finally {
+		f.cleanup();
+	}
+});
 
 function fixture() {
 	const cwd = mkdtempSync(path.join(tmpdir(), 'git-publication-'));
@@ -55,6 +152,65 @@ void test('requires an approved name/email pair, including for noreply addresses
 	assert.equal(allowedIdentity(personal.name, safe.email), false);
 	assert.equal(allowedIdentity(safe.name, personal.email), false);
 	assert.equal(allowedIdentity(safe.name, '1+unapproved@users.noreply.github.com'), false);
+});
+
+void test('publication policy contains only the approved public roles and bots', () => {
+	const configured = JSON.parse(
+		readFileSync(new URL('../.github/publication-identities.json', import.meta.url), 'utf8'),
+	);
+	assert.deepEqual(
+		configured.identities.map((entry) => entry.name).sort(),
+		['FakieSui', 'Furbor', 'GitHub', 'github-actions[bot]', 'dependabot[bot]'].sort(),
+	);
+	assert.equal(allowedIdentity('Furbor', '355990620+Furbor@users.noreply.github.com'), true);
+	assert.equal(allowedIdentity(personal.name, '355990620+Furbor@users.noreply.github.com'), false);
+	assert.equal(allowedIdentity('Furbor', personal.email), false);
+});
+
+void test('approved role passes author, committer, attribution and annotated tag checks', () => {
+	const f = fixture();
+	try {
+		const base = f.commit();
+		const role = {
+			GIT_AUTHOR_NAME: 'Furbor',
+			GIT_AUTHOR_EMAIL: '355990620+Furbor@users.noreply.github.com',
+			GIT_COMMITTER_NAME: 'Furbor',
+			GIT_COMMITTER_EMAIL: '355990620+Furbor@users.noreply.github.com',
+		};
+		f.commit('test\n\nCo-authored-by: Furbor <355990620+Furbor@users.noreply.github.com>', role);
+		f.git(['tag', '-a', 'public-role', '-m', 'test'], role);
+		assert.equal(f.scan(['--range', base, f.git(['rev-parse', 'public-role'])]).status, 0);
+	} finally {
+		f.cleanup();
+	}
+});
+
+void test('an approved role mailbox does not authorize a private name in checked fields', () => {
+	const f = fixture();
+	try {
+		const base = f.commit();
+		const bad = {
+			GIT_AUTHOR_NAME: personal.name,
+			GIT_AUTHOR_EMAIL: '355990620+Furbor@users.noreply.github.com',
+			GIT_COMMITTER_NAME: personal.name,
+			GIT_COMMITTER_EMAIL: '355990620+Furbor@users.noreply.github.com',
+		};
+		const head = f.commit('test', bad);
+		const commitResult = f.scan(['--range', base, head]);
+		redacted(commitResult);
+		assert.match(commitResult.stderr, /unapproved author/);
+		assert.match(commitResult.stderr, /unapproved committer/);
+		f.git(['tag', '-a', 'private-name', '-m', 'test'], bad);
+		const tagResult = f.scan(['--range', head, f.git(['rev-parse', 'private-name'])]);
+		redacted(tagResult);
+		assert.match(tagResult.stderr, /unapproved tagger/);
+		assert.deepEqual(
+			inspectMessage(`Co-authored-by: ${personal.name} <355990620+Furbor@users.noreply.github.com>`),
+			['unapproved identity trailer'],
+		);
+	} finally {
+		f.cleanup();
+	}
 });
 
 void test('recognizes attribution trailers anywhere in the message', () => {

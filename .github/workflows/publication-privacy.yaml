@@ -12,16 +12,20 @@ jobs:
   publication-privacy:
     if: github.event_name != 'push' || github.event.deleted != true
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Setup Node.js and pnpm
         uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
           node-version-file: .node-version
       - name: Test publication identity guard
-        run: node --test scripts/validate-git-identities.test.mjs
+        run: node --test scripts/validate-git-identities.test.mjs scripts/fetch-git-event-objects.test.mjs
       - name: Check incoming commits and squash metadata
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/check-publication-event.mjs

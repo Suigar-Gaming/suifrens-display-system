@@ -35,7 +35,11 @@ jobs:
         id: plan
         env:
           PREVIOUS_SHA: ${{ github.event.before }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
+          if [ -n "${PREVIOUS_SHA:-}" ] && [[ ! "$PREVIOUS_SHA" =~ ^0+$ ]]; then
+            node scripts/fetch-git-event-objects.mjs "$PREVIOUS_SHA" "$GITHUB_SHA"
+          fi
           pnpm changeset status --output "$RUNNER_TEMP/release-plan.json"
           node --input-type=module <<'JS'
           import assert from 'node:assert/strict';
