@@ -205,7 +205,9 @@ void test('an approved role mailbox does not authorize a private name in checked
 		redacted(tagResult);
 		assert.match(tagResult.stderr, /unapproved tagger/);
 		assert.deepEqual(
-			inspectMessage(`Co-authored-by: ${personal.name} <355990620+Furbor@users.noreply.github.com>`),
+			inspectMessage(
+				`Co-authored-by: ${personal.name} <355990620+Furbor@users.noreply.github.com>`,
+			),
 			['unapproved identity trailer'],
 		);
 	} finally {
